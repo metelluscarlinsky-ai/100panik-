@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-black text-white font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-gold-500/30 text-gold-500;
+  }
+}
+
+@layer components {
+  /* Bouton Prensipal */
+  .btn-primary {
+    @apply bg-gold-500 hover:bg-gold-600 text-black font-body font-semibold 
+           py-4 px-10 rounded-none uppercase tracking-[0.2em] text-sm 
+           transition-all duration-300 ease-in-out 
+           focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  /* Bouton Segondè */
+  .btn-outline {
+    @apply border border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-black 
+           font-body font-semibold py-3 px-8 rounded-none uppercase tracking-[0.2em] text-sm 
+           transition-all duration-300 ease-in-out 
+           focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  /* Champ Antre Tèks */
+  .input-panik {
+    @apply w-full bg-transparent border-b border-gray-500/50 py-3 px-2 
+           text-white placeholder-gray-500 
+           focus:outline-none focus:border-gold-500 
+           transition-colors duration-300 font-body;
+  }
+
+  /* Kat Pwodwi */
+  .card-panik {
+    @apply bg-dark-700 border border-transparent hover:border-gold-500/50 
+           transition-all duration-500 ease-in-out group;
+  }
+
+  /* Efè Overlay */
+  .overlay-panik {
+    @apply absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
