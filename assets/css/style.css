@@ -66,7 +66,7 @@ h1, h2, h3, h4 {
   display: flex; align-items: center; gap: 8px;
 }
 .logo-panik img { height: 40px; width: auto; }
-.logo-panik span { color: var(--lò); }
+.logo-panik span { color: var(--wouj-vif); }
 .nav-panik { display: flex; gap: 2.2rem; }
 .nav-panik a {
   font-size: 0.9rem; font-weight: 600; text-transform: uppercase;
