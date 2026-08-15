@@ -388,7 +388,7 @@ h1, h2, h3, h4 {
   position: relative;
   max-width: 1600px;
   margin: 0 auto;
-  height: 420px;
+  height: 280px;
 }
 .pub-track {
   display: flex;
@@ -507,7 +507,7 @@ h1, h2, h3, h4 {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .pub-slider { height: auto; min-height: 300px; }
+  .pub-slider { height: auto; min-height: 220px; }
   .pub-content { padding: 1.5rem; }
   .pub-arrow { width: 36px; height: 36px; font-size: 1rem; }
   .pub-prev { left: 10px; }
