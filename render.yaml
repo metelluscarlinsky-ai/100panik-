@@ -1,13 +1,16 @@
 services:
   - type: web
-    name: 100panik-frontend
+    name: 100panik
     env: static
-    buildCommand: echo "Static site - pa gen build nesesè"
-    staticPublishPath: ./
+    buildCommand: echo "Static site - pa gen build"
+    staticPublishPath: .
     routes:
       - type: rewrite
+        source: /
+        destination: /index.html
+      - type: rewrite
         source: /*
-        destination: /pages/index.html
+        destination: /pages/*
     headers:
       - path: /*
         name: Cache-Control
