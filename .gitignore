@@ -1,7 +1,19 @@
-# Fichye pa nesesè pou deplwaye
+# Depandans
+node_modules/
+.npm/
+
+# Fichye tanporè
 *.log
 .DS_Store
 Thumbs.db
+
+# Fichye lokal
 setup.sh
 server.js
 live_server.js
+create_pages.sh
+update_logo.sh
+
+# Cache
+.cache/
+.tmp/
