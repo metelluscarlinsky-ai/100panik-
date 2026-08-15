@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontak | 100PANIK</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a href="index.html" class="logo"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK"></a>
+    <nav class="nav-desktop"><ul>
+      <li><a href="index.html" class="nav-link">Dakèy</a></li>
+      <li><a href="boutik.html" class="nav-link">Boutik</a></li>
+      <li><a href="koleksyon.html" class="nav-link">Koleksyon</a></li>
+      <li><a href="istwa.html" class="nav-link">Istwa</a></li>
+      <li><a href="kontak.html" class="nav-link">Kontak</a></li>
+    </ul></nav>
+    <div class="header-actions">
+      <a href="konekte.html" class="icon-btn">🔍</a>
+      <a href="panye.html" class="icon-btn cart-btn">🛒<span class="cart-badge" id="cartBadge">0</span></a>
+    </div>
+  </div>
+</header>
+<main style="padding-top:120px;">
+
+<div class="container" style="max-width:700px;"><h1 class="section-title-main" style="margin-bottom:40px;">Kontakte <span class="text-gradient">Nou</span></h1><div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;"><div style="background:#1a1a1a;padding:30px;"><h3 style="color:#D4AF37;margin-bottom:15px;">Enfòmasyon</h3><p style="color:#888;">📞 +509 32924776</p><p style="color:#888;">📧 info@100panik.com</p><p style="color:#888;">📍 Pòtoprens, Ayiti</p></div><form id="contactForm" style="background:#1a1a1a;padding:30px;"><input type="text" placeholder="Non ou" required style="width:100%;background:transparent;border:none;border-bottom:1px solid #333;padding:12px 0;color:#fff;outline:none;margin-bottom:15px;"><input type="email" placeholder="Imèl" required style="width:100%;background:transparent;border:none;border-bottom:1px solid #333;padding:12px 0;color:#fff;outline:none;margin-bottom:15px;"><textarea placeholder="Mesaj ou..." rows="4" style="width:100%;background:transparent;border:none;border-bottom:1px solid #333;padding:12px 0;color:#fff;outline:none;margin-bottom:20px;resize:vertical;"></textarea><button type="submit" class="btn btn-primary" style="width:100%;">Voye</button></form></div></div>
+
+</main>
+<footer class="footer-futuristic">
+  <div class="container">
+    <div class="footer-grid-futuristic">
+      <div class="footer-brand-futuristic"><h3>100<span style="color:#D4AF37;">PANIK</span></h3><p>Lè mòd lan pran panik, style lan rete kalm.</p></div>
+      <div class="footer-column-futuristic"><h4>Lyen Rapid</h4><ul class="footer-links-futuristic"><li><a href="boutik.html">Boutik</a></li><li><a href="koleksyon.html">Koleksyon</a></li><li><a href="istwa.html">Istwa</a></li><li><a href="kontak.html">Kontak</a></li></ul></div>
+      <div class="footer-column-futuristic"><h4>Sèvis</h4><ul class="footer-links-futuristic"><li><a href="#">Livrezon</a></li><li><a href="#">Retou</a></li><li><a href="#">FAQ</a></li></ul></div>
+      <div class="footer-column-futuristic"><h4>Kontak</h4><ul class="footer-links-futuristic"><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul></div>
+    </div>
+    <div class="footer-bottom-futuristic"><p>&copy; 2026 100PANIK. Tout dwa rezève.</p></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
+<script>
+document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();alert('✅ Mesaj ou voye!');this.reset()});
+</script>

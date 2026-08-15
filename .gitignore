@@ -1,0 +1,7 @@
+# Fichye pa nesesè pou deplwaye
+*.log
+.DS_Store
+Thumbs.db
+setup.sh
+server.js
+live_server.js
