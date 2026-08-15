@@ -28,6 +28,19 @@
     </div>
   </div>
 </header>
+<!-- PUB / PROMO SLIDER (PRO) -->
+<section class="pub-slider-wrap" id="pubSliderWrap">
+  <div class="pub-slider">
+    <div class="pub-track" id="pubTrack">
+      <!-- Slides yo pral jenere pa JavaScript -->
+    </div>
+    <button class="pub-arrow pub-prev" onclick="movePub(-1)" aria-label="Previous">&#10094;</button>
+    <button class="pub-arrow pub-next" onclick="movePub(1)" aria-label="Next">&#10095;</button>
+    <div class="pub-nav" id="pubNav"></div>
+  </div>
+</section>
+
+
 
 <main style="padding-top:90px;">
 
@@ -51,19 +64,6 @@
     <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
   </div>
 </div>
-
-
-<!-- SEKSYON PUB / PROMO -->
-<section class="seksyon-pub" id="pubSeksyon">
-  <div class="pub-slider" id="pubSlider">
-    <div class="pub-track" id="pubTrack">
-      <!-- Slides yo pral jenere pa JavaScript -->
-    </div>
-    <button class="pub-prev" onclick="movePub(-1)">&#10094;</button>
-    <button class="pub-next" onclick="movePub(1)">&#10095;</button>
-    <div class="pub-nav" id="pubNav"></div>
-  </div>
-</section>
 
 
 <section class="seksyon-pwodwi">
@@ -303,6 +303,82 @@ setInterval(() => movePub(1), 5000);
 
 // Chaje pub yo lè paj la ouvè
 document.addEventListener('DOMContentLoaded', loadPubAds);
+
+
+<script>
+// ===== SISTÈM PUB (PRO) =====
+let pubAds = JSON.parse(localStorage.getItem('100panik_ads')) || [];
+let pubIndex = 0;
+let pubTrack = document.getElementById('pubTrack');
+let pubNav = document.getElementById('pubNav');
+
+function loadPubAds() {
+  if (!pubTrack) return;
+  pubTrack.innerHTML = '';
+  pubNav.innerHTML = '';
+  
+  if (pubAds.length === 0) {
+    // Yon slide default si pa gen pub
+    pubAds = [{
+      id: 'default',
+      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
+      eyebrow: 'Limited Release',
+      title: 'The Calm Before the Storm',
+      subtitle: 'Bold streetwear for the fearless. No noise. No limits.',
+      link: 'boutik.html'
+    }];
+    localStorage.setItem('100panik_ads', JSON.stringify(pubAds));
+  }
+  
+  pubAds.forEach((ad, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'pub-slide';
+    slide.innerHTML = `
+      <div class="pub-slide-bg" style="background-image: url('${ad.image}');"></div>
+      <div class="pub-slide-overlay"></div>
+      <div class="pub-content">
+        ${ad.eyebrow ? `<p class="pub-eyebrow">${ad.eyebrow}</p>` : ''}
+        <h2 class="pub-title">${ad.title}</h2>
+        <p class="pub-subtitle">${ad.subtitle}</p>
+        <a href="${ad.link || 'boutik.html'}" class="pub-cta">Discover</a>
+      </div>
+    `;
+    pubTrack.appendChild(slide);
+    
+    const dot = document.createElement('div');
+    dot.className = 'pub-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToPub(i);
+    pubNav.appendChild(dot);
+  });
+  
+  updatePub();
+}
+
+function updatePub() {
+  if (!pubTrack) return;
+  pubTrack.style.transform = `translateX(-${pubIndex * 100}%)`;
+  document.querySelectorAll('.pub-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === pubIndex);
+  });
+}
+
+function goToPub(i) {
+  pubIndex = i;
+  updatePub();
+}
+
+function movePub(dir) {
+  if (pubAds.length === 0) return;
+  pubIndex = (pubIndex + dir + pubAds.length) % pubAds.length;
+  updatePub();
+}
+
+// Oto-rotasyon chak 6 segond
+setInterval(() => movePub(1), 6000);
+
+// Chaje pub yo
+document.addEventListener('DOMContentLoaded', loadPubAds);
+</script>
 
 </body>
 </html>

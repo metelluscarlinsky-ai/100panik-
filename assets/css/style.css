@@ -373,22 +373,27 @@ h1, h2, h3, h4 {
 }
 
 
-/* ========== SEKSYON PUB / PROMO ========== */
-.seksyon-pub {
+
+.pub-next { right: 20px; }
+
+
+/* ========== PUB / PROMO SLIDER (PRO) ========== */
+.pub-slider-wrap {
   position: relative;
-  padding: 4rem 0;
+  margin: 0;
   background: var(--ble-pwofon);
   overflow: hidden;
 }
 .pub-slider {
   position: relative;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  overflow: hidden;
+  height: 420px;
 }
 .pub-track {
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .pub-slide {
   min-width: 100%;
@@ -396,49 +401,66 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  height: 400px;
+  height: 100%;
   overflow: hidden;
 }
-.pub-slide img {
+.pub-slide-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.5);
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.45) saturate(1.1);
+}
+.pub-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11,29,58,0.9) 0%, rgba(11,29,58,0.3) 100%);
 }
 .pub-content {
   position: relative;
   z-index: 2;
-  padding: 2rem;
-  max-width: 800px;
+  text-align: left;
+  max-width: 700px;
+  padding: 2rem 3rem;
+  color: var(--blan);
 }
-.pub-tit {
-  font-family: var(--font-titr);
-  font-size: clamp(1.8rem, 5vw, 3rem);
+.pub-eyebrow {
   color: var(--lò);
-  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  margin-bottom: 0.8rem;
 }
-.pub-soustit {
+.pub-title {
+  font-family: var(--font-titr);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+}
+.pub-subtitle {
   font-size: 1.1rem;
   color: var(--gri-klè);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
+  font-weight: 300;
 }
 .pub-cta {
   display: inline-block;
-  padding: 0.8rem 2rem;
+  padding: 0.9rem 2.5rem;
   background: var(--lò);
   color: var(--ble-pwofon);
   font-weight: 700;
-  border-radius: var(--radius-sm);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border-radius: 0;
   text-decoration: none;
-  transition: background var(--transisyon), transform var(--transisyon);
+  transition: background var(--transisyon), transform var(--transisyon), box-shadow var(--transisyon);
 }
 .pub-cta:hover {
-  background: var(--lò);
+  background: #fff;
+  color: var(--ble-pwofon);
   transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(212,175,55,0.4);
 }
 .pub-nav {
   position: absolute;
@@ -446,39 +468,48 @@ h1, h2, h3, h4 {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 12px;
   z-index: 3;
 }
 .pub-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.3);
   cursor: pointer;
-  transition: background var(--transisyon), transform var(--transisyon);
+  transition: all var(--transisyon);
 }
 .pub-dot.active {
   background: var(--lò);
-  transform: scale(1.3);
+  transform: scale(1.4);
 }
-.pub-prev, .pub-next {
+.pub-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(212,175,55,0.3);
+  background: rgba(11,29,58,0.5);
+  border: 1px solid rgba(212,175,55,0.4);
   color: var(--lò);
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1.5rem;
   z-index: 3;
-  transition: background var(--transisyon), color var(--transisyon);
+  transition: all var(--transisyon);
 }
-.pub-prev:hover, .pub-next:hover {
+.pub-arrow:hover {
   background: var(--lò);
   color: var(--ble-pwofon);
 }
 .pub-prev { left: 20px; }
 .pub-next { right: 20px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pub-slider { height: auto; min-height: 300px; }
+  .pub-content { padding: 1.5rem; }
+  .pub-arrow { width: 36px; height: 36px; font-size: 1rem; }
+  .pub-prev { left: 10px; }
+  .pub-next { right: 10px; }
+}

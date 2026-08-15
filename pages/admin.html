@@ -6,182 +6,134 @@
 <title>Admin | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+<style>
+  .admin-tabs { display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap; }
+  .admin-tab { padding:12px 25px; background: rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); color:var(--gri-klè); cursor:pointer; font-weight:600; border-radius:4px; transition:0.3s; }
+  .admin-tab:hover, .admin-tab.active { background:var(--lò); color:var(--ble-pwofon); }
+  .admin-panel-content { display:none; }
+  .admin-panel-content.active { display:block; }
+  .ad-form { background:rgba(255,255,255,0.05); padding:25px; border-radius:8px; margin-bottom:30px; }
+  .ad-form label { color:var(--gri-klè); display:block; margin-bottom:5px; font-size:0.85rem; }
+  .ad-form input[type="text"], .ad-form input[type="file"] { width:100%; background:transparent; border:1px solid #333; padding:10px; color:#fff; margin-bottom:15px; border-radius:4px; }
+  .ad-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:20px; }
+  .ad-card { background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:8px; overflow:hidden; }
+  .ad-card img { width:100%; height:160px; object-fit:cover; }
+  .ad-card-body { padding:15px; }
+  .ad-card-title { color:var(--lò); font-weight:700; margin-bottom:5px; }
+  .ad-card-sub { color:var(--gri-klè); font-size:0.85rem; margin-bottom:10px; }
+  .ad-delete { background:#B71C1C; color:#fff; border:none; padding:6px 15px; border-radius:4px; cursor:pointer; font-size:0.8rem; }
+</style>
 </head>
 <body>
-
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Home</a>
-      <a href="boutik.html" >Shop</a>
-      <a href="koleksyon.html" >Collection</a>
-      <a href="istwa.html" >Our Story</a>
-      <a href="kontak.html" >Contact</a>
+    <nav class="nav-panik">
+      <a href="index.html">Home</a>
+      <a href="boutik.html">Shop</a>
+      <a href="koleksyon.html">Collection</a>
+      <a href="istwa.html">Story</a>
+      <a href="kontak.html">Contact</a>
     </nav>
     <div class="aksyon-header">
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
-      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="#" class="icon-btn">👤</a>
     </div>
   </div>
 </header>
 
 <main style="padding-top:90px;">
-
-<section style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:20px;">
-  <div id="loginPanel" style="max-width:420px;width:100%;background:rgba(255,255,255,0.05);padding:50px 40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;backdrop-filter:blur(16px);">
+  <!-- Login -->
+  <div id="loginPanel" style="max-width:420px;margin:auto;background:rgba(255,255,255,0.05);padding:50px 40px;border:1px solid rgba(212,175,55,0.2);border-radius:16px;">
     <h2 style="text-align:center;margin-bottom:25px;">🔐 Admin</h2>
     <form id="adminLoginForm">
       <input type="password" id="adminPassword" placeholder="Admin password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:14px 0;color:#fff;font-size:1.2rem;outline:none;text-align:center;">
       <button type="submit" class="btn-panik btn-primè" style="width:100%;margin-top:25px;">Enter</button>
     </form>
-    <p id="loginError" style="color:var(--wouj-vif);margin-top:15px;display:none;text-align:center;">Incorrect password</p>
+    <p id="loginError" style="color:var(--wouj-fonse);margin-top:15px;display:none;text-align:center;">Incorrect password</p>
   </div>
-  
-<div id="adminPanel" style="display:none; max-width:1200px; margin:auto; padding: 20px;">
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-    <h1 class="tit-seksyon">Admin Panel</h1>
-    <button id="logoutBtn" class="btn-panik btn-segondè">Sign Out</button>
-  </div>
-  
-  <!-- Tabs -->
-  <div style="display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap;">
-    <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
-    <button class="admin-tab" data-tab="ads">Pub / Promo</button>
-    <button class="admin-tab" data-tab="products">Products</button>
-  </div>
-  
-  <!-- Dashboard -->
-  <div id="tab-dashboard" class="admin-panel-content">
-    <h2 style="margin-bottom:20px;">Welcome, Boss!</h2>
-    <p style="color:var(--gri-klè);">Use the tabs to manage your advertisements and products.</p>
-  </div>
-  
-  <!-- Ads Manager -->
-  <div id="tab-ads" class="admin-panel-content" style="display:none;">
-    <h2 style="margin-bottom:20px;">Manage Pub / Promo</h2>
-    <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 8px; margin-bottom:30px;">
-      <h3 style="margin-bottom:15px; color:var(--lò);">Add New Ad</h3>
-      <form id="adForm">
-        <div style="margin-bottom:15px;">
-          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Ad Image</label>
-          <input type="file" id="adImageInput" accept="image/*" required style="color:var(--gri-klè);">
-        </div>
-        <div style="margin-bottom:15px;">
-          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Title</label>
-          <input type="text" id="adTitle" required style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
-        </div>
-        <div style="margin-bottom:15px;">
-          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Subtitle</label>
-          <input type="text" id="adSubtitle" style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
-        </div>
-        <div style="margin-bottom:20px;">
-          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Link (optional)</label>
-          <input type="text" id="adLink" value="boutik.html" style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
-        </div>
-        <button type="submit" class="btn-panik btn-primè">Add Ad</button>
-      </form>
+
+  <!-- Admin Panel -->
+  <div id="adminPanel" style="display:none;max-width:1200px;margin:auto;padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
+      <h1 class="tit-seksyon">Admin Panel</h1>
+      <button id="logoutBtn" class="btn-panik btn-segondè">Sign Out</button>
     </div>
     
-    <h3 style="margin-bottom:15px;">Existing Ads</h3>
-    <div id="adsList" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap:20px;"></div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
+      <button class="admin-tab" data-tab="ads">Pub / Promo</button>
+      <button class="admin-tab" data-tab="products">Products</button>
+    </div>
+    
+    <!-- Dashboard -->
+    <div id="tab-dashboard" class="admin-panel-content active">
+      <h2 style="margin-bottom:20px;">Welcome, Boss!</h2>
+      <p style="color:var(--gri-klè);">Manage your ads and products from here.</p>
+    </div>
+    
+    <!-- Ads Manager -->
+    <div id="tab-ads" class="admin-panel-content">
+      <h2 style="margin-bottom:20px;">Manage Pub / Promo</h2>
+      <div class="ad-form">
+        <h3 style="margin-bottom:15px;color:var(--lò);">Add New Ad</h3>
+        <form id="adForm">
+          <label>Ad Image (from device)</label>
+          <input type="file" id="adImageInput" accept="image/*" required>
+          <label>Eyebrow (optional)</label>
+          <input type="text" id="adEyebrow" placeholder="e.g., Limited Release">
+          <label>Title</label>
+          <input type="text" id="adTitle" required placeholder="e.g., The Calm Before the Storm">
+          <label>Subtitle</label>
+          <input type="text" id="adSubtitle" placeholder="e.g., Bold streetwear for the fearless.">
+          <label>Link (optional)</label>
+          <input type="text" id="adLink" value="boutik.html">
+          <button type="submit" class="btn-panik btn-primè" style="width:100%;margin-top:10px;">Add Ad</button>
+        </form>
+      </div>
+      
+      <h3 style="margin-bottom:15px;">Existing Ads</h3>
+      <div id="adsList" class="ad-list"></div>
+    </div>
+    
+    <!-- Products placeholder -->
+    <div id="tab-products" class="admin-panel-content">
+      <h2>Products (Coming Soon)</h2>
+      <p style="color:var(--gri-klè);">Full product management will be available after backend connection.</p>
+    </div>
   </div>
-  
-  <!-- Products (placeholder) -->
-  <div id="tab-products" class="admin-panel-content" style="display:none;">
-    <h2 style="margin-bottom:20px;">Products (Coming Soon)</h2>
-    <p style="color:var(--gri-klè);">Full product management will be available after backend connection.</p>
-  </div>
-</div>
-
-</section>
-<script>
-document.getElementById('adminLoginForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('adminPassword').value==='100panik'){document.getElementById('loginPanel').style.display='none';document.getElementById('adminPanel').style.display='block';sessionStorage.setItem('admin_auth','true')}else{document.getElementById('loginError').style.display='block'}});
-document.getElementById('logoutBtn')?.addEventListener('click',function(){sessionStorage.removeItem('admin_auth');document.getElementById('loginPanel').style.display='block';document.getElementById('adminPanel').style.display='none'});
-if(sessionStorage.getItem('admin_auth')==='true'){document.getElementById('loginPanel').style.display='none';document.getElementById('adminPanel').style.display='block'}
-</script>
 </main>
 
-<footer class="footer-panik">
-  <div class="konteni-limit">
-    <div class="grid-footer">
-      <div class="footer-kolòn">
-        <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
-        <div class="footer-rezosyal">
-          <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
-        </div>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="boutik.html">Shop</a></li>
-          <li><a href="koleksyon.html">Collection</a></li>
-          <li><a href="istwa.html">Our Story</a></li>
-          <li><a href="kontak.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="#">Shipping</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+50932924776">+509 32924776</a></li>
-          <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. All rights reserved.</p>
-      <p>When the world panics, style stays calm.</p>
-    </div>
-  </div>
-</footer>
-
-<a href="panye.html" class="panye-flotan" aria-label="Cart">
-  🛒
-  <span class="panye-konte" id="cartBadge">0</span>
-</a>
-
+<script src="../assets/js/main.js"></script>
 <script>
-let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
+// Login logic
+document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (document.getElementById('adminPassword').value === '100panik') {
+    document.getElementById('loginPanel').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    sessionStorage.setItem('admin_auth', 'true');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+});
 
-// Hamburger menu
-const hamburger = document.getElementById('hamburgerBtn');
-const nav = document.getElementById('navPanik');
-if(hamburger && nav) {
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('nav-louvri');
-  });
-}
-</script>
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  sessionStorage.removeItem('admin_auth');
+  document.getElementById('loginPanel').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+});
 
-// ===== Admin Tabs =====
+// Tab switching
 document.querySelectorAll('.admin-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    document.querySelectorAll('.admin-panel-content').forEach(p => p.style.display = 'none');
-    document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
+    document.querySelectorAll('.admin-panel-content').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
   });
 });
 
-// ===== Ads Manager =====
+// Ads Manager (localStorage)
 let ads = JSON.parse(localStorage.getItem('100panik_ads')) || [];
 
 function saveAds() {
@@ -199,13 +151,13 @@ function renderAdsList() {
   }
   ads.forEach((ad, index) => {
     const card = document.createElement('div');
-    card.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; overflow:hidden;';
+    card.className = 'ad-card';
     card.innerHTML = `
-      <img src="${ad.image}" alt="${ad.title}" style="width:100%; height:150px; object-fit:cover;">
-      <div style="padding:15px;">
-        <h4 style="color:var(--lò); margin-bottom:5px;">${ad.title}</h4>
-        <p style="color:var(--gri-klè); font-size:0.85rem; margin-bottom:10px;">${ad.subtitle || ''}</p>
-        <button onclick="deleteAd(${index})" style="background:var(--wouj-fonse); color:#fff; border:none; padding:5px 15px; border-radius:4px; cursor:pointer;">Delete</button>
+      <img src="${ad.image}" alt="${ad.title}" onerror="this.src='../assets/images/hero-bg.svg'">
+      <div class="ad-card-body">
+        <div class="ad-card-title">${ad.title}</div>
+        <div class="ad-card-sub">${ad.subtitle || ''}</div>
+        <button class="ad-delete" onclick="deleteAd(${index})">Delete</button>
       </div>
     `;
     container.appendChild(card);
@@ -215,12 +167,13 @@ function renderAdsList() {
 window.deleteAd = function(index) {
   ads.splice(index, 1);
   saveAds();
-}
+};
 
-// Ad form submission
+// Ad form
 document.getElementById('adForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const fileInput = document.getElementById('adImageInput');
+  const eyebrow = document.getElementById('adEyebrow').value;
   const title = document.getElementById('adTitle').value;
   const subtitle = document.getElementById('adSubtitle').value;
   const link = document.getElementById('adLink').value || 'boutik.html';
@@ -232,24 +185,27 @@ document.getElementById('adForm').addEventListener('submit', function(e) {
   
   const reader = new FileReader();
   reader.onload = function(ev) {
-    const newAd = {
+    ads.push({
       id: Date.now().toString(),
       image: ev.target.result,
+      eyebrow: eyebrow,
       title: title,
       subtitle: subtitle,
       link: link
-    };
-    ads.push(newAd);
+    });
     saveAds();
-    // Reset form
     this.reset();
     alert('✅ Ad added successfully!');
   }.bind(this);
   reader.readAsDataURL(fileInput.files[0]);
 });
 
-// Initialize ads list
+// Init
+if (sessionStorage.getItem('admin_auth') === 'true') {
+  document.getElementById('loginPanel').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+}
 renderAdsList();
-
+</script>
 </body>
 </html>
