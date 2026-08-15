@@ -1,13 +1,74 @@
 <!DOCTYPE html>
 <html lang="ht">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Panye | 100PANIK</title><link rel="stylesheet" href="../assets/css/style.css"><link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg"></head>
-<body><header class="header"><div class="header-container"><a href="index.html" class="logo"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK"></a><nav class="nav-desktop"><ul><li><a href="index.html" class="nav-link">Dakèy</a></li><li><a href="boutik.html" class="nav-link">Boutik</a></li><li><a href="koleksyon.html" class="nav-link">Koleksyon</a></li><li><a href="istwa.html" class="nav-link">Istwa</a></li><li><a href="kontak.html" class="nav-link">Kontak</a></li></ul></nav><div class="header-actions"><a href="konekte.html" class="icon-btn">🔍</a><a href="panye.html" class="icon-btn cart-btn">🛒<span class="cart-badge" id="cartBadge">0</span></a></div></div></header>
-<main style="padding-top:120px;"><div class="container" style="max-width:900px;"><h1 class="section-title-main" style="margin-bottom:40px;">Panye <span class="text-gradient">100PANIK</span></h1><div id="cartItems"></div><div id="cartSummary" style="margin-top:30px;border-top:1px solid rgba(212,175,55,.2);padding-top:20px;display:none;"><p style="font-size:1.2rem;color:#D4AF37;">Total: $<span id="cartTotal">0.00</span></p><div style="margin-top:20px;display:flex;gap:20px;"><a href="checkout.html" class="btn btn-primary">Ale nan Checkout</a><a href="boutik.html" class="btn btn-outline">Kontinye Achte</a></div></div><p id="emptyCart" style="text-align:center;color:#888;margin-top:60px;font-size:1.2rem;">Panye ou vid.</p></div></main>
-<footer class="footer-futuristic"><div class="container"><div class="footer-bottom-futuristic"><p>&copy; 2026 100PANIK. Tout dwa rezève.</p></div></div></footer>
-<script src="../assets/js/main.js"></script>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panye | 100PANIK</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a href="index.html" class="logo"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK"></a>
+    <nav class="nav-desktop">
+      <ul>
+        <li><a href="index.html" class="nav-link">Dakèy</a></li>
+        <li><a href="boutik.html" class="nav-link">Boutik</a></li>
+        <li><a href="koleksyon.html" class="nav-link">Koleksyon</a></li>
+        <li><a href="istwa.html" class="nav-link">Istwa</a></li>
+        <li><a href="kontak.html" class="nav-link">Kontak</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="konekte.html" class="icon-btn">👤</a>
+      <a href="panye.html" class="icon-btn">🛒</a>
+    </div>
+  </div>
+</header>
+<main style="padding-top:120px;">
+
+<div class="container" style="max-width:900px;">
+  <div class="section-header">
+    <p class="section-eyebrow">Ou prèske la</p>
+    <h1 class="section-title">Panye <span class="text-beige">100PANIK</span></h1>
+  </div>
+  <div id="cartItems"></div>
+  <div id="cartSummary" style="margin-top:30px;border-top:1px solid rgba(212,197,169,0.2);padding-top:20px;display:none;">
+    <p style="font-size:1.5rem;color:var(--beige);font-weight:700;">Total: $<span id="cartTotal">0.00</span></p>
+    <div style="margin-top:20px;display:flex;gap:20px;flex-wrap:wrap;">
+      <a href="checkout.html" class="btn btn-beige">Ale nan Checkout</a>
+      <a href="boutik.html" class="btn btn-outline">Kontinye Achte</a>
+    </div>
+  </div>
+  <p id="emptyCart" style="text-align:center;color:#888;margin-top:60px;font-size:1.2rem;">Panye ou vid.</p>
+</div>
 <script>
-function renderCart(){const container=document.getElementById('cartItems');const summary=document.getElementById('cartSummary');const empty=document.getElementById('emptyCart');container.innerHTML='';let cart=getCart();if(cart.length===0){empty.style.display='block';summary.style.display='none';return}empty.style.display='none';summary.style.display='block';let total=0;cart.forEach((item,index)=>{total+=item.price*item.quantity;const div=document.createElement('div');div.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:20px;margin-bottom:15px;border:1px solid rgba(212,175,55,.1);background:#1a1a1a';const info=document.createElement('div');const name=document.createElement('h3');name.style.fontSize='1.1rem';name.textContent=item.name;const price=document.createElement('p');price.style.color='#D4AF37';price.textContent='$'+item.price.toFixed(2);const qty=document.createElement('div');qty.style.cssText='display:flex;gap:10px;align-items:center;margin-top:5px';const dec=document.createElement('button');dec.textContent='-';dec.onclick=()=>{if(cart[index].quantity>1)cart[index].quantity--;saveCart(cart);renderCart();updateCartBadge()};const qtySpan=document.createElement('span');qtySpan.textContent=item.quantity;const inc=document.createElement('button');inc.textContent='+';inc.onclick=()=>{cart[index].quantity++;saveCart(cart);renderCart();updateCartBadge()};qty.append(dec,qtySpan,inc);info.append(name,price,qty);const remove=document.createElement('button');remove.innerHTML='&times;';remove.style.cssText='background:none;border:none;color:red;cursor:pointer;font-size:1.5rem';remove.onclick=()=>{cart.splice(index,1);saveCart(cart);renderCart();updateCartBadge()};div.append(info,remove);container.appendChild(div)});document.getElementById('cartTotal').textContent=total.toFixed(2)}
-renderCart();updateCartBadge();
+function renderCart(){const container=document.getElementById("cartItems");const summary=document.getElementById("cartSummary");const empty=document.getElementById("emptyCart");container.innerHTML="";let cart=JSON.parse(localStorage.getItem("100panik_cart"))||[];if(cart.length===0){empty.style.display="block";summary.style.display="none";return}empty.style.display="none";summary.style.display="block";let total=0;cart.forEach((item,index)=>{total+=item.price*item.quantity;const div=document.createElement("div");div.style.cssText="display:flex;justify-content:space-between;align-items:center;padding:20px;margin-bottom:15px;background:#1a1a1a;border:1px solid rgba(212,197,169,0.1);";const info=document.createElement("div");const name=document.createElement("h3");name.style.fontSize="1.1rem";name.textContent=item.name;const price=document.createElement("p");price.style.color="var(--beige)";price.textContent="$"+item.price.toFixed(2);const qty=document.createElement("div");qty.style.cssText="display:flex;gap:10px;align-items:center;margin-top:5px;";const dec=document.createElement("button");dec.textContent="-";dec.style.cssText="background:none;border:1px solid #555;color:#fff;width:30px;height:30px;cursor:pointer;";dec.onclick=()=>{if(cart[index].quantity>1)cart[index].quantity--;localStorage.setItem("100panik_cart",JSON.stringify(cart));renderCart();updateBadge()};const qtySpan=document.createElement("span");qtySpan.textContent=item.quantity;const inc=document.createElement("button");inc.textContent="+";inc.style.cssText="background:none;border:1px solid #555;color:#fff;width:30px;height:30px;cursor:pointer;";inc.onclick=()=>{cart[index].quantity++;localStorage.setItem("100panik_cart",JSON.stringify(cart));renderCart();updateBadge()};qty.append(dec,qtySpan,inc);info.append(name,price,qty);const remove=document.createElement("button");remove.innerHTML="✕";remove.style.cssText="background:none;border:none;color:#ff4444;cursor:pointer;font-size:1.5rem;";remove.onclick=()=>{cart.splice(index,1);localStorage.setItem("100panik_cart",JSON.stringify(cart));renderCart();updateBadge()};div.append(info,remove);container.appendChild(div)});document.getElementById("cartTotal").textContent=total.toFixed(2)}renderCart();
+</script></main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h3 style="font-family:var(--font-titre);font-size:1.8rem;">100<span class="text-beige">PANIK</span></h3><p style="color:#aaa;line-height:1.8;">Lè mòd lan pran panik, style lan rete kalm.</p></div>
+      <div class="footer-col"><h4>Lyen Rapid</h4><ul><li><a href="boutik.html">Boutik</a></li><li><a href="koleksyon.html">Koleksyon</a></li><li><a href="istwa.html">Istwa</a></li><li><a href="kontak.html">Kontak</a></li></ul></div>
+      <div class="footer-col"><h4>Sèvis</h4><ul><li><a href="#">Livrezon</a></li><li><a href="#">Retou</a></li><li><a href="#">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Kontak</h4><ul><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 100PANIK. Tout dwa rezève.</p></div>
+  </div>
+</footer>
+<a href="panye.html" class="floating-cart">
+  🛒
+  <span class="badge" id="cartBadge">0</span>
+</a>
+<script>
+let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
+function updateBadge() {
+  const total = cart.reduce((s,i)=>s+i.quantity,0);
+  const el = document.getElementById('cartBadge');
+  if(el) el.textContent = total;
+}
+updateBadge();
 </script>
 </body>
 </html>
