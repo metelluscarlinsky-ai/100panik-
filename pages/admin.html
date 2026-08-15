@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,11 @@
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Dakèy</a>
-      <a href="boutik.html" >Boutik</a>
-      <a href="koleksyon.html" >Koleksyon</a>
-      <a href="istwa.html" >Istwa</a>
-      <a href="kontak.html" >Kontak</a>
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" >Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -35,15 +35,15 @@
   <div id="loginPanel" style="max-width:420px;width:100%;background:rgba(255,255,255,0.05);padding:50px 40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;backdrop-filter:blur(16px);">
     <h2 style="text-align:center;margin-bottom:25px;">🔐 Admin</h2>
     <form id="adminLoginForm">
-      <input type="password" id="adminPassword" placeholder="Modpas admin" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:14px 0;color:#fff;font-size:1.2rem;outline:none;text-align:center;">
-      <button type="submit" class="btn-panik btn-primè" style="width:100%;margin-top:25px;">Antre</button>
+      <input type="password" id="adminPassword" placeholder="Admin password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:14px 0;color:#fff;font-size:1.2rem;outline:none;text-align:center;">
+      <button type="submit" class="btn-panik btn-primè" style="width:100%;margin-top:25px;">Enter</button>
     </form>
-    <p id="loginError" style="color:var(--wouj-vif);margin-top:15px;display:none;text-align:center;">Modpas pa kòrèk</p>
+    <p id="loginError" style="color:var(--wouj-vif);margin-top:15px;display:none;text-align:center;">Incorrect password</p>
   </div>
   <div id="adminPanel" style="display:none;max-width:1200px;margin:auto;">
-    <h1 class="tit-seksyon">Panèl Admin</h1>
-    <p style="color:var(--gri-klè);margin-top:20px;">Byenveni! Ou ka jere pwodwi yo isit la.</p>
-    <button id="logoutBtn" class="btn-panik btn-segondè" style="margin-top:30px;">Dekonekte</button>
+    <h1 class="tit-seksyon">Admin Panel</h1>
+    <p style="color:var(--gri-klè);margin-top:20px;">Welcome! You can manage products here.</p>
+    <button id="logoutBtn" class="btn-panik btn-segondè" style="margin-top:30px;">Sign Out</button>
   </div>
 </section>
 <script>
@@ -58,30 +58,30 @@ if(sessionStorage.getItem('admin_auth')==='true'){document.getElementById('login
     <div class="grid-footer">
       <div class="footer-kolòn">
         <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
         <div class="footer-rezosyal">
           <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
         </div>
       </div>
       <div class="footer-kolòn">
-        <h4>Lyen Rapid</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="boutik.html">Boutik</a></li>
-          <li><a href="koleksyon.html">Koleksyon</a></li>
-          <li><a href="istwa.html">Istwa</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="boutik.html">Shop</a></li>
+          <li><a href="koleksyon.html">Collection</a></li>
+          <li><a href="istwa.html">Our Story</a></li>
+          <li><a href="kontak.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Sèvis</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#">Livrezon</a></li>
-          <li><a href="#">Retou</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
           <li><a href="#">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Kontak</h4>
+        <h4>Contact</h4>
         <ul>
           <li><a href="tel:+50932924776">+509 32924776</a></li>
           <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
@@ -89,13 +89,13 @@ if(sessionStorage.getItem('admin_auth')==='true'){document.getElementById('login
       </div>
     </div>
     <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
-      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <p>When the world panics, style stays calm.</p>
     </div>
   </div>
 </footer>
 
-<a href="panye.html" class="panye-flotan" aria-label="Panye">
+<a href="panye.html" class="panye-flotan" aria-label="Cart">
   🛒
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
@@ -109,7 +109,7 @@ function updateBadge() {
 }
 updateBadge();
 
-// Menu hamburger
+// Hamburger menu
 const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) {

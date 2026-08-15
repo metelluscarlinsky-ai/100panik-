@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kont Mwen | 100PANIK</title>
+<title>My Account | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
@@ -13,11 +13,11 @@
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Dakèy</a>
-      <a href="boutik.html" >Boutik</a>
-      <a href="koleksyon.html" >Koleksyon</a>
-      <a href="istwa.html" >Istwa</a>
-      <a href="kontak.html" >Kontak</a>
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" >Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -33,20 +33,20 @@
 
 <section class="seksyon-pwodwi">
   <div class="konteni-limit" style="max-width:900px;">
-    <h1 class="tit-seksyon">Kont Mwen</h1>
+    <h1 class="tit-seksyon">My Account</h1>
     <div style="background:rgba(255,255,255,0.05);padding:40px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
-      <h2 style="margin-bottom:15px;">Pwofil</h2>
+      <h2 style="margin-bottom:15px;">Profile</h2>
       <p id="profileInfo" style="color:var(--gri-klè);"></p>
-      <a href="konekte.html" class="btn-panik btn-segondè" style="margin-top:20px;">Dekonekte</a>
+      <a href="konekte.html" class="btn-panik btn-segondè" style="margin-top:20px;">Sign Out</a>
     </div>
     <div style="background:rgba(255,255,255,0.05);padding:40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
-      <h2 style="margin-bottom:15px;">Istwa Lòd yo</h2>
-      <p style="color:var(--gri-klè);">Pa gen lòd ankò.</p>
+      <h2 style="margin-bottom:15px;">Order History</h2>
+      <p style="color:var(--gri-klè);">No orders yet.</p>
     </div>
   </div>
 </section>
 <script>
-const user=JSON.parse(localStorage.getItem('100panik_user')||'{}');document.getElementById('profileInfo').textContent=user.loggedIn?'✅ Ou konekte.':'❌ Ou pa konekte.';
+const user=JSON.parse(localStorage.getItem('100panik_user')||'{}');document.getElementById('profileInfo').textContent=user.loggedIn?'✅ You are signed in.':'❌ You are not signed in.';
 </script>
 </main>
 
@@ -55,30 +55,30 @@ const user=JSON.parse(localStorage.getItem('100panik_user')||'{}');document.getE
     <div class="grid-footer">
       <div class="footer-kolòn">
         <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
         <div class="footer-rezosyal">
           <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
         </div>
       </div>
       <div class="footer-kolòn">
-        <h4>Lyen Rapid</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="boutik.html">Boutik</a></li>
-          <li><a href="koleksyon.html">Koleksyon</a></li>
-          <li><a href="istwa.html">Istwa</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="boutik.html">Shop</a></li>
+          <li><a href="koleksyon.html">Collection</a></li>
+          <li><a href="istwa.html">Our Story</a></li>
+          <li><a href="kontak.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Sèvis</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#">Livrezon</a></li>
-          <li><a href="#">Retou</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
           <li><a href="#">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Kontak</h4>
+        <h4>Contact</h4>
         <ul>
           <li><a href="tel:+50932924776">+509 32924776</a></li>
           <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
@@ -86,13 +86,13 @@ const user=JSON.parse(localStorage.getItem('100panik_user')||'{}');document.getE
       </div>
     </div>
     <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
-      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <p>When the world panics, style stays calm.</p>
     </div>
   </div>
 </footer>
 
-<a href="panye.html" class="panye-flotan" aria-label="Panye">
+<a href="panye.html" class="panye-flotan" aria-label="Cart">
   🛒
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
@@ -106,7 +106,7 @@ function updateBadge() {
 }
 updateBadge();
 
-// Menu hamburger
+// Hamburger menu
 const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) {

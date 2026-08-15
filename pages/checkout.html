@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,11 @@
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Dakèy</a>
-      <a href="boutik.html" >Boutik</a>
-      <a href="koleksyon.html" >Koleksyon</a>
-      <a href="istwa.html" >Istwa</a>
-      <a href="kontak.html" >Kontak</a>
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" >Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -36,25 +36,25 @@
     <h1 class="tit-seksyon">Checkout</h1>
     <div id="cartSummary" style="background:rgba(255,255,255,0.05);padding:25px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;"></div>
     <form id="checkoutForm" style="background:rgba(255,255,255,0.05);padding:40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
-      <h2 style="margin-bottom:25px;">Enfòmasyon Livrezon</h2>
-      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Non konplè</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Telefòn</label><input type="tel" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Adrès</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <div style="margin-bottom:30px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Vil</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <h2 style="margin-bottom:25px;">Metòd Peman</h2>
+      <h2 style="margin-bottom:25px;">Shipping Information</h2>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Full Name</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Phone</label><input type="tel" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Address</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:30px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">City</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <h2 style="margin-bottom:25px;">Payment Method</h2>
       <div style="background:rgba(212,197,169,0.05);padding:25px;border:2px solid var(--lò);margin-bottom:30px;border-radius:8px;">
         <p style="color:var(--lò);font-weight:700;font-size:1.2rem;margin-bottom:10px;">💰 MonCash</p>
-        <p style="color:var(--gri-klè);">Nimewo: <strong style="color:var(--lò);font-size:1.5rem;">32924776</strong></p>
-        <p style="color:#aaa;margin-top:10px;">Non: 100PANIK SARL</p>
+        <p style="color:var(--gri-klè);">Number: <strong style="color:var(--lò);font-size:1.5rem;">32924776</strong></p>
+        <p style="color:#aaa;margin-top:10px;">Name: 100PANIK LLC</p>
       </div>
-      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Konfime Lòd la</button>
+      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Confirm Order</button>
     </form>
   </div>
 </section>
 <script>
 let cart=JSON.parse(localStorage.getItem('100panik_cart'))||[];
-function displaySummary(){const summary=document.getElementById('cartSummary');if(cart.length===0){summary.innerHTML='<p style="color:#aaa;">Panye ou vid.</p>';return}let total=0;let html='<h3 style="margin-bottom:15px;">Rekapitilasyon</h3><ul style="list-style:none;">';cart.forEach(item=>{total+=item.price*item.quantity;html+=`<li style="display:flex;justify-content:space-between;margin-bottom:10px;"><span>${item.name} x${item.quantity}</span><span style="color:var(--lò);font-weight:700;">$${(item.price*item.quantity).toFixed(2)}</span></li>`});html+=`</ul><p style="font-size:1.5rem;color:var(--lò);font-weight:700;margin-top:20px;">Total: $${total.toFixed(2)}</p>`;summary.innerHTML=html}displaySummary();
-document.getElementById('checkoutForm').addEventListener('submit',function(e){e.preventDefault();alert('✅ Lòd ou anrejistre!');localStorage.removeItem('100panik_cart');window.location.href='kont-mwen.html'});
+function displaySummary(){const summary=document.getElementById('cartSummary');if(cart.length===0){summary.innerHTML='<p style="color:#aaa;">Your cart is empty.</p>';return}let total=0;let html='<h3 style="margin-bottom:15px;">Summary</h3><ul style="list-style:none;">';cart.forEach(item=>{total+=item.price*item.quantity;html+=`<li style="display:flex;justify-content:space-between;margin-bottom:10px;"><span>${item.name} x${item.quantity}</span><span style="color:var(--lò);font-weight:700;">$${(item.price*item.quantity).toFixed(2)}</span></li>`});html+=`</ul><p style="font-size:1.5rem;color:var(--lò);font-weight:700;margin-top:20px;">Total: $${total.toFixed(2)}</p>`;summary.innerHTML=html}displaySummary();
+document.getElementById('checkoutForm').addEventListener('submit',function(e){e.preventDefault();alert('✅ Order placed! We will contact you.');localStorage.removeItem('100panik_cart');window.location.href='kont-mwen.html'});
 </script>
 </main>
 
@@ -63,30 +63,30 @@ document.getElementById('checkoutForm').addEventListener('submit',function(e){e.
     <div class="grid-footer">
       <div class="footer-kolòn">
         <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
         <div class="footer-rezosyal">
           <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
         </div>
       </div>
       <div class="footer-kolòn">
-        <h4>Lyen Rapid</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="boutik.html">Boutik</a></li>
-          <li><a href="koleksyon.html">Koleksyon</a></li>
-          <li><a href="istwa.html">Istwa</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="boutik.html">Shop</a></li>
+          <li><a href="koleksyon.html">Collection</a></li>
+          <li><a href="istwa.html">Our Story</a></li>
+          <li><a href="kontak.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Sèvis</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#">Livrezon</a></li>
-          <li><a href="#">Retou</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
           <li><a href="#">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Kontak</h4>
+        <h4>Contact</h4>
         <ul>
           <li><a href="tel:+50932924776">+509 32924776</a></li>
           <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
@@ -94,13 +94,13 @@ document.getElementById('checkoutForm').addEventListener('submit',function(e){e.
       </div>
     </div>
     <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
-      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <p>When the world panics, style stays calm.</p>
     </div>
   </div>
 </footer>
 
-<a href="panye.html" class="panye-flotan" aria-label="Panye">
+<a href="panye.html" class="panye-flotan" aria-label="Cart">
   🛒
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
@@ -114,7 +114,7 @@ function updateBadge() {
 }
 updateBadge();
 
-// Menu hamburger
+// Hamburger menu
 const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) {

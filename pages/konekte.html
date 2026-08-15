@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konekte | 100PANIK</title>
+<title>Sign In | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
@@ -13,11 +13,11 @@
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Dakèy</a>
-      <a href="boutik.html" >Boutik</a>
-      <a href="koleksyon.html" >Koleksyon</a>
-      <a href="istwa.html" >Istwa</a>
-      <a href="kontak.html" >Kontak</a>
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" >Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -33,17 +33,17 @@
 
 <section style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:20px;">
   <div style="background:rgba(255,255,255,0.05);padding:50px 40px;max-width:420px;width:100%;border:1px solid rgba(255,255,255,0.12);border-radius:16px;backdrop-filter:blur(16px);">
-    <h1 style="text-align:center;margin-bottom:30px;">Konekte</h1>
+    <h1 style="text-align:center;margin-bottom:30px;">Sign In</h1>
     <form id="loginForm">
-      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Non Itilizatè</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <div style="margin-bottom:25px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Modpas</label><input type="password" id="password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Konekte</button>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Username</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:25px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Password</label><input type="password" id="password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Sign In</button>
     </form>
-    <p style="text-align:center;margin-top:20px;color:var(--gri-klè);">Pa gen kont? <a href="enskri.html" style="color:var(--lò);">Enskri</a></p>
+    <p style="text-align:center;margin-top:20px;color:var(--gri-klè);">Don't have an account? <a href="enskri.html" style="color:var(--lò);">Sign Up</a></p>
   </div>
 </section>
 <script>
-document.getElementById('loginForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('password').value==='100panik'){localStorage.setItem('100panik_user',JSON.stringify({loggedIn:true}));window.location.href='kont-mwen.html'}else{alert('Modpas pa kòrèk')}});
+document.getElementById('loginForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('password').value==='100panik'){localStorage.setItem('100panik_user',JSON.stringify({loggedIn:true}));window.location.href='kont-mwen.html'}else{alert('Incorrect password')}});
 </script>
 </main>
 
@@ -52,30 +52,30 @@ document.getElementById('loginForm').addEventListener('submit',function(e){e.pre
     <div class="grid-footer">
       <div class="footer-kolòn">
         <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
         <div class="footer-rezosyal">
           <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
         </div>
       </div>
       <div class="footer-kolòn">
-        <h4>Lyen Rapid</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="boutik.html">Boutik</a></li>
-          <li><a href="koleksyon.html">Koleksyon</a></li>
-          <li><a href="istwa.html">Istwa</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="boutik.html">Shop</a></li>
+          <li><a href="koleksyon.html">Collection</a></li>
+          <li><a href="istwa.html">Our Story</a></li>
+          <li><a href="kontak.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Sèvis</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#">Livrezon</a></li>
-          <li><a href="#">Retou</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
           <li><a href="#">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Kontak</h4>
+        <h4>Contact</h4>
         <ul>
           <li><a href="tel:+50932924776">+509 32924776</a></li>
           <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
@@ -83,13 +83,13 @@ document.getElementById('loginForm').addEventListener('submit',function(e){e.pre
       </div>
     </div>
     <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
-      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <p>When the world panics, style stays calm.</p>
     </div>
   </div>
 </footer>
 
-<a href="panye.html" class="panye-flotan" aria-label="Panye">
+<a href="panye.html" class="panye-flotan" aria-label="Cart">
   🛒
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
@@ -103,7 +103,7 @@ function updateBadge() {
 }
 updateBadge();
 
-// Menu hamburger
+// Hamburger menu
 const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) {

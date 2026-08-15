@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boutik | 100PANIK</title>
+<title>Shop | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
@@ -13,11 +13,11 @@
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Dakèy</a>
-      <a href="boutik.html" class="active">Boutik</a>
-      <a href="koleksyon.html" >Koleksyon</a>
-      <a href="istwa.html" >Istwa</a>
-      <a href="kontak.html" >Kontak</a>
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" class="active">Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -33,25 +33,25 @@
 
 <section class="seksyon-pwodwi">
   <div class="konteni-limit">
-    <h1 class="tit-seksyon">Boutik</h1>
-    <p class="souti-seksyon">Tout koleksyon nou an — chwazi moso ou yo.</p>
+    <h1 class="tit-seksyon">Shop</h1>
+    <p class="souti-seksyon">Explore the collection. Choose your pieces.</p>
     <div class="grid-pwodwi">
       <article class="kat-pwodwi">
         <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-1.svg" alt=""></div>
-        <span class="badge-pwodwi badge-nouvo">Nouvo</span>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">Hoodie "Krisis Silans"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('1','Hoodie Krisis Silans',189)">Ajoute nan Panye</button></div>
+        <span class="badge-pwodwi badge-nouvo">New</span>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">Hoodie "Silent Crisis"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('1','Hoodie Silent Crisis',189)">Add to Cart</button></div>
       </article>
       <article class="kat-pwodwi">
         <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-2.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">T-Shirt "Vwa Silans"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('2','T-Shirt Vwa Silans',89)">Ajoute nan Panye</button></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">T-Shirt "Silent Voice"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('2','T-Shirt Silent Voice',89)">Add to Cart</button></div>
       </article>
       <article class="kat-pwodwi">
         <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-3.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Pantalon</p><h3 class="pwodwi-non">Pantalon "Liy Kalm"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('3','Pantalon Liy Kalm',149)">Ajoute nan Panye</button></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Pants</p><h3 class="pwodwi-non">Pants "Calm Line"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('3','Pants Calm Line',149)">Add to Cart</button></div>
       </article>
       <article class="kat-pwodwi">
         <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-4.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Kaskèt</p><h3 class="pwodwi-non">Kaskèt "Tèt Kalm"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$59.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('4','Kaskèt Tèt Kalm',59)">Ajoute nan Panye</button></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Cap</p><h3 class="pwodwi-non">Cap "Calm Head"</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$59.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('4','Cap Calm Head',59)">Add to Cart</button></div>
       </article>
     </div>
   </div>
@@ -64,7 +64,7 @@ function addToCart(id, name, price) {
   else cart.push({id, name, price, quantity:1});
   localStorage.setItem('100panik_cart', JSON.stringify(cart));
   updateBadge();
-  alert('✅ ' + name + ' ajoute nan panye!');
+  alert('✅ ' + name + ' added to cart!');
 }
 </script>
 </main>
@@ -74,30 +74,30 @@ function addToCart(id, name, price) {
     <div class="grid-footer">
       <div class="footer-kolòn">
         <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
         <div class="footer-rezosyal">
           <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
         </div>
       </div>
       <div class="footer-kolòn">
-        <h4>Lyen Rapid</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="boutik.html">Boutik</a></li>
-          <li><a href="koleksyon.html">Koleksyon</a></li>
-          <li><a href="istwa.html">Istwa</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="boutik.html">Shop</a></li>
+          <li><a href="koleksyon.html">Collection</a></li>
+          <li><a href="istwa.html">Our Story</a></li>
+          <li><a href="kontak.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Sèvis</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#">Livrezon</a></li>
-          <li><a href="#">Retou</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
           <li><a href="#">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-kolòn">
-        <h4>Kontak</h4>
+        <h4>Contact</h4>
         <ul>
           <li><a href="tel:+50932924776">+509 32924776</a></li>
           <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
@@ -105,13 +105,13 @@ function addToCart(id, name, price) {
       </div>
     </div>
     <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
-      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <p>When the world panics, style stays calm.</p>
     </div>
   </div>
 </footer>
 
-<a href="panye.html" class="panye-flotan" aria-label="Panye">
+<a href="panye.html" class="panye-flotan" aria-label="Cart">
   🛒
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
@@ -125,7 +125,7 @@ function updateBadge() {
 }
 updateBadge();
 
-// Menu hamburger
+// Hamburger menu
 const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) {
