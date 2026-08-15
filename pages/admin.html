@@ -40,11 +40,63 @@
     </form>
     <p id="loginError" style="color:var(--wouj-vif);margin-top:15px;display:none;text-align:center;">Incorrect password</p>
   </div>
-  <div id="adminPanel" style="display:none;max-width:1200px;margin:auto;">
+  
+<div id="adminPanel" style="display:none; max-width:1200px; margin:auto; padding: 20px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
     <h1 class="tit-seksyon">Admin Panel</h1>
-    <p style="color:var(--gri-klè);margin-top:20px;">Welcome! You can manage products here.</p>
-    <button id="logoutBtn" class="btn-panik btn-segondè" style="margin-top:30px;">Sign Out</button>
+    <button id="logoutBtn" class="btn-panik btn-segondè">Sign Out</button>
   </div>
+  
+  <!-- Tabs -->
+  <div style="display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap;">
+    <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
+    <button class="admin-tab" data-tab="ads">Pub / Promo</button>
+    <button class="admin-tab" data-tab="products">Products</button>
+  </div>
+  
+  <!-- Dashboard -->
+  <div id="tab-dashboard" class="admin-panel-content">
+    <h2 style="margin-bottom:20px;">Welcome, Boss!</h2>
+    <p style="color:var(--gri-klè);">Use the tabs to manage your advertisements and products.</p>
+  </div>
+  
+  <!-- Ads Manager -->
+  <div id="tab-ads" class="admin-panel-content" style="display:none;">
+    <h2 style="margin-bottom:20px;">Manage Pub / Promo</h2>
+    <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 8px; margin-bottom:30px;">
+      <h3 style="margin-bottom:15px; color:var(--lò);">Add New Ad</h3>
+      <form id="adForm">
+        <div style="margin-bottom:15px;">
+          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Ad Image</label>
+          <input type="file" id="adImageInput" accept="image/*" required style="color:var(--gri-klè);">
+        </div>
+        <div style="margin-bottom:15px;">
+          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Title</label>
+          <input type="text" id="adTitle" required style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
+        </div>
+        <div style="margin-bottom:15px;">
+          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Subtitle</label>
+          <input type="text" id="adSubtitle" style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="color:var(--gri-klè); display:block; margin-bottom:5px;">Link (optional)</label>
+          <input type="text" id="adLink" value="boutik.html" style="width:100%; background:transparent; border:none; border-bottom:1px solid #333; padding:10px 0; color:#fff; outline:none;">
+        </div>
+        <button type="submit" class="btn-panik btn-primè">Add Ad</button>
+      </form>
+    </div>
+    
+    <h3 style="margin-bottom:15px;">Existing Ads</h3>
+    <div id="adsList" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap:20px;"></div>
+  </div>
+  
+  <!-- Products (placeholder) -->
+  <div id="tab-products" class="admin-panel-content" style="display:none;">
+    <h2 style="margin-bottom:20px;">Products (Coming Soon)</h2>
+    <p style="color:var(--gri-klè);">Full product management will be available after backend connection.</p>
+  </div>
+</div>
+
 </section>
 <script>
 document.getElementById('adminLoginForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('adminPassword').value==='100panik'){document.getElementById('loginPanel').style.display='none';document.getElementById('adminPanel').style.display='block';sessionStorage.setItem('admin_auth','true')}else{document.getElementById('loginError').style.display='block'}});
@@ -118,5 +170,86 @@ if(hamburger && nav) {
   });
 }
 </script>
+
+// ===== Admin Tabs =====
+document.querySelectorAll('.admin-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.admin-panel-content').forEach(p => p.style.display = 'none');
+    document.getElementById('tab-' + tab.dataset.tab).style.display = 'block';
+  });
+});
+
+// ===== Ads Manager =====
+let ads = JSON.parse(localStorage.getItem('100panik_ads')) || [];
+
+function saveAds() {
+  localStorage.setItem('100panik_ads', JSON.stringify(ads));
+  renderAdsList();
+}
+
+function renderAdsList() {
+  const container = document.getElementById('adsList');
+  if (!container) return;
+  container.innerHTML = '';
+  if (ads.length === 0) {
+    container.innerHTML = '<p style="color:var(--gri-klè);">No ads yet. Add one above.</p>';
+    return;
+  }
+  ads.forEach((ad, index) => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; overflow:hidden;';
+    card.innerHTML = `
+      <img src="${ad.image}" alt="${ad.title}" style="width:100%; height:150px; object-fit:cover;">
+      <div style="padding:15px;">
+        <h4 style="color:var(--lò); margin-bottom:5px;">${ad.title}</h4>
+        <p style="color:var(--gri-klè); font-size:0.85rem; margin-bottom:10px;">${ad.subtitle || ''}</p>
+        <button onclick="deleteAd(${index})" style="background:var(--wouj-fonse); color:#fff; border:none; padding:5px 15px; border-radius:4px; cursor:pointer;">Delete</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+window.deleteAd = function(index) {
+  ads.splice(index, 1);
+  saveAds();
+}
+
+// Ad form submission
+document.getElementById('adForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const fileInput = document.getElementById('adImageInput');
+  const title = document.getElementById('adTitle').value;
+  const subtitle = document.getElementById('adSubtitle').value;
+  const link = document.getElementById('adLink').value || 'boutik.html';
+  
+  if (!fileInput.files || !fileInput.files[0]) {
+    alert('Please select an image.');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const newAd = {
+      id: Date.now().toString(),
+      image: ev.target.result,
+      title: title,
+      subtitle: subtitle,
+      link: link
+    };
+    ads.push(newAd);
+    saveAds();
+    // Reset form
+    this.reset();
+    alert('✅ Ad added successfully!');
+  }.bind(this);
+  reader.readAsDataURL(fileInput.files[0]);
+});
+
+// Initialize ads list
+renderAdsList();
+
 </body>
 </html>
