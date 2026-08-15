@@ -3,92 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>100PANIK | Haute Couture</title>
+<title>Dakèy | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
+<header class="header-panik">
   <div class="header-container">
-    <a href="index.html" class="logo"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK"></a>
-    <nav class="nav-desktop">
-      <ul>
-        <li><a href="index.html" class="nav-link active">Dakèy</a></li>
-        <li><a href="boutik.html" class="nav-link">Boutik</a></li>
-        <li><a href="koleksyon.html" class="nav-link">Koleksyon</a></li>
-        <li><a href="istwa.html" class="nav-link">Istwa</a></li>
-        <li><a href="kontak.html" class="nav-link">Kontak</a></li>
-      </ul>
+    <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
+    <nav class="nav-panik" id="navPanik">
+      <a href="index.html" class="active">Dakèy</a>
+      <a href="boutik.html" >Boutik</a>
+      <a href="koleksyon.html" >Koleksyon</a>
+      <a href="istwa.html" >Istwa</a>
+      <a href="kontak.html" >Kontak</a>
     </nav>
-    <div class="header-actions">
+    <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
       <a href="panye.html" class="icon-btn">🛒</a>
+      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg" style="background-image: linear-gradient(135deg, #2d2d2d, #111);"></div>
+<main style="padding-top:90px;">
+
+<section class="hero-panik">
+  <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
+  <div class="hero-kontni">
     <p class="hero-eyebrow">Koleksyon Kapsil #01</p>
-    <h1 class="hero-title">Lè mòd lan pran<br><span class="accent">panik</span>, style lan rete<br><span class="accent">kalm</span>.</h1>
-    <p class="hero-sub">Rad ki fèt pou moun ki oze, ki kreye, ki redefini kòd yo. Ekspresyon san konpwomi.</p>
-    <div class="hero-cta">
-      <a href="boutik.html" class="btn btn-beige">Achte Kounye a</a>
-      <a href="koleksyon.html" class="btn btn-outline">Dekouvri Koleksyon an</a>
+    <h1 class="hero-tit">Lè mòd lan pran <span class="aksan-wouj">panik</span>,<br>style lan rete <span style="color:var(--lò)">kalm</span>.</h1>
+    <p class="hero-slogan">Rad ki fèt pou moun ki oze, ki kreye, ki redefini kòd yo.</p>
+    <div class="hero-boutons">
+      <a href="boutik.html" class="btn-panik btn-primè">Achte Kounye a</a>
+      <a href="koleksyon.html" class="btn-panik btn-segondè">Dekouvri Koleksyon an</a>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee">
+<div class="marquee-panik">
   <div class="marquee-track">
-    <span class="marquee-item">100PANIK</span>
-    <span class="marquee-item">Kalm nan Panik</span>
-    <span class="marquee-item">Nouvo Koleksyon</span>
-    <span class="marquee-item">100PANIK</span>
-    <span class="marquee-item">Kalm nan Panik</span>
-    <span class="marquee-item">Nouvo Koleksyon</span>
+    <span>100PANIK</span><span>Kalm nan Panik</span><span>Nouvo Koleksyon</span>
+    <span>100PANIK</span><span>Kalm nan Panik</span><span>Nouvo Koleksyon</span>
   </div>
 </div>
 
-<!-- PRODUITS -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-eyebrow">Pi bon Vandè</p>
-      <h2 class="section-title">Moso <span class="text-beige">Limit</span></h2>
-    </div>
-    <div class="product-grid">
-      <article class="product-card">
-        <div class="product-card-img"><img src="../assets/images/products/product-1.svg" alt="Hoodie"></div>
-        <span class="product-badge">Nouvo</span>
-        <div class="product-info"><h3 class="product-name">Hoodie "Krisis Silans"</h3><p class="product-price">$189.00</p></div>
+<section class="seksyon-pwodwi">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon">Moso Limit</h2>
+    <p class="souti-seksyon">Dekouvri pi bon vandè yo — chak pyès rakonte yon istwa.</p>
+    <div class="grid-pwodwi">
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-1.svg" alt="Hoodie"></div>
+        <span class="badge-pwodwi badge-nouvo">Nouvo</span>
+        <div class="pwodwi-enfo">
+          <p class="pwodwi-kategori">Hoodie</p>
+          <h3 class="pwodwi-non">Hoodie "Krisis Silans"</h3>
+          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div>
+          <button class="btn-ajoute-panye" onclick="addToCart('1','Hoodie Krisis Silans',189)">Ajoute nan Panye</button>
+        </div>
       </article>
-      <article class="product-card">
-        <div class="product-card-img"><img src="../assets/images/products/product-2.svg" alt="T-Shirt"></div>
-        <div class="product-info"><h3 class="product-name">T-Shirt "Vwa Silans"</h3><p class="product-price">$89.00</p></div>
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-2.svg" alt="T-Shirt"></div>
+        <div class="pwodwi-enfo">
+          <p class="pwodwi-kategori">T-Shirt</p>
+          <h3 class="pwodwi-non">T-Shirt "Vwa Silans"</h3>
+          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div>
+          <button class="btn-ajoute-panye" onclick="addToCart('2','T-Shirt Vwa Silans',89)">Ajoute nan Panye</button>
+        </div>
       </article>
-      <article class="product-card">
-        <div class="product-card-img"><img src="../assets/images/products/product-3.svg" alt="Pantalon"></div>
-        <div class="product-info"><h3 class="product-name">Pantalon "Liy Kalm"</h3><p class="product-price">$149.00</p></div>
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-3.svg" alt="Pantalon"></div>
+        <div class="pwodwi-enfo">
+          <p class="pwodwi-kategori">Pantalon</p>
+          <h3 class="pwodwi-non">Pantalon "Liy Kalm"</h3>
+          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div>
+          <button class="btn-ajoute-panye" onclick="addToCart('3','Pantalon Liy Kalm',149)">Ajoute nan Panye</button>
+        </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- LOOKBOOK -->
-<section class="section" style="background: #111;">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-eyebrow">Lookbook</p>
-      <h2 class="section-title">Koleksyon <span class="text-beige">an imaj</span></h2>
-    </div>
-    <div class="lookbook-grid">
+<section class="seksyon-lookbook">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">Lookbook</h2>
+    <div class="grid-lookbook">
       <div class="lookbook-item"><img src="../assets/images/products/product-1.svg" alt=""></div>
       <div class="lookbook-item"><img src="../assets/images/products/product-2.svg" alt=""></div>
       <div class="lookbook-item"><img src="../assets/images/products/product-3.svg" alt=""></div>
@@ -97,78 +101,124 @@
   </div>
 </section>
 
-<!-- TÉMOIGNAGES -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-eyebrow">Kliyan satisfè</p>
-      <h2 class="section-title">Sa yo <span class="text-beige">di</span></h2>
-    </div>
-    <div class="testimonial-grid">
-      <div class="testimonial-card">
-        <p class="testimonial-text">"Rad 100PANIK yo gen yon kalite ki pa ka bat. Mwen santi m konfyans ak style."</p>
-        <p class="testimonial-name">Jean-Karl</p>
-        <p class="testimonial-role">Kliyan fidèl</p>
+<section class="seksyon-temwayaj">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">Sa yo Di</h2>
+    <div class="grid-temwayaj">
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"Rad 100PANIK yo gen yon kalite ki pa ka bat. Mwen santi m konfyans ak style."</p>
+        <div class="temwayaj-moun">
+          <div class="temwayaj-avatar">JK</div>
+          <div><p class="temwayaj-non">Jean-Karl</p><p class="temwayaj-vil">Pòtoprens</p></div>
+        </div>
       </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"Atitid kalm nan panik — se sa mwen renmen. Chak pyès rakonte yon istwa."</p>
-        <p class="testimonial-name">Mika</p>
-        <p class="testimonial-role">Stilis</p>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"Atitid kalm nan panik — se sa mwen renmen. Chak pyès rakonte yon istwa."</p>
+        <div class="temwayaj-moun">
+          <div class="temwayaj-avatar">MK</div>
+          <div><p class="temwayaj-non">Mika</p><p class="temwayaj-vil">Miami</p></div>
+        </div>
       </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"Depi mwen dekouvri 100PANIK, sa se sèl mak mwen mete. Livrezon rapid tou."</p>
-        <p class="testimonial-name">Daphney</p>
-        <p class="testimonial-role">Enfliyansè</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MONCASH -->
-<section class="section" style="background: #111;">
-  <div class="container" style="max-width:700px;">
-    <div class="section-header">
-      <p class="section-eyebrow">Pèman Fasil</p>
-      <h2 class="section-title">Peye ak <span class="text-beige">MonCash</span></h2>
-    </div>
-    <div style="background:rgba(212,197,169,0.03);border:1px solid rgba(212,197,169,0.15);padding:60px;text-align:center;">
-      <p style="color:#ccc;margin-bottom:30px;">Transfere lajan ou sou nimewo sa a epi voye prèv sou WhatsApp.</p>
-      <div style="background:rgba(212,197,169,0.05);border:2px solid var(--beige);padding:30px;display:inline-block;">
-        <span style="font-family:var(--font-titre);font-size:2.5rem;color:var(--beige);letter-spacing:0.3em;">32924776</span>
-      </div>
-      <div style="margin-top:40px;">
-        <a href="https://wa.me/50932924776" target="_blank" class="btn btn-beige">Voye Prèv sou WhatsApp</a>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"Depi mwen dekouvri 100PANIK, sa se sèl mak mwen mete. Livrezon rapid tou."</p>
+        <div class="temwayaj-moun">
+          <div class="temwayaj-avatar">DP</div>
+          <div><p class="temwayaj-non">Daphney</p><p class="temwayaj-vil">Petyonvil</p></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col"><h3 style="font-family:var(--font-titre);font-size:1.8rem;">100<span class="text-beige">PANIK</span></h3><p style="color:#aaa;line-height:1.8;">Lè mòd lan pran panik, style lan rete kalm.</p></div>
-      <div class="footer-col"><h4>Lyen Rapid</h4><ul><li><a href="boutik.html">Boutik</a></li><li><a href="koleksyon.html">Koleksyon</a></li><li><a href="istwa.html">Istwa</a></li><li><a href="kontak.html">Kontak</a></li></ul></div>
-      <div class="footer-col"><h4>Sèvis</h4><ul><li><a href="#">Livrezon</a></li><li><a href="#">Retou</a></li><li><a href="#">FAQ</a></li></ul></div>
-      <div class="footer-col"><h4>Kontak</h4><ul><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul></div>
+<section class="seksyon-moncash">
+  <div class="moncash-kat">
+    <h2 class="moncash-tit">💰 Pèman MonCash</h2>
+    <p class="moncash-tèks">Transfere lajan ou sou nimewo sa a epi voye prèv sou WhatsApp.</p>
+    <div class="moncash-nimewo">32924776</div>
+    <a href="https://wa.me/50932924776" target="_blank" class="btn-panik btn-lò">Voye Prèv sou WhatsApp</a>
+  </div>
+</section>
+
+<script>
+function addToCart(id, name, price) {
+  let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
+  const exist = cart.find(i => i.id === id);
+  if(exist) exist.quantity++;
+  else cart.push({id, name, price, quantity:1});
+  localStorage.setItem('100panik_cart', JSON.stringify(cart));
+  updateBadge();
+  alert('✅ ' + name + ' ajoute nan panye!');
+}
+</script>
+</main>
+
+<footer class="footer-panik">
+  <div class="konteni-limit">
+    <div class="grid-footer">
+      <div class="footer-kolòn">
+        <h3 class="footer-logo">100<span>PANIK</span></h3>
+        <p class="footer-deskripsyon">Lè mòd lan pran panik, style lan rete kalm.</p>
+        <div class="footer-rezosyal">
+          <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
+        </div>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Lyen Rapid</h4>
+        <ul>
+          <li><a href="boutik.html">Boutik</a></li>
+          <li><a href="koleksyon.html">Koleksyon</a></li>
+          <li><a href="istwa.html">Istwa</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Sèvis</h4>
+        <ul>
+          <li><a href="#">Livrezon</a></li>
+          <li><a href="#">Retou</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Kontak</h4>
+        <ul>
+          <li><a href="tel:+50932924776">+509 32924776</a></li>
+          <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2026 100PANIK. Tout dwa rezève.</p></div>
+    <div class="footer-anba">
+      <p>&copy; 2026 100PANIK. Tout dwa rezève.</p>
+      <p>Lè mòd lan pran panik, style lan rete kalm.</p>
+    </div>
   </div>
 </footer>
 
-<!-- FLOATING CART -->
-<a href="panye.html" class="floating-cart">
+<a href="panye.html" class="panye-flotan" aria-label="Panye">
   🛒
-  <span class="badge" id="cartBadge">0</span>
+  <span class="panye-konte" id="cartBadge">0</span>
 </a>
 
 <script>
 let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
 function updateBadge() {
   const total = cart.reduce((s,i)=>s+i.quantity,0);
-  document.getElementById('cartBadge').textContent = total;
+  const el = document.getElementById('cartBadge');
+  if(el) el.textContent = total;
 }
 updateBadge();
+
+// Menu hamburger
+const hamburger = document.getElementById('hamburgerBtn');
+const nav = document.getElementById('navPanik');
+if(hamburger && nav) {
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('nav-louvri');
+  });
+}
 </script>
 </body>
 </html>
