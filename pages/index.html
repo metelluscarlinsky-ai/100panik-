@@ -28,18 +28,15 @@
     </div>
   </div>
 </header>
-<!-- PUB / PROMO SLIDER (PRO) -->
+<!-- ========== NOUVO PUB SLIDER ========== -->
 <section class="pub-slider-wrap" id="pubSliderWrap">
   <div class="pub-slider">
-    <div class="pub-track" id="pubTrack">
-      <!-- Slides yo pral jenere pa JavaScript -->
-    </div>
+    <div class="pub-track" id="pubTrack"></div>
     <button class="pub-arrow pub-prev" onclick="movePub(-1)" aria-label="Previous">&#10094;</button>
     <button class="pub-arrow pub-next" onclick="movePub(1)" aria-label="Next">&#10095;</button>
     <div class="pub-nav" id="pubNav"></div>
   </div>
 </section>
-
 
 
 <main style="padding-top:90px;">
@@ -64,7 +61,6 @@
     <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
   </div>
 </div>
-
 
 <section class="seksyon-pwodwi">
   <div class="konteni-limit">
@@ -306,8 +302,9 @@ document.addEventListener('DOMContentLoaded', loadPubAds);
 
 
 <script>
-// ===== SISTÈM PUB (PRO) =====
-let pubAds = JSON.parse(localStorage.getItem('100panik_ads')) || [];
+// ===== NOUVO SISTÈM PUB =====
+let pubAds = [];
+try { pubAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { pubAds = []; }
 let pubIndex = 0;
 let pubTrack = document.getElementById('pubTrack');
 let pubNav = document.getElementById('pubNav');
@@ -318,7 +315,6 @@ function loadPubAds() {
   pubNav.innerHTML = '';
   
   if (pubAds.length === 0) {
-    // Yon slide default si pa gen pub
     pubAds = [{
       id: 'default',
       image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
@@ -350,7 +346,6 @@ function loadPubAds() {
     dot.onclick = () => goToPub(i);
     pubNav.appendChild(dot);
   });
-  
   updatePub();
 }
 
@@ -362,21 +357,14 @@ function updatePub() {
   });
 }
 
-function goToPub(i) {
-  pubIndex = i;
-  updatePub();
-}
-
+function goToPub(i) { pubIndex = i; updatePub(); }
 function movePub(dir) {
   if (pubAds.length === 0) return;
   pubIndex = (pubIndex + dir + pubAds.length) % pubAds.length;
   updatePub();
 }
 
-// Oto-rotasyon chak 6 segond
 setInterval(() => movePub(1), 6000);
-
-// Chaje pub yo
 document.addEventListener('DOMContentLoaded', loadPubAds);
 </script>
 
