@@ -9,10 +9,24 @@
 </head>
 <body>
 
-<!-- ===== SPLASH SCREEN AK PUB FLOTE ===== -->
-<div id="splashOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(10px);">
-  <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
-    <div id="splashFloatingAds" style="position:relative;width:100%;height:100%;"></div>
+<!-- ===== SPLASH SCREEN AK PUB PLEIN EKRAN ===== -->
+<div id="splashOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:var(--ble-pwofon);overflow:hidden;">
+  <!-- Slider -->
+  <div id="splashSlider" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+    <div class="splash-track" id="splashTrack"></div>
+    <button class="splash-arrow splash-prev" onclick="moveSplash(-1)">&#10094;</button>
+    <button class="splash-arrow splash-next" onclick="moveSplash(1)">&#10095;</button>
+    <div class="splash-dots" id="splashDots"></div>
+  </div>
+  
+  <!-- Bouton Enter Site -->
+  <div style="position:absolute;top:20px;right:20px;z-index:10;">
+    <button id="skipSplashBtn" style="padding:12px 30px;background:var(--lò);color:var(--ble-pwofon);border:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-size:0.85rem;border-radius:4px;transition:0.3s;">Enter Site ✕</button>
+  </div>
+</div>
+
+
+
   </div>
   <div style="position:relative;z-index:10;text-align:center;padding:20px;">
     <h1 style="font-family:var(--font-titr);font-size:clamp(2rem,6vw,4rem);color:var(--lò);margin-bottom:10px;">100<span style="color:var(--wouj-vif);">PANIK</span></h1>
@@ -274,57 +288,75 @@ setInterval(() => movePub(1), 6000);
 document.addEventListener('DOMContentLoaded', loadPubAds);
 </script>
 
+
+
+
 <script>
-// ===== SPLASH SCREEN AK PUB FLOTE =====
+// ===== SPLASH SLIDER (PUB PLEIN EKRAN) =====
 let splashAds = [];
 try { splashAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { splashAds = []; }
 if (splashAds.length === 0) {
   splashAds = [
-    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', title: 'The Calm Before the Storm', link: 'produi.html' },
-    { id: '2', image: '../assets/images/products/product-2.svg', title: 'Echoes of Silence', link: 'boutik.html' },
-    { id: '3', image: '../assets/images/products/product-3.svg', title: 'Clean Lines, Calm Mind', link: 'boutik.html' }
+    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'The Calm Before the Storm', subtitle: 'Bold streetwear for the fearless. No noise. No limits.', link: 'produi.html' },
+    { id: '2', image: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Echoes of Silence', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' },
+    { id: '3', image: '../assets/images/products/product-3.svg', eyebrow: 'Exclusive', title: 'Clean Lines, Calm Mind', subtitle: 'Precision fit for the modern mind.', link: 'boutik.html' }
   ];
   localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
 }
 
-function createFloatingAds() {
-  const container = document.getElementById('splashFloatingAds');
-  if (!container) return;
-  container.innerHTML = '';
-  splashAds.forEach((ad, index) => {
-    const adEl = document.createElement('a');
-    adEl.href = ad.link || 'boutik.html';
-    adEl.className = 'floating-ad';
-    adEl.style.cssText = `
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid var(--lò);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: floatAround ${10 + index * 3}s infinite alternate ease-in-out;
-      cursor: pointer;
-      transition: transform 0.3s;
+let splashIndex = 0;
+const splashTrack = document.getElementById('splashTrack');
+const splashDots = document.getElementById('splashDots');
+
+function loadSplashAds() {
+  if (!splashTrack) return;
+  splashTrack.innerHTML = '';
+  splashDots.innerHTML = '';
+  splashAds.forEach((ad, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'splash-slide';
+    slide.innerHTML = `
+      <div class="splash-slide-bg" style="background-image: url('${ad.image}');"></div>
+      <div class="splash-slide-overlay"></div>
+      <div class="splash-content">
+        ${ad.eyebrow ? `<p class="splash-eyebrow">${ad.eyebrow}</p>` : ''}
+        <h1 class="splash-title">${ad.title}</h1>
+        <p class="splash-subtitle">${ad.subtitle || ''}</p>
+        <a href="${ad.link || 'boutik.html'}" class="splash-cta">Shop Now</a>
+      </div>
     `;
-    adEl.innerHTML = `<img src="${ad.image}" alt="${ad.title}" style="width:100%;height:100%;object-fit:cover;">`;
-    adEl.style.left = (10 + index * 30) + '%';
-    adEl.style.top = (20 + index * 20) + '%';
-    adEl.addEventListener('mouseenter', () => adEl.style.transform = 'scale(1.1)');
-    adEl.addEventListener('mouseleave', () => adEl.style.transform = 'scale(1)');
-    container.appendChild(adEl);
+    splashTrack.appendChild(slide);
+    
+    const dot = document.createElement('div');
+    dot.className = 'splash-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSplash(i);
+    splashDots.appendChild(dot);
   });
+  updateSplash();
 }
 
-// Bouton Skip
+function updateSplash() {
+  if (!splashTrack) return;
+  splashTrack.style.transform = `translateX(-${splashIndex * 100}%)`;
+  document.querySelectorAll('.splash-dot').forEach((d, i) => d.classList.toggle('active', i === splashIndex));
+}
+
+function goToSplash(i) { splashIndex = i; updateSplash(); }
+function moveSplash(dir) {
+  if (splashAds.length === 0) return;
+  splashIndex = (splashIndex + dir + splashAds.length) % splashAds.length;
+  updateSplash();
+}
+
+// Skip button
 document.getElementById('skipSplashBtn').addEventListener('click', function() {
   document.getElementById('splashOverlay').style.display = 'none';
 });
 
-// Lè paj la chaje, kreye pub yo
-document.addEventListener('DOMContentLoaded', function() {
-  createFloatingAds();
-});
+// Auto-advance
+setInterval(() => moveSplash(1), 5000);
+
+document.addEventListener('DOMContentLoaded', loadSplashAds);
 </script>
 
 </body>
