@@ -9,6 +9,19 @@
 </head>
 <body>
 
+<!-- ===== SPLASH SCREEN AK PUB FLOTE ===== -->
+<div id="splashOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(10px);">
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
+    <div id="splashFloatingAds" style="position:relative;width:100%;height:100%;"></div>
+  </div>
+  <div style="position:relative;z-index:10;text-align:center;padding:20px;">
+    <h1 style="font-family:var(--font-titr);font-size:clamp(2rem,6vw,4rem);color:var(--lò);margin-bottom:10px;">100<span style="color:var(--wouj-vif);">PANIK</span></h1>
+    <p style="color:var(--gri-klè);font-size:1.1rem;margin-bottom:30px;">Discover our latest drops</p>
+    <button id="skipSplashBtn" style="padding:15px 40px;background:var(--lò);color:var(--ble-pwofon);border:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-size:0.9rem;border-radius:4px;transition:0.3s;">Enter Site</button>
+  </div>
+</div>
+
+
 <!-- ===== HEADER ===== -->
 <header class="header-panik">
   <div class="header-container">
@@ -30,15 +43,7 @@
   </div>
 </header>
 
-<!-- ===== NOUVO PUB SLIDER (PWÒP) ===== -->
-<section class="pub-slider-wrap" id="pubSliderWrap">
-  <div class="pub-slider">
-    <div class="pub-track" id="pubTrack"></div>
-    <button class="pub-arrow pub-prev" onclick="movePub(-1)" aria-label="Previous">&#10094;</button>
-    <button class="pub-arrow pub-next" onclick="movePub(1)" aria-label="Next">&#10095;</button>
-    <div class="pub-nav" id="pubNav"></div>
-  </div>
-</section>
+
 
 <!-- ===== HERO (foto background) ===== -->
 <section class="hero-panik">
@@ -268,5 +273,59 @@ function movePub(dir) {
 setInterval(() => movePub(1), 6000);
 document.addEventListener('DOMContentLoaded', loadPubAds);
 </script>
+
+<script>
+// ===== SPLASH SCREEN AK PUB FLOTE =====
+let splashAds = [];
+try { splashAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { splashAds = []; }
+if (splashAds.length === 0) {
+  splashAds = [
+    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', title: 'The Calm Before the Storm', link: 'produi.html' },
+    { id: '2', image: '../assets/images/products/product-2.svg', title: 'Echoes of Silence', link: 'boutik.html' },
+    { id: '3', image: '../assets/images/products/product-3.svg', title: 'Clean Lines, Calm Mind', link: 'boutik.html' }
+  ];
+  localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
+}
+
+function createFloatingAds() {
+  const container = document.getElementById('splashFloatingAds');
+  if (!container) return;
+  container.innerHTML = '';
+  splashAds.forEach((ad, index) => {
+    const adEl = document.createElement('a');
+    adEl.href = ad.link || 'boutik.html';
+    adEl.className = 'floating-ad';
+    adEl.style.cssText = `
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--lò);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: floatAround ${10 + index * 3}s infinite alternate ease-in-out;
+      cursor: pointer;
+      transition: transform 0.3s;
+    `;
+    adEl.innerHTML = `<img src="${ad.image}" alt="${ad.title}" style="width:100%;height:100%;object-fit:cover;">`;
+    adEl.style.left = (10 + index * 30) + '%';
+    adEl.style.top = (20 + index * 20) + '%';
+    adEl.addEventListener('mouseenter', () => adEl.style.transform = 'scale(1.1)');
+    adEl.addEventListener('mouseleave', () => adEl.style.transform = 'scale(1)');
+    container.appendChild(adEl);
+  });
+}
+
+// Bouton Skip
+document.getElementById('skipSplashBtn').addEventListener('click', function() {
+  document.getElementById('splashOverlay').style.display = 'none';
+});
+
+// Lè paj la chaje, kreye pub yo
+document.addEventListener('DOMContentLoaded', function() {
+  createFloatingAds();
+});
+</script>
+
 </body>
 </html>
