@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>100PANIK | When the World Panics, Style Stays Calm</title>
@@ -88,50 +89,9 @@
   <div class="konteni-limit">
     <h2 class="tit-seksyon">Limited Pieces</h2>
     <p class="souti-seksyon">Limited. Rare. Unapologetic. Get yours before it's gone.</p>
-    <div class="grid-pwodwi">
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-1.svg" alt="The Calm Before the Storm"></div>
-        <span class="badge-pwodwi badge-nouvo">New</span>
-        <div class="pwodwi-enfo">
-          <p class="pwodwi-kategori">Hoodie</p>
-          <h3 class="pwodwi-non">The Calm Before the Storm</h3>
-          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div>
-          <button class="btn-ajoute-panye" onclick="addToCart('1','Hoodie The Calm Before the Storm',189)">Add to Cart</button>
-        </div>
-      </article>
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-2.svg" alt="Echoes of Silence"></div>
-        <div class="pwodwi-enfo">
-          <p class="pwodwi-kategori">T-Shirt</p>
-          <h3 class="pwodwi-non">Echoes of Silence</h3>
-          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div>
-          <button class="btn-ajoute-panye" onclick="addToCart('2','T-Shirt Echoes of Silence',89)">Add to Cart</button>
-        </div>
-      </article>
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-3.svg" alt="Clean Lines, Calm Mind"></div>
-        <div class="pwodwi-enfo">
-          <p class="pwodwi-kategori">Pants</p>
-          <h3 class="pwodwi-non">Clean Lines, Calm Mind</h3>
-          <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div>
-          <button class="btn-ajoute-panye" onclick="addToCart('3','Pants Clean Lines Calm Mind',149)">Add to Cart</button>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LOOKBOOK ===== -->
-<section class="seksyon-lookbook">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">Lookbook</h2>
-    <div class="grid-lookbook">
-      <div class="lookbook-item"><img src="../assets/images/products/product-1.svg" alt="Look 1"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-2.svg" alt="Look 2"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-3.svg" alt="Look 3"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-4.svg" alt="Look 4"></div>
-    </div>
-  </div>
+    <div class="grid-pwodwi" id="dynamicProducts">
+        <p class="loading" style="color:var(--gri-klè); text-align:center;">Loading products...</p>
+      </div>
 </section>
 
 <!-- ===== TESTIMONYAL ===== -->
@@ -360,6 +320,36 @@ document.getElementById('skipSplashBtn').addEventListener('click', function() {
 setInterval(() => moveSplash(1), 5000);
 
 document.addEventListener('DOMContentLoaded', loadSplashAds);
+</script>
+
+<script src="../js/supabase-config.js"></script>
+
+<script>
+async function loadProducts() {
+  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+  const container = document.getElementById('dynamicProducts');
+  if (error) {
+    container.innerHTML = '<p class="loading">Error loading products.</p>';
+    return;
+  }
+  if (data.length === 0) {
+    container.innerHTML = '<p class="loading">No products yet. Check back soon.</p>';
+    return;
+  }
+  container.innerHTML = data.map(p => `
+    <article class="kat-pwodwi">
+      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}"></div>
+      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
+      <div class="pwodwi-enfo">
+        <p class="pwodwi-kategori">${p.category}</p>
+        <h3 class="pwodwi-non">${p.name}</h3>
+        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
+        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
+      </div>
+    </article>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
 </body>

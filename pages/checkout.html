@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout | 100PANIK</title>
@@ -123,5 +124,37 @@ if(hamburger && nav) {
   });
 }
 </script>
+<script src="../js/supabase-config.js"></script>
+
+<script>
+document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('fullname').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+  const city = document.getElementById('city').value;
+  const cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  if (total === 0) {
+    alert('Your cart is empty.');
+    return;
+  }
+  const { data, error } = await supabase.from('admin_orders').insert({
+    customer_name: name,
+    customer_phone: phone,
+    customer_address: address + ', ' + city,
+    total: total,
+    status: 'pending'
+  });
+  if (error) {
+    alert('Error placing order: ' + error.message);
+    return;
+  }
+  alert('✅ Order placed successfully!');
+  localStorage.removeItem('100panik_cart');
+  window.location.href = 'index.html';
+});
+</script>
+
 </body>
 </html>

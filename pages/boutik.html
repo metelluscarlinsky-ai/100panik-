@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop | 100PANIK</title>
@@ -134,5 +135,35 @@ if(hamburger && nav) {
   });
 }
 </script>
+<script src="../js/supabase-config.js"></script>
+
+<script>
+async function loadProducts() {
+  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+  const container = document.getElementById('dynamicProducts');
+  if (error) {
+    container.innerHTML = '<p class="loading">Error loading products.</p>';
+    return;
+  }
+  if (data.length === 0) {
+    container.innerHTML = '<p class="loading">No products yet. Check back soon.</p>';
+    return;
+  }
+  container.innerHTML = data.map(p => `
+    <article class="kat-pwodwi">
+      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}"></div>
+      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
+      <div class="pwodwi-enfo">
+        <p class="pwodwi-kategori">${p.category}</p>
+        <h3 class="pwodwi-non">${p.name}</h3>
+        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
+        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
+      </div>
+    </article>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+
 </body>
 </html>

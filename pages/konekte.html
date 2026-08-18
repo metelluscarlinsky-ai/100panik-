@@ -6,111 +6,45 @@
 <title>Sign In | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Home</a>
-      <a href="boutik.html" >Shop</a>
-      <a href="koleksyon.html" >Collection</a>
-      <a href="istwa.html" >Our Story</a>
-      <a href="kontak.html" >Contact</a>
+    <nav class="nav-panik">
+      <a href="index.html">Home</a><a href="boutik.html">Shop</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Story</a><a href="kontak.html">Contact</a>
     </nav>
-    <div class="aksyon-header">
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
-      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
   </div>
 </header>
-
-<main style="padding-top:90px;">
-
-<section style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:rgba(255,255,255,0.05);padding:50px 40px;max-width:420px;width:100%;border:1px solid rgba(255,255,255,0.12);border-radius:16px;backdrop-filter:blur(16px);">
-    <h1 style="text-align:center;margin-bottom:30px;">Sign In</h1>
-    <form id="loginForm">
-      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Username</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <div style="margin-bottom:25px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Password</label><input type="password" id="password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
-      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Sign In</button>
-    </form>
-    <p style="text-align:center;margin-top:20px;color:var(--gri-klè);">Don't have an account? <a href="enskri.html" style="color:var(--lò);">Sign Up</a></p>
+<main style="padding-top:120px;">
+  <div style="min-height:70vh;display:flex;align-items:center;justify-content:center;">
+    <div style="background:rgba(255,255,255,0.03);padding:50px 40px;max-width:420px;width:100%;border:1px solid rgba(212,175,55,0.15);border-radius:16px;backdrop-filter:blur(20px);">
+      <h1 style="font-family:var(--font-titr);text-align:center;margin-bottom:30px;font-size:2rem;">Sign In</h1>
+      <form id="loginForm">
+        <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Email</label><input type="email" id="email" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+        <div style="margin-bottom:25px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Password</label><input type="password" id="password" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+        <button type="submit" class="btn-panik btn-primè" style="width:100%;">Sign In</button>
+      </form>
+      <p style="text-align:center;margin-top:20px;color:var(--gri-klè);">Don't have an account? <a href="enskri.html" style="color:var(--lò);">Sign Up</a></p>
+    </div>
   </div>
-</section>
-<script>
-document.getElementById('loginForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('password').value==='100panik'){localStorage.setItem('100panik_user',JSON.stringify({loggedIn:true}));window.location.href='kont-mwen.html'}else{alert('Incorrect password')}});
-</script>
 </main>
-
-<footer class="footer-panik">
-  <div class="konteni-limit">
-    <div class="grid-footer">
-      <div class="footer-kolòn">
-        <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
-        <div class="footer-rezosyal">
-          <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
-        </div>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="boutik.html">Shop</a></li>
-          <li><a href="koleksyon.html">Collection</a></li>
-          <li><a href="istwa.html">Our Story</a></li>
-          <li><a href="kontak.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="#">Shipping</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+50932924776">+509 32924776</a></li>
-          <li><a href="mailto:info@100panik.com">info@100panik.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. All rights reserved.</p>
-      <p>When the world panics, style stays calm.</p>
-    </div>
-  </div>
-</footer>
-
-<a href="panye.html" class="panye-flotan" aria-label="Cart">
-  🛒
-  <span class="panye-konte" id="cartBadge">0</span>
-</a>
-
+<script src="../js/supabase-config.js"></script>
 <script>
-let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
-
-// Hamburger menu
-const hamburger = document.getElementById('hamburgerBtn');
-const nav = document.getElementById('navPanik');
-if(hamburger && nav) {
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('nav-louvri');
-  });
-}
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    alert('Invalid credentials: ' + error.message);
+    return;
+  }
+  const role = data.user.user_metadata?.role;
+  if (role === 'admin') window.location.href = 'admin.html';
+  else window.location.href = 'kont-mwen.html';
+});
 </script>
 </body>
 </html>
