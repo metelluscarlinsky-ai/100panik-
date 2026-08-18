@@ -104,58 +104,7 @@
   <span class="panye-konte" id="cartBadge">0</span>
 </a>
 
-<script>
-let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
 
-// Hamburger menu
-const hamburger = document.getElementById('hamburgerBtn');
-const nav = document.getElementById('navPanik');
-if(hamburger && nav) {
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('nav-louvri');
-  });
-}
-</script>
-<script src="/js/pwa.js"></script>
-
-
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
-  }
-});
-</script>
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
-    const INTRO_DURATION = 10000; // en millisecondes
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, INTRO_DURATION);
-  }
-});
-</script>
 
 </body>
 </html>

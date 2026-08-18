@@ -45,55 +45,7 @@
   </div>
 </main>
 <script src="../js/supabase-config.js"></script>
-<script>
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) {
-    alert('Invalid credentials: ' + error.message);
-    return;
-  }
-  const role = data.user.user_metadata?.role;
-  if (role === 'admin') window.location.href = 'admin.html';
-  else window.location.href = 'kont-mwen.html';
-});
-</script>
-<script src="/js/pwa.js"></script>
 
-
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
-  }
-});
-</script>
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
-    const INTRO_DURATION = 10000; // en millisecondes
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, INTRO_DURATION);
-  }
-});
-</script>
 
 </body>
 </html>

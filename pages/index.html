@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<!-- INTRO OVERLAY LONGUE -->
+<!-- INTRO OVERLAY (Index only) -->
 <div id="introOverlay">
   <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
   <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
@@ -20,13 +20,8 @@
 </div>
 
 
-<!-- INTRO OVERLAY AUTOMATIQUE -->
+<!-- INTRO OVERLAY LONGUE -->
 
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"100PANIK isn't just fashion—it's a state of mind. Calm in chaos, always."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">MK</div><div><p class="temwayaj-non">Mika</p><p class="temwayaj-vil">Miami</p></div></div>
-      </div>
       <div class="kat-temwayaj">
         <div class="temwayaj-zetwal">★★★★★</div>
         <p class="temwayaj-tèks">"Every drop sells out. If you hesitate, you lose. That's the 100PANIK effect."</p>
@@ -86,192 +81,6 @@
 </a>
 
 <!-- ===== SCRIPTS ===== -->
-<script>
-// Cart
-let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
-function addToCart(id, name, price) {
-  const exist = cart.find(i => i.id === id);
-  if(exist) exist.quantity++;
-  else cart.push({id, name, price, quantity:1});
-  localStorage.setItem('100panik_cart', JSON.stringify(cart));
-  updateBadge();
-  alert('✅ ' + name + ' added to cart!');
-}
-
-// Hamburger
-const hamburger = document.getElementById('hamburgerBtn');
-const nav = document.getElementById('navPanik');
-if(hamburger && nav) {
-  hamburger.addEventListener('click', () => nav.classList.toggle('nav-louvri'));
-}
-
-// Pub Slider (pwòp)
-let pubAds = [];
-try { pubAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { pubAds = []; }
-let pubIndex = 0;
-const pubTrack = document.getElementById('pubTrack');
-const pubNav = document.getElementById('pubNav');
-
-function loadPubAds() {
-  if (!pubTrack) return;
-  pubTrack.innerHTML = '';
-  pubNav.innerHTML = '';
-  if (pubAds.length === 0) {
-    pubAds = [{
-      id: 'default',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
-      eyebrow: 'Limited Release',
-      title: 'Silent Hoodie',
-      subtitle: 'Bold streetwear for the fearless. No noise. No limits.',
-      link: 'boutik.html'
-    }];
-    localStorage.setItem('100panik_ads', JSON.stringify(pubAds));
-  }
-  pubAds.forEach((ad, i) => {
-    const slide = document.createElement('div');
-    slide.className = 'pub-slide';
-    slide.innerHTML = `
-      <div class="pub-slide-bg" style="background-image: url('${ad.image}');"></div>
-      <div class="pub-slide-overlay"></div>
-      <div class="pub-content">
-        ${ad.eyebrow ? `<p class="pub-eyebrow">${ad.eyebrow}</p>` : ''}
-        <h2 class="pub-title">${ad.title}</h2>
-        <p class="pub-subtitle">${ad.subtitle}</p>
-        <a href="${ad.link || 'boutik.html'}" class="pub-cta">Discover</a>
-      </div>
-    `;
-    pubTrack.appendChild(slide);
-    const dot = document.createElement('div');
-    dot.className = 'pub-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goToPub(i);
-    pubNav.appendChild(dot);
-  });
-  updatePub();
-}
-function updatePub() {
-  if (!pubTrack) return;
-  pubTrack.style.transform = `translateX(-${pubIndex * 100}%)`;
-  document.querySelectorAll('.pub-dot').forEach((d, i) => d.classList.toggle('active', i === pubIndex));
-}
-function goToPub(i) { pubIndex = i; updatePub(); }
-function movePub(dir) {
-  if (pubAds.length === 0) return;
-  pubIndex = (pubIndex + dir + pubAds.length) % pubAds.length;
-  updatePub();
-}
-setInterval(() => movePub(1), 6000);
-document.addEventListener('DOMContentLoaded', loadPubAds);
-</script>
-
-
-
-
-<script>
-// ===== SPLASH SLIDER (PUB PLEIN EKRAN) =====
-let splashAds = [];
-try { splashAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { splashAds = []; }
-if (splashAds.length === 0) {
-  splashAds = [
-    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'Silent Hoodie', subtitle: 'Bold streetwear for the fearless. No noise. No limits.', link: 'produi.html' },
-    { id: '2', image: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Silent Tee', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' },
-    { id: '3', image: '../assets/images/products/product-3.svg', eyebrow: 'Exclusive', title: 'Clean Trousers', subtitle: 'Precision fit for the modern mind.', link: 'boutik.html' }
-  ];
-  localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
-}
-
-let splashIndex = 0;
-const splashTrack = document.getElementById('splashTrack');
-const splashDots = document.getElementById('splashDots');
-
-function loadSplashAds() {
-  if (!splashTrack) return;
-  splashTrack.innerHTML = '';
-  splashDots.innerHTML = '';
-  splashAds.forEach((ad, i) => {
-    const slide = document.createElement('div');
-    slide.className = 'splash-slide';
-    slide.innerHTML = `
-      <div class="splash-slide-bg" style="background-image: url('${ad.image}');"></div>
-      <div class="splash-slide-overlay"></div>
-      <div class="splash-content">
-        ${ad.eyebrow ? `<p class="splash-eyebrow">${ad.eyebrow}</p>` : ''}
-        <h1 class="splash-title">${ad.title}</h1>
-        <p class="splash-subtitle">${ad.subtitle || ''}</p>
-        <a href="${ad.link || 'boutik.html'}" class="splash-cta">Shop Now</a>
-      </div>
-    `;
-    splashTrack.appendChild(slide);
-    
-    const dot = document.createElement('div');
-    dot.className = 'splash-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goToSplash(i);
-    splashDots.appendChild(dot);
-  });
-  updateSplash();
-}
-
-function updateSplash() {
-  if (!splashTrack) return;
-  splashTrack.style.transform = `translateX(-${splashIndex * 100}%)`;
-  document.querySelectorAll('.splash-dot').forEach((d, i) => d.classList.toggle('active', i === splashIndex));
-}
-
-function goToSplash(i) { splashIndex = i; updateSplash(); }
-function moveSplash(dir) {
-  if (splashAds.length === 0) return;
-  splashIndex = (splashIndex + dir + splashAds.length) % splashAds.length;
-  updateSplash();
-}
-
-// Skip button
-document.getElementById('skipSplashBtn').addEventListener('click', function() {
-  document.getElementById('splashOverlay').style.display = 'none';
-});
-
-// Auto-advance
-setInterval(() => moveSplash(1), 5000);
-
-document.addEventListener('DOMContentLoaded', loadSplashAds);
-</script>
-
-<script src="../js/supabase-config.js"></script>
-
-<script>
-async function loadProducts() {
-  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
-  const container = document.getElementById('dynamicProducts');
-  if (error) {
-    container.innerHTML = '<p class="loading">Error loading products.</p>';
-    return;
-  }
-  if (data.length === 0) {
-    container.innerHTML = '<p class="loading">No products yet. Check back soon.</p>';
-    return;
-  }
-  container.innerHTML = data.map(p => `
-    <article class="kat-pwodwi">
-      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}"></div>
-      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
-      <div class="pwodwi-enfo">
-        <p class="pwodwi-kategori">${p.category}</p>
-        <h3 class="pwodwi-non">${p.name}</h3>
-        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
-        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
-      </div>
-    </article>
-  `).join('');
-}
-document.addEventListener('DOMContentLoaded', loadProducts);
-</script>
-
-<script src="/js/pwa.js"></script>
-
 
 
 
@@ -279,23 +88,7 @@ document.addEventListener('DOMContentLoaded', loadProducts);
 window.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('introOverlay');
   if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
-  }
-});
-</script>
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
-    const INTRO_DURATION = 10000; // en millisecondes
+    const INTRO_DURATION = 10000; // 10 secondes (modifier pour plus)
     setTimeout(() => {
       overlay.style.transition = 'opacity 0.8s ease';
       overlay.style.opacity = '0';
