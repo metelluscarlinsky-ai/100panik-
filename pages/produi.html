@@ -10,39 +10,16 @@
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
 <body>
-<header class="header">
-  <div class="header-container">
-    <a href="index.html" class="logo"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK"></a>
-    <nav class="nav-desktop">
-      <ul>
-        <li><a href="index.html" class="nav-link">Dakèy</a></li>
-        <li><a href="boutik.html" class="nav-link">Boutik</a></li>
-        <li><a href="koleksyon.html" class="nav-link">Koleksyon</a></li>
-        <li><a href="istwa.html" class="nav-link">Istwa</a></li>
-        <li><a href="kontak.html" class="nav-link">Kontak</a></li>
-      </ul>
-    </nav>
-    <div class="header-actions">
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
-    </div>
-  </div>
-</header>
-<main style="padding-top:120px;">
 
-<div class="container" style="max-width:1200px;">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;">
-    <div style="aspect-ratio:3/4;overflow:hidden;"><img src="../assets/images/products/product-1.svg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div>
-      <p class="section-eyebrow">Nouvo</p>
-      <h1 class="section-title" style="font-size:2.5rem;margin-bottom:15px;">Hoodie "Krisis Silans"</h1>
-      <p style="font-size:2rem;color:var(--beige);font-weight:700;margin-bottom:20px;">$189.00</p>
-      <p style="color:#ccc;line-height:1.8;margin-bottom:30px;">Yon hoodie ki fèt ak koton epè, koupe modèn. Kalm nan panik.</p>
-      <button class="btn btn-beige" onclick="addToCart()">Ajoute nan Panye</button>
-      <button class="btn btn-outline" style="margin-left:15px;" onclick="buyNow()">Achte Kounye a</button>
-    </div>
-  </div>
+<!-- INTRO OVERLAY AUTOMATIQUE -->
+<div id="introOverlay">
+  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
+  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
+  <p class="intro-sub">When the world panics, style stays calm</p>
 </div>
+
+
+
 <script>
 function addToCart(){let cart=JSON.parse(localStorage.getItem("100panik_cart"))||[];const exist=cart.find(i=>i.id==="1");if(exist)exist.quantity++;else cart.push({id:"1",name:"Hoodie Krisis Silans",price:189,quantity:1});localStorage.setItem("100panik_cart",JSON.stringify(cart));updateBadge();alert("✅ Ajoute!");}
 function buyNow(){addToCart();window.location.href="checkout.html"}
@@ -72,5 +49,23 @@ function updateBadge() {
 updateBadge();
 </script>
 <script src="/js/pwa.js"></script>
+
+
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    // Apre 3 segond, fade out epi retire
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.8s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 800);
+    }, 3000);
+  }
+});
+</script>
+
 </body>
 </html>

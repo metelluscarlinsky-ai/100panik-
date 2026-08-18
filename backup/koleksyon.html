@@ -5,23 +5,11 @@
 <link rel="manifest" href="/manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Account | 100PANIK</title>
+<title>Collection | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
 <body>
-
-<!-- INTRO OVERLAY -->
-<div id="introOverlay">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
-  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
-  <p class="intro-sub">When the world panics, style stays calm</p>
-  
-</div>
-
-<!-- INSTALL APP BUTTON (visible si disponible) -->
-<button id="installBtn">📱 Install App</button>
-
 
 <header class="header-panik">
   <div class="header-container">
@@ -29,7 +17,7 @@
     <nav class="nav-panik" id="navPanik">
       <a href="index.html" >Home</a>
       <a href="boutik.html" >Shop</a>
-      <a href="koleksyon.html" >Collection</a>
+      <a href="koleksyon.html" class="active">Collection</a>
       <a href="istwa.html" >Our Story</a>
       <a href="kontak.html" >Contact</a>
     </nav>
@@ -46,21 +34,32 @@
 <main style="padding-top:90px;">
 
 <section class="seksyon-pwodwi">
-  <div class="konteni-limit" style="max-width:900px;">
-    <h1 class="tit-seksyon">My Account</h1>
-    <div style="background:rgba(255,255,255,0.05);padding:40px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
-      <h2 style="margin-bottom:15px;">Profile</h2>
-      <p id="profileInfo" style="color:var(--gri-klè);"></p>
-      <a href="konekte.html" class="btn-panik btn-segondè" style="margin-top:20px;">Sign Out</a>
-    </div>
-    <div style="background:rgba(255,255,255,0.05);padding:40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
-      <h2 style="margin-bottom:15px;">Order History</h2>
-      <p style="color:var(--gri-klè);">No orders yet.</p>
+  <div class="konteni-limit">
+    <h1 class="tit-seksyon">Collection "THE 100PANIK BRAND"</h1>
+    <p class="souti-seksyon">Limited pieces rooted in silence and strength.</p>
+    <div class="grid-pwodwi">
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-5.svg" alt=""></div>
+        <span class="badge-pwodwi badge-limite">Limited</span>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">Midnight Gold</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$199.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('5','Midnight Gold',199)">Add to Cart</button></div>
+      </article>
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-6.svg" alt=""></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">Absolute Zero</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$79.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('6','Absolute Zero',79)">Add to Cart</button></div>
+      </article>
     </div>
   </div>
 </section>
 <script>
-const user=JSON.parse(localStorage.getItem('100panik_user')||'{}');document.getElementById('profileInfo').textContent=user.loggedIn?'✅ You are signed in.':'❌ You are not signed in.';
+function addToCart(id, name, price) {
+  let cart = JSON.parse(localStorage.getItem('100panik_cart')) || [];
+  const exist = cart.find(i => i.id === id);
+  if(exist) exist.quantity++;
+  else cart.push({id, name, price, quantity:1});
+  localStorage.setItem('100panik_cart', JSON.stringify(cart));
+  updateBadge();
+  alert('✅ ' + name + ' added to cart!');
+}
 </script>
 </main>
 
@@ -130,23 +129,5 @@ if(hamburger && nav) {
 }
 </script>
 <script src="/js/pwa.js"></script>
-
-
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
-  }
-});
-</script>
-
 </body>
 </html>

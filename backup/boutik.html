@@ -3,33 +3,22 @@
 <head>
 <meta name="theme-color" content="#0B1D3A">
 <link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collection | 100PANIK</title>
+<title>Shop | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
 </head>
 <body>
-
-<!-- INTRO OVERLAY -->
-<div id="introOverlay">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
-  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
-  <p class="intro-sub">When the world panics, style stays calm</p>
-  
-</div>
-
-<!-- INSTALL APP BUTTON (visible si disponible) -->
-<button id="installBtn">📱 Install App</button>
-
 
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik" id="navPanik">
       <a href="index.html" >Home</a>
-      <a href="boutik.html" >Shop</a>
-      <a href="koleksyon.html" class="active">Collection</a>
+      <a href="boutik.html" class="active">Shop</a>
+      <a href="koleksyon.html" >Collection</a>
       <a href="istwa.html" >Our Story</a>
       <a href="kontak.html" >Contact</a>
     </nav>
@@ -47,17 +36,25 @@
 
 <section class="seksyon-pwodwi">
   <div class="konteni-limit">
-    <h1 class="tit-seksyon">Collection "THE 100PANIK BRAND"</h1>
-    <p class="souti-seksyon">Limited pieces rooted in silence and strength.</p>
+    <h1 class="tit-seksyon">Shop</h1>
+    <p class="souti-seksyon">Explore the collection. Choose your pieces.</p>
     <div class="grid-pwodwi">
       <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-5.svg" alt=""></div>
-        <span class="badge-pwodwi badge-limite">Limited</span>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">Midnight Gold</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$199.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('5','Midnight Gold',199)">Add to Cart</button></div>
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-1.svg" alt=""></div>
+        <span class="badge-pwodwi badge-nouvo">New</span>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">The Calm Before the Storm</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('1','The Calm Before the Storm',189)">Add to Cart</button></div>
       </article>
       <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-6.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">Absolute Zero</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$79.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('6','Absolute Zero',79)">Add to Cart</button></div>
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-2.svg" alt=""></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">Echoes of Silence</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('2','Echoes of Silence',89)">Add to Cart</button></div>
+      </article>
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-3.svg" alt=""></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Pants</p><h3 class="pwodwi-non">Clean Lines, Calm Mind</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('3','Clean Lines, Calm Mind',149)">Add to Cart</button></div>
+      </article>
+      <article class="kat-pwodwi">
+        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-4.svg" alt=""></div>
+        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Cap</p><h3 class="pwodwi-non">Crown of Calm</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$59.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('4','Crown of Calm',59)">Add to Cart</button></div>
       </article>
     </div>
   </div>
@@ -140,24 +137,36 @@ if(hamburger && nav) {
   });
 }
 </script>
-<script src="/js/pwa.js"></script>
-
-
-
+<script src="../js/supabase-config.js"></script>
 
 <script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
+async function loadProducts() {
+  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+  const container = document.getElementById('dynamicProducts');
+  if (error) {
+    container.innerHTML = '<p class="loading">Error loading products.</p>';
+    return;
   }
-});
+  if (data.length === 0) {
+    container.innerHTML = '<p class="loading">No products yet. Check back soon.</p>';
+    return;
+  }
+  container.innerHTML = data.map(p => `
+    <article class="kat-pwodwi">
+      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}"></div>
+      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
+      <div class="pwodwi-enfo">
+        <p class="pwodwi-kategori">${p.category}</p>
+        <h3 class="pwodwi-non">${p.name}</h3>
+        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
+        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
+      </div>
+    </article>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
+<script src="/js/pwa.js"></script>
 </body>
 </html>

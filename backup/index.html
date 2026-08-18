@@ -12,15 +12,25 @@
 </head>
 <body>
 
-<!-- INTRO OVERLAY AUTOMATIQUE -->
-<div id="introOverlay">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
-  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
-  <p class="intro-sub">When the world panics, style stays calm</p>
+<!-- ===== SPLASH SCREEN AK PUB PLEIN EKRAN ===== -->
+<div id="splashOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:var(--ble-pwofon);overflow:hidden;">
+  <!-- Slider -->
+  <div id="splashSlider" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+    <div class="splash-track" id="splashTrack"></div>
+    <button class="splash-arrow splash-prev" onclick="moveSplash(-1)">&#10094;</button>
+    <button class="splash-arrow splash-next" onclick="moveSplash(1)">&#10095;</button>
+    <div class="splash-dots" id="splashDots"></div>
+  </div>
+  
+  <!-- Bouton Enter Site -->
+  <div style="position:absolute;top:20px;right:20px;z-index:10;">
+    <button id="skipSplashBtn" style="padding:12px 30px;background:var(--lò);color:var(--ble-pwofon);border:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-size:0.85rem;border-radius:4px;transition:0.3s;">Enter Site ✕</button>
+  </div>
 </div>
 
 
 
+  </div>
   <div style="position:relative;z-index:10;text-align:center;padding:20px;">
     <h1 style="font-family:var(--font-titr);font-size:clamp(2rem,6vw,4rem);color:var(--lò);margin-bottom:10px;">100<span style="color:var(--wouj-vif);">PANIK</span></h1>
     <p style="color:var(--gri-klè);font-size:1.1rem;margin-bottom:30px;">Discover our latest drops</p>
@@ -58,12 +68,12 @@
   <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-kontni">
-    <p class="hero-eyebrow">The New Standard</p>
-    <h1 class="hero-tit">CALM IS <span style="color:#A0522D;">POWER</span></h1>
-    <p class="hero-slogan">Luxury streetwear for those who move in silence.</p>
+    <p class="hero-eyebrow">THE 100PANIK BRAND</p>
+    <h1 class="hero-tit">When the World <span class="aksan-wouj">Panics</span>,<br>100PANIK Stays <span style="color:var(--lò)">Calm</span>.</h1>
+    <p class="hero-slogan">Bold streetwear for the fearless. No noise. No limits. Pure presence.</p>
     <div class="hero-boutons">
-      <a href="boutik.html" class="btn-panik btn-primè">Shop the Drop</a>
-      <a href="koleksyon.html" class="btn-panik btn-segondè">Explore</a>
+      <a href="boutik.html" class="btn-panik btn-primè">Claim Your Piece</a>
+      <a href="koleksyon.html" class="btn-panik btn-segondè">Enter the Calm</a>
     </div>
   </div>
 </section>
@@ -79,8 +89,8 @@
 <!-- ===== PWODWI (3 kolòn) ===== -->
 <section class="seksyon-pwodwi">
   <div class="konteni-limit">
-    <h2 class="tit-seksyon">The Edit</h2>
-    <p class="souti-seksyon">Curated pieces. Impeccable silence.</p>
+    <h2 class="tit-seksyon">Limited Pieces</h2>
+    <p class="souti-seksyon">Limited. Rare. Unapologetic. Get yours before it's gone.</p>
     <div class="grid-pwodwi" id="dynamicProducts">
         <p class="loading" style="color:var(--gri-klè); text-align:center;">Loading products...</p>
       </div>
@@ -89,7 +99,7 @@
 <!-- ===== TESTIMONYAL ===== -->
 <section class="seksyon-temwayaj">
   <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">From the Streets</h2>
+    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">What They Say</h2>
     <div class="grid-temwayaj">
       <div class="kat-temwayaj">
         <div class="temwayaj-zetwal">★★★★★</div>
@@ -113,8 +123,8 @@
 <!-- ===== MONCASH ===== -->
 <section class="seksyon-moncash">
   <div class="moncash-kat">
-    <h2 class="moncash-tit">💰 Payment</h2>
-    <p class="moncash-tèks">Reserve your piece. Pay via MonCash.</p>
+    <h2 class="moncash-tit">💰 Pay with MonCash</h2>
+    <p class="moncash-tèks">Secure your piece now. Pay via MonCash and send proof on WhatsApp.</p>
     <div class="moncash-nimewo">32924776</div>
     <a href="https://wa.me/50932924776" target="_blank" class="btn-panik btn-lò">Confirm on WhatsApp</a>
   </div>
@@ -201,7 +211,7 @@ function loadPubAds() {
       id: 'default',
       image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
       eyebrow: 'Limited Release',
-      title: 'Silent Hoodie',
+      title: 'The Calm Before the Storm',
       subtitle: 'Bold streetwear for the fearless. No noise. No limits.',
       link: 'boutik.html'
     }];
@@ -252,9 +262,9 @@ let splashAds = [];
 try { splashAds = JSON.parse(localStorage.getItem('100panik_ads')) || []; } catch(e) { splashAds = []; }
 if (splashAds.length === 0) {
   splashAds = [
-    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'Silent Hoodie', subtitle: 'Bold streetwear for the fearless. No noise. No limits.', link: 'produi.html' },
-    { id: '2', image: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Silent Tee', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' },
-    { id: '3', image: '../assets/images/products/product-3.svg', eyebrow: 'Exclusive', title: 'Clean Trousers', subtitle: 'Precision fit for the modern mind.', link: 'boutik.html' }
+    { id: '1', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'The Calm Before the Storm', subtitle: 'Bold streetwear for the fearless. No noise. No limits.', link: 'produi.html' },
+    { id: '2', image: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Echoes of Silence', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' },
+    { id: '3', image: '../assets/images/products/product-3.svg', eyebrow: 'Exclusive', title: 'Clean Lines, Calm Mind', subtitle: 'Precision fit for the modern mind.', link: 'boutik.html' }
   ];
   localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
 }
@@ -345,23 +355,5 @@ document.addEventListener('DOMContentLoaded', loadProducts);
 </script>
 
 <script src="/js/pwa.js"></script>
-
-
-
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    // Apre 3 segond, fade out epi retire
-    setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
-    }, 3000);
-  }
-});
-</script>
-
 </body>
 </html>

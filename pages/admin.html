@@ -160,59 +160,15 @@ body {
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginPanel">
-  <div class="login-card">
-    <h2>100PANIK <span style="color:var(--gold);">Admin</span></h2>
-    <form id="loginForm">
-      <label>Password</label>
-      <input type="password" id="password" required placeholder="Modpas admin">
-      <button type="submit">Sign In</button>
-    </form>
-    <p class="login-error" id="loginError">Incorrect password</p>
-  </div>
+<!-- INTRO OVERLAY AUTOMATIQUE -->
+<div id="introOverlay">
+  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
+  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
+  <p class="intro-sub">When the world panics, style stays calm</p>
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel">
-  <div class="admin-header">
-    <h1>100<span>PANIK</span> Admin</h1>
-    <button class="btn-outline" id="logoutBtn">Sign Out</button>
-  </div>
 
-  <div class="admin-tabs">
-    <button class="admin-tab active" data-tab="dashboard">📊 Dashboard</button>
-    <button class="admin-tab" data-tab="pub">📢 Pub / Promo</button>
-    <button class="admin-tab" data-tab="products">📦 Pwodwi</button>
-    <button class="admin-tab" data-tab="orders">🛒 Lòd</button>
-    <button class="admin-tab" data-tab="settings">⚙️ Anviwònman</button>
-  </div>
 
-  <!-- DASHBOARD -->
-  <div id="tab-dashboard" class="admin-panel active">
-    <h2 style="color:var(--gold); margin-bottom:25px;">Overview</h2>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total Lòd</div>
-        <div class="stat-value" id="statOrders">0</div>
-        <div class="stat-detail">Dènye: --</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Revni Total</div>
-        <div class="stat-value" id="statRevenue">$0.00</div>
-        <div class="stat-detail">Semèn pase: $0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Pwodwi Aktif</div>
-        <div class="stat-value" id="statProducts">0</div>
-        <div class="stat-detail">Stock total: 0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Kliyan</div>
-        <div class="stat-value" id="statCustomers">0</div>
-        <div class="stat-detail">Dènye lòd: --</div>
-      </div>
-    </div>
   </div>
 
   <!-- PUB -->
@@ -532,5 +488,23 @@ function loadAllData() {
 loadAllData();
 </script>
 <script src="/js/pwa.js"></script>
+
+
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    // Apre 3 segond, fade out epi retire
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.8s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 800);
+    }, 3000);
+  }
+});
+</script>
+
 </body>
 </html>
