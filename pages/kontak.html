@@ -153,5 +153,21 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
+    const INTRO_DURATION = 10000; // en millisecondes
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.8s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 800);
+    }, INTRO_DURATION);
+  }
+});
+</script>
+
 </body>
 </html>

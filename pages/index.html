@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<!-- INTRO OVERLAY AUTOMATIQUE -->
+<!-- INTRO OVERLAY LONGUE -->
 <div id="introOverlay">
   <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
   <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
@@ -20,82 +20,8 @@
 </div>
 
 
+<!-- INTRO OVERLAY AUTOMATIQUE -->
 
-  <div style="position:relative;z-index:10;text-align:center;padding:20px;">
-    <h1 style="font-family:var(--font-titr);font-size:clamp(2rem,6vw,4rem);color:var(--lò);margin-bottom:10px;">100<span style="color:var(--wouj-vif);">PANIK</span></h1>
-    <p style="color:var(--gri-klè);font-size:1.1rem;margin-bottom:30px;">Discover our latest drops</p>
-    <button id="skipSplashBtn" style="padding:15px 40px;background:var(--lò);color:var(--ble-pwofon);border:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-size:0.9rem;border-radius:4px;transition:0.3s;">Enter Site</button>
-  </div>
-</div>
-
-
-<!-- ===== HEADER ===== -->
-<header class="header-panik">
-  <div class="header-container">
-    <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" class="active">Home</a>
-      <a href="boutik.html">Shop</a>
-      <a href="koleksyon.html">Collection</a>
-      <a href="istwa.html">Our Story</a>
-      <a href="kontak.html">Contact</a>
-    </nav>
-    <div class="aksyon-header">
-      <a href="admin.html" class="icon-btn" style="opacity:0.35; font-size:1rem;" title="Admin">⚙</a>
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
-      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-
-
-<!-- ===== HERO (foto background) ===== -->
-<section class="hero-panik">
-  <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-kontni">
-    <p class="hero-eyebrow">The New Standard</p>
-    <h1 class="hero-tit">CALM IS <span style="color:#A0522D;">POWER</span></h1>
-    <p class="hero-slogan">Luxury streetwear for those who move in silence.</p>
-    <div class="hero-boutons">
-      <a href="boutik.html" class="btn-panik btn-primè">Shop the Drop</a>
-      <a href="koleksyon.html" class="btn-panik btn-segondè">Explore</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== MARQUEE ===== -->
-<div class="marquee-panik">
-  <div class="marquee-track">
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-  </div>
-</div>
-
-<!-- ===== PWODWI (3 kolòn) ===== -->
-<section class="seksyon-pwodwi">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon">The Edit</h2>
-    <p class="souti-seksyon">Curated pieces. Impeccable silence.</p>
-    <div class="grid-pwodwi" id="dynamicProducts">
-        <p class="loading" style="color:var(--gri-klè); text-align:center;">Loading products...</p>
-      </div>
-</section>
-
-<!-- ===== TESTIMONYAL ===== -->
-<section class="seksyon-temwayaj">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center;margin-bottom:2rem;">From the Streets</h2>
-    <div class="grid-temwayaj">
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"From the moment I put it on, I felt untouchable. 100PANIK is a statement."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">JK</div><div><p class="temwayaj-non">Jean-Karl</p><p class="temwayaj-vil">Port-au-Prince</p></div></div>
-      </div>
       <div class="kat-temwayaj">
         <div class="temwayaj-zetwal">★★★★★</div>
         <p class="temwayaj-tèks">"100PANIK isn't just fashion—it's a state of mind. Calm in chaos, always."</p>
@@ -359,6 +285,22 @@ window.addEventListener('DOMContentLoaded', () => {
       overlay.style.opacity = '0';
       setTimeout(() => overlay.remove(), 800);
     }, 3000);
+  }
+});
+</script>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
+    const INTRO_DURATION = 10000; // en millisecondes
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.8s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 800);
+    }, INTRO_DURATION);
   }
 });
 </script>

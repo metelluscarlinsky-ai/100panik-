@@ -160,7 +160,7 @@ body {
 </head>
 <body>
 
-<!-- INTRO OVERLAY AUTOMATIQUE -->
+<!-- INTRO OVERLAY LONGUE -->
 <div id="introOverlay">
   <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
   <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
@@ -168,78 +168,8 @@ body {
 </div>
 
 
+<!-- INTRO OVERLAY AUTOMATIQUE -->
 
-  </div>
-
-  <!-- PUB -->
-  <div id="tab-pub" class="admin-panel">
-    <h2 style="color:var(--gold); margin-bottom:20px;">Manage Ads</h2>
-    <div class="form-card">
-      <h3>Add New Ad</h3>
-      <form id="adForm">
-        <div class="form-group"><label class="form-label">Image</label><input type="file" id="adImage" accept="image/*" required class="form-input"></div>
-        <div class="form-group"><label class="form-label">Eyebrow (optional)</label><input type="text" id="adEyebrow" class="form-input" placeholder="Limited Release"></div>
-        <div class="form-group"><label class="form-label">Title</label><input type="text" id="adTitle" required class="form-input" placeholder="The Calm Before the Storm"></div>
-        <div class="form-group"><label class="form-label">Subtitle</label><input type="text" id="adSubtitle" class="form-input" placeholder="Bold streetwear for the fearless."></div>
-        <div class="form-group"><label class="form-label">Link</label><input type="text" id="adLink" value="boutik.html" class="form-input"></div>
-        <button type="submit" class="btn-save">Add Ad</button>
-      </form>
-    </div>
-    <div id="adsList" class="ads-grid"></div>
-  </div>
-
-  <!-- PRODUCTS -->
-  <div id="tab-products" class="admin-panel">
-    <h2 style="color:var(--gold); margin-bottom:20px;">Manage Products</h2>
-    <div class="form-card">
-      <h3>Add Product</h3>
-      <form id="productForm">
-        <div class="form-group"><label class="form-label">Name</label><input type="text" id="prodName" required class="form-input"></div>
-        <div class="form-group"><label class="form-label">Price (USD)</label><input type="number" id="prodPrice" step="0.01" required class="form-input"></div>
-        <div class="form-group"><label class="form-label">Category</label><select id="prodCategory" class="form-select"><option>Hoodie</option><option>T-Shirt</option><option>Pants</option><option>Cap</option></select></div>
-        <div class="form-group"><label class="form-label">Stock</label><input type="number" id="prodStock" value="10" class="form-input"></div>
-        <div class="form-group"><label class="form-label">Image (optional)</label><input type="file" id="prodImage" accept="image/*" class="form-input"></div>
-        <button type="submit" class="btn-save">Add Product</button>
-      </form>
-    </div>
-    <div class="table-wrap">
-      <table class="admin-table">
-        <thead><tr><th>Image</th><th>Name</th><th>Price</th><th>Category</th><th>Stock</th><th>Action</th></tr></thead>
-        <tbody id="productTable"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ORDERS -->
-  <div id="tab-orders" class="admin-panel">
-    <h2 style="color:var(--gold); margin-bottom:20px;">Orders</h2>
-    <div class="form-card" style="max-width:600px;">
-      <h3>Add Order (Manual)</h3>
-      <form id="orderForm">
-        <div class="form-group"><label class="form-label">Customer Name</label><input type="text" id="orderCustomer" required class="form-input"></div>
-        <div class="form-group"><label class="form-label">Phone</label><input type="text" id="orderPhone" class="form-input"></div>
-        <div class="form-group"><label class="form-label">Total</label><input type="number" id="orderTotal" step="0.01" required class="form-input"></div>
-        <button type="submit" class="btn-save">Add Order</button>
-      </form>
-    </div>
-    <div class="table-wrap">
-      <table class="admin-table">
-        <thead><tr><th>ID</th><th>Customer</th><th>Phone</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody id="orderTable"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- SETTINGS -->
-  <div id="tab-settings" class="admin-panel">
-    <h2 style="color:var(--gold); margin-bottom:20px;">Settings</h2>
-    <div class="form-card" style="max-width:500px;">
-      <div class="form-group"><label class="form-label">MonCash Number</label><input type="text" id="settingMoncash" value="32924776" class="form-input"></div>
-      <div class="form-group"><label class="form-label">Contact Email</label><input type="email" id="settingEmail" value="info@100panik.com" class="form-input"></div>
-      <button class="btn-save" onclick="saveSettings()">Save Settings</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // ==================== AUTHENTICATION ====================
@@ -502,6 +432,22 @@ window.addEventListener('DOMContentLoaded', () => {
       overlay.style.opacity = '0';
       setTimeout(() => overlay.remove(), 800);
     }, 3000);
+  }
+});
+</script>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    // Durée de l'intro : 10 secondes (ajustable jusqu'à 30 max)
+    const INTRO_DURATION = 10000; // en millisecondes
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.8s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 800);
+    }, INTRO_DURATION);
   }
 });
 </script>

@@ -7,16 +7,16 @@
 
 
 
+
 :root {
-  /* Palette luxe : gris crème, marron chocolat, blanc */
-  --wouj-vif: #A0522D;          /* Marron accent */
-  --wouj-fonse: #5C3A21;        /* Marron foncé */
-  --ble-pwofon: #3E2723;        /* Brun très foncé */
-  --ble-elektrik: #6D4C41;      /* Brun moyen */
-  --ble-cyan: #8D6E63;          /* Marron gris */
+  --wouj-vif: #A0522D;       /* Marron accent */
+  --wouj-fonse: #5C3A21;     /* Marron foncé */
+  --ble-pwofon: #3E2723;     /* Brun très foncé */
+  --ble-elektrik: #6D4C41;   /* Brun moyen */
+  --ble-cyan: #8D6E63;       /* Marron gris */
   --blan: #FFFFFF;
-  --gri-klè: #F5F0E6;           /* Crème clair */
-  --lò: #D4A373;                /* Doré doux (beige doré) */
+  --gri-klè: #F5F0E6;        /* Crème clair */
+  --lò: #D4A373;             /* Doré doux */
   --gradient-panik: linear-gradient(135deg, #A0522D 0%, #3E2723 100%);
   --gradient-overlay: linear-gradient(135deg, rgba(62,39,35,0.75) 0%, rgba(92,58,33,0.75) 100%);
   --gradient-lò: linear-gradient(135deg, #D4A373 0%, #B08D6A 100%);
@@ -31,6 +31,7 @@
   --shadow-lò: 0 8px 25px rgba(212,163,115,0.3);
   --shadow-glass: 0 8px 32px rgba(0,0,0,0.15);
 }
+
 
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -821,3 +822,53 @@ h1, h2, h3, h4 {
   transition: transform 0.3s;
 }
 #installBtn:hover { transform: scale(1.05); }
+
+/* ===== INTRO LONGUE AUTOMATIQUE ===== */
+#introOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #F5F0E6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#introOverlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.intro-logo {
+  width: 220px;
+  height: auto;
+  animation: introLogoAnim 3s ease-in-out infinite;
+}
+@keyframes introLogoAnim {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { transform: scale(1.05) rotate(-2deg); opacity: 0.9; }
+  50% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+  75% { transform: scale(1.02) rotate(-1deg); opacity: 0.8; }
+}
+.intro-title {
+  font-family: var(--font-titr);
+  font-size: 3rem;
+  color: #3E2723;
+  margin-top: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  animation: fadeInText 2s ease-out;
+}
+.intro-sub {
+  color: #8D6E63;
+  margin: 15px 0 40px;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  animation: fadeInText 3s ease-out;
+}
+@keyframes fadeInText {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
