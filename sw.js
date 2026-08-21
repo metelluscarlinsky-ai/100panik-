@@ -1,5 +1,5 @@
 
-const CACHE_NAME = '100panik-v1';
+const CACHE_NAME = '100panik-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/pages/index.html',
