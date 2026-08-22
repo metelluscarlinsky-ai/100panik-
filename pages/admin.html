@@ -159,6 +159,7 @@ body {
 </style>
 </head>
 <body>
+<div id="toastContainer"></div>
 
 
 
@@ -168,6 +169,21 @@ body {
 
 
 
+
+<script src="/js/notifications.js"></script>
+<script src="/js/supabase-config.js"></script>
+
+<script>
+// Realtime subscription for new orders
+supabase
+  .channel('admin_orders_changes')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'admin_orders' }, (payload) => {
+    showToast('🔔 Nouvo lòd resevwa! #' + payload.new.id.slice(0,8), 'info');
+    if (typeof loadOrders === 'function') loadOrders();
+    if (typeof loadAllData === 'function') loadAllData();
+  })
+  .subscribe();
+</script>
 
 </body>
 </html>

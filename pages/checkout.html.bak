@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="theme-color" content="#0B1D3A">
+<link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | 100PANIK</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+</head>
+<body>
+
+
+
+
+<!-- INSTALL APP BUTTON (visible si disponible) -->
+<button id="installBtn">📱 Install App</button>
+
+
+<header class="header-panik">
+  <div class="header-container">
+    <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
+    <nav class="nav-panik" id="navPanik">
+      <a href="index.html" >Home</a>
+      <a href="boutik.html" >Shop</a>
+      <a href="koleksyon.html" >Collection</a>
+      <a href="istwa.html" >Our Story</a>
+      <a href="kontak.html" >Contact</a>
+    </nav>
+    <div class="aksyon-header">
+      <a href="konekte.html" class="icon-btn">👤</a>
+      <a href="panye.html" class="icon-btn">🛒</a>
+      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="padding-top:90px;">
+
+<section class="seksyon-pwodwi">
+  <div class="konteni-limit" style="max-width:800px;">
+    <h1 class="tit-seksyon">Checkout</h1>
+    <div id="cartSummary" style="background:rgba(255,255,255,0.05);padding:25px;margin-bottom:30px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;"></div>
+    <form id="checkoutForm" style="background:rgba(255,255,255,0.05);padding:40px;border:1px solid rgba(255,255,255,0.12);border-radius:16px;">
+      <h2 style="margin-bottom:25px;">Shipping Information</h2>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Full Name</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Phone</label><input type="tel" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">Address</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <div style="margin-bottom:30px;"><label style="color:var(--gri-klè);display:block;margin-bottom:8px;">City</label><input type="text" required style="width:100%;background:transparent;border:none;border-bottom:2px solid #333;padding:12px 0;color:#fff;font-size:1rem;outline:none;"></div>
+      <h2 style="margin-bottom:25px;">Payment Method</h2>
+      <div style="background:rgba(212,197,169,0.05);padding:25px;border:2px solid var(--lò);margin-bottom:30px;border-radius:8px;">
+        <p style="color:var(--lò);font-weight:700;font-size:1.2rem;margin-bottom:10px;">💰 MonCash</p>
+        <p style="color:var(--gri-klè);">Number: <strong style="color:var(--lò);font-size:1.5rem;">32924776</strong></p>
+        <p style="color:#aaa;margin-top:10px;">Name: 100PANIK LLC</p>
+      </div>
+      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Confirm Order</button>
+    </form>
+  </div>
+</section>
+
+
+</body>
+</html>
