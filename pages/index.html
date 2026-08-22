@@ -12,21 +12,16 @@
 </head>
 <body>
 
-<!-- INTRO OVERLAY (Index only) -->
-<div id="introOverlay">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" class="intro-logo">
-  <h1 class="intro-title">100<span style="color:#A0522D;">PANIK</span></h1>
-  <p class="intro-sub">When the world panics, style stays calm</p>
+<!-- INTRO OVERLAY (5s) -->
+<div id="introOverlay" style="position:fixed; inset:0; z-index:99999; background:#F5F0E6; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.5s ease;">
+  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" style="width:180px; height:auto; animation:introLogo 2s ease-in-out;">
+  <h1 style="font-family:var(--font-titr, 'Space Grotesk', sans-serif); font-size:2.5rem; color:#3E2723; margin-top:20px; letter-spacing:0.4em;">100<span style="color:#A0522D;">PANIK</span></h1>
+  <p style="color:#8D6E63; letter-spacing:0.3em; text-transform:uppercase; margin-top:10px;">When the world panics, style stays calm</p>
 </div>
 
 
-<!-- INTRO OVERLAY LONGUE -->
+<!-- INTRO OVERLAY (Index only) -->
 
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"Every drop sells out. If you hesitate, you lose. That's the 100PANIK effect."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">DP</div><div><p class="temwayaj-non">Daphney</p><p class="temwayaj-vil">Pétion-Ville</p></div></div>
-      </div>
     </div>
   </div>
 </section>
@@ -42,6 +37,17 @@
 </section>
 
 <!-- ===== FOOTER ===== -->
+
+<!-- PUB / ADS SECTION -->
+<section class="seksyon-pwodwi" id="adsSection">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:30px;">Featured Drops</h2>
+    <div id="adsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:25px;">
+      <p style="color:#A0A0A0;">Loading ads...</p>
+    </div>
+  </div>
+</section>
+
 <footer class="footer-panik">
   <div class="konteni-limit">
     <div class="grid-footer">
@@ -84,15 +90,77 @@
 
 
 
+
+
+
+
+
+<script src="/js/supabase-config.js"></script>
+
+<script>
+async function loadProducts() {
+  const container = document.getElementById('dynamicProducts');
+  if (!container) return;
+  container.innerHTML = '<p style="color:#A0A0A0;">Loading products...</p>';
+  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+  if (error) {
+    console.error('Supabase products error:', error);
+    container.innerHTML = '<p style="color:#B71C1C;">Error loading products. Please refresh.</p>';
+    return;
+  }
+  if (data.length === 0) {
+    container.innerHTML = '<p style="color:#5C3A21;">No products yet. Check back soon.</p>';
+    return;
+  }
+  container.innerHTML = data.map(p => `
+    <article class="kat-pwodwi">
+      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}" onerror="this.src='../assets/images/products/product-1.svg'"></div>
+      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
+      <div class="pwodwi-enfo">
+        <p class="pwodwi-kategori">${p.category}</p>
+        <h3 class="pwodwi-non">${p.name}</h3>
+        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
+        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
+      </div>
+    </article>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+
+
+<script>
+async function loadAds() {
+  const container = document.getElementById('adsGrid');
+  if (!container) return;
+  const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    container.innerHTML = '<p style="color:#5C3A21;">No featured drops right now.</p>';
+    return;
+  }
+  container.innerHTML = data.map(ad => `
+    <div class="ad-card" style="background:rgba(255,255,255,0.7); border:1px solid rgba(160,82,45,0.2); border-radius:12px; overflow:hidden; transition:transform 0.3s;">
+      <img src="${ad.image_url}" alt="${ad.title}" style="width:100%; height:180px; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
+      <div style="padding:15px;">
+        <h3 style="color:#3E2723; font-size:1.1rem; font-weight:700;">${ad.title}</h3>
+        <p style="color:#5C3A21; font-size:0.9rem; margin:5px 0;">${ad.subtitle || ''}</p>
+        <a href="${ad.link || 'boutik.html'}" style="color:#A0522D; font-weight:600;">Shop Now →</a>
+      </div>
+    </div>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded', loadAds);
+</script>
+
+
 <script>
 window.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('introOverlay');
   if (overlay) {
-    const INTRO_DURATION = 10000; // 10 secondes (modifier pour plus)
+    const INTRO_DURATION = 5000; // 5 secondes
     setTimeout(() => {
-      overlay.style.transition = 'opacity 0.8s ease';
       overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 800);
+      setTimeout(() => overlay.remove(), 500);
     }, INTRO_DURATION);
   }
 });
