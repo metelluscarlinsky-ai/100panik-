@@ -93,18 +93,7 @@
 
 
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    const INTRO_DURATION = 5000; // 5 secondes
-    setTimeout(() => {
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 500);
-    }, INTRO_DURATION);
-  }
-});
-</script>
+
 
 <script src="/js/supabase-config.js"></script>
 
@@ -161,6 +150,20 @@ async function loadAds() {
   `).join('');
 }
 document.addEventListener('DOMContentLoaded', loadAds);
+</script>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('introOverlay');
+  if (overlay) {
+    const INTRO_DURATION = 5000; // 5 secondes
+    setTimeout(() => {
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 500);
+    }, INTRO_DURATION);
+  }
+});
 </script>
 
 </body>
