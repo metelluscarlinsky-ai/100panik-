@@ -6,44 +6,104 @@
     <title>Admin | 100PANIK</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        .admin-tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; }
-        .admin-tab { padding:14px 25px; background:rgba(255,255,255,0.7); border:1px solid #A0522D; color:#3E2723; cursor:pointer; font-weight:600; border-radius:6px; }
-        .admin-tab.active { background:#A0522D; color:#F5F0E6; }
-        .admin-panel { display:none; }
-        .admin-panel.active { display:block; }
-        .color-input { width:60px; height:40px; border:1px solid #ddd; padding:2px; }
-        .form-group { margin-bottom:15px; }
-        label { display:block; margin-bottom:5px; color:#3E2723; }
+        body { background: #F5F0E6; font-family: sans-serif; }
+        #loginPanel {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-box {
+            background: #3E2723;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-box h2 { color: #F5F0E6; margin-bottom: 20px; }
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 4px;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #D4A373;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #loginError { color: red; display: none; }
+        #adminPanel {
+            display: none;
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .admin-tab {
+            padding: 12px 25px;
+            background: #fff;
+            border: 1px solid #A0522D;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .admin-tab.active {
+            background: #A0522D;
+            color: #fff;
+        }
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { background: #A0522D; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .list-item { padding: 10px; border-bottom: 1px solid #ddd; }
     </style>
 </head>
 <body>
+
 <!-- LOGIN -->
-<div id="loginPanel" style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:#F5F0E6;">
-    <div style="background:#3E2723; padding:40px; max-width:400px; width:100%; border-radius:12px; text-align:center;">
-        <h2 style="color:#F5F0E6;">🔐 Admin</h2>
+<div id="loginPanel">
+    <div class="login-box">
+        <h2>🔐 Admin 100PANIK</h2>
         <form id="loginForm">
-            <div style="margin-bottom:15px; text-align:left;"><label style="color:#F5F0E6;">Email</label><input type="email" id="email" required style="width:100%; padding:12px; margin-top:5px; border:none; border-radius:4px;"></div>
-            <div style="margin-bottom:20px; text-align:left;"><label style="color:#F5F0E6;">Password</label><input type="password" id="password" required style="width:100%; padding:12px; margin-top:5px; border:none; border-radius:4px;"></div>
-            <button type="submit" style="width:100%; padding:14px; background:#D4A373; border:none; border-radius:4px; font-weight:700;">Sign In</button>
+            <input type="password" id="password" placeholder="Mot de passe admin" required>
+            <button type="submit">Se connecter</button>
         </form>
-        <p id="loginError" style="color:red; display:none;">Invalid credentials or not admin</p>
+        <p id="loginError">Mot de passe incorrect</p>
+        <p style="color:#aaa; margin-top:10px;">Mot de passe : 100panik</p>
     </div>
 </div>
 
 <!-- ADMIN PANEL -->
-<div id="adminPanel" style="display:none; max-width:1200px; margin:auto; padding:30px 20px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+<div id="adminPanel">
+    <div class="admin-header">
         <h1 style="color:#3E2723;">Admin Panel</h1>
-        <button id="logoutBtn" style="padding:10px 20px; background:transparent; border:1px solid #3E2723; border-radius:4px;">Sign Out</button>
+        <button class="btn" id="logoutBtn">Déconnexion</button>
     </div>
 
-    <!-- Onglets -->
     <div class="admin-tabs">
         <button class="admin-tab active" data-tab="dashboard">📊 Dashboard</button>
-        <button class="admin-tab" data-tab="colors">🎨 Couleurs</button>
-        <button class="admin-tab" data-tab="ads">📢 Pub</button>
+        <button class="admin-tab" data-tab="ads">📢 Pubs</button>
         <button class="admin-tab" data-tab="products">📦 Produits</button>
         <button class="admin-tab" data-tab="orders">🛒 Commandes</button>
     </div>
@@ -51,27 +111,12 @@
     <!-- Dashboard -->
     <div id="tab-dashboard" class="admin-panel active">
         <h2>Vue d'ensemble</h2>
-        <p>Bienvenue dans l'admin. Utilisez les onglets pour gérer les couleurs, les pubs, les produits et les commandes.</p>
+        <p>Bienvenue ! Vous pouvez gérer les pubs, les produits et voir les commandes.</p>
     </div>
 
-    <!-- Couleurs -->
-    <div id="tab-colors" class="admin-panel">
-        <h2>Personnaliser les couleurs</h2>
-        <form id="colorsForm">
-            <div class="form-group"><label>Couleur d'accent (boutons, liens)</label><input type="color" id="accent_color" class="color-input"></div>
-            <div class="form-group"><label>Fond de page</label><input type="color" id="bg_color" class="color-input"></div>
-            <div class="form-group"><label>Couleur du texte</label><input type="color" id="text_color" class="color-input"></div>
-            <div class="form-group"><label>Couleur dorée (détails)</label><input type="color" id="gold_color" class="color-input"></div>
-            <div class="form-group"><label>Fond du header</label><input type="color" id="header_bg" class="color-input"></div>
-            <button type="submit" style="padding:12px 30px; background:#A0522D; color:#F5F0E6; border:none; border-radius:4px;">Enregistrer</button>
-        </form>
-    </div>
-
-    <!-- Pub (simplifié) -->
+    <!-- Pubs -->
     <div id="tab-ads" class="admin-panel">
         <h2>Gestion des pubs</h2>
-        <p>Vous pouvez ajouter ou supprimer des pubs ici.</p>
-        <!-- Formulaire d'ajout d'annonce (image, titre, lien) -->
         <form id="adForm">
             <div class="form-group"><label>Image URL</label><input type="text" id="adImageUrl" required></div>
             <div class="form-group"><label>Titre</label><input type="text" id="adTitle" required></div>
@@ -81,10 +126,9 @@
         <div id="adsList" style="margin-top:20px;"></div>
     </div>
 
-    <!-- Produits (simplifié) -->
+    <!-- Produits -->
     <div id="tab-products" class="admin-panel">
         <h2>Gestion des produits</h2>
-        <p>Ajoutez ou supprimez des produits.</p>
         <form id="productForm">
             <div class="form-group"><label>Nom</label><input type="text" id="prodName" required></div>
             <div class="form-group"><label>Prix</label><input type="number" id="prodPrice" step="0.01" required></div>
@@ -101,39 +145,37 @@
     </div>
 </div>
 
-<script src="../js/supabase-config.js"></script>
 <script>
-// Login
-async function tryLogin(email, password) {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return false;
-    return data.user.user_metadata?.role === 'admin';
-}
+// === AUTHENTIFICATION ===
+const CORRECT_PASSWORD = '100panik';
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const success = await tryLogin(email, password) || password === '100panik';
-    if (success) {
+    const pwd = document.getElementById('password').value;
+    if (pwd === CORRECT_PASSWORD) {
         document.getElementById('loginPanel').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
-        loadColors();
-        loadAdsAdmin();
-        loadProductsAdmin();
-        loadOrdersAdmin();
+        sessionStorage.setItem('admin_auth', 'true');
+        loadAll();
     } else {
         document.getElementById('loginError').style.display = 'block';
     }
 });
 
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-    await supabase.auth.signOut();
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    sessionStorage.removeItem('admin_auth');
     document.getElementById('loginPanel').style.display = 'flex';
     document.getElementById('adminPanel').style.display = 'none';
 });
 
-// Tabs
+// Auto-login
+if (sessionStorage.getItem('admin_auth') === 'true') {
+    document.getElementById('loginPanel').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAll();
+}
+
+// === TABS ===
 document.querySelectorAll('.admin-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -143,100 +185,95 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
-// Couleurs
-async function loadColors() {
-    const { data, error } = await supabase.from('site_settings').select('*').eq('id', 1).single();
-    if (!error && data) {
-        document.getElementById('accent_color').value = data.accent_color || '#A0522D';
-        document.getElementById('bg_color').value = data.bg_color || '#F5F0E6';
-        document.getElementById('text_color').value = data.text_color || '#3E2723';
-        document.getElementById('gold_color').value = data.gold_color || '#D4A373';
-        document.getElementById('header_bg').value = data.header_bg || '#3E2723';
-    }
-}
+// === DATA (localStorage) ===
+let ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+let products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
+let orders = JSON.parse(localStorage.getItem('100panik_orders') || '[]');
 
-document.getElementById('colorsForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const updates = {
-        accent_color: document.getElementById('accent_color').value,
-        bg_color: document.getElementById('bg_color').value,
-        text_color: document.getElementById('text_color').value,
-        gold_color: document.getElementById('gold_color').value,
-        header_bg: document.getElementById('header_bg').value
-    };
-    const { error } = await supabase.from('site_settings').update(updates).eq('id', 1);
-    if (!error) alert('✅ Couleurs enregistrées !');
-    else alert('Erreur : ' + error.message);
-});
-
-// Ads (simplifié)
-async function loadAdsAdmin() {
-    const { data, error } = await supabase.from('ads').select('*');
+// === RENDER FUNCTIONS ===
+function loadAds() {
     const container = document.getElementById('adsList');
     container.innerHTML = '';
-    if (!error && data) {
-        data.forEach(ad => {
-            container.innerHTML += `<div>${ad.title} - <a href="${ad.link}">${ad.link}</a> <button onclick="deleteAd('${ad.id}')">Suppr</button></div>`;
-        });
+    if (ads.length === 0) {
+        container.innerHTML = '<p>Aucune pub.</p>';
+        return;
     }
+    ads.forEach((ad, i) => {
+        container.innerHTML += `<div class="list-item">${ad.title} - <button onclick="deleteAd(${i})">Suppr</button></div>`;
+    });
 }
-window.deleteAd = async (id) => { await supabase.from('ads').delete().eq('id', id); loadAdsAdmin(); };
-document.getElementById('adForm').addEventListener('submit', async (e) => {
+
+window.deleteAd = function(index) {
+    ads.splice(index, 1);
+    localStorage.setItem('100panik_ads', JSON.stringify(ads));
+    loadAds();
+};
+
+document.getElementById('adForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const image_url = document.getElementById('adImageUrl').value;
-    const title = document.getElementById('adTitle').value;
-    const link = document.getElementById('adLink').value;
-    await supabase.from('ads').insert({ image_url, title, link });
-    loadAdsAdmin();
+    const newAd = {
+        image_url: document.getElementById('adImageUrl').value,
+        title: document.getElementById('adTitle').value,
+        link: document.getElementById('adLink').value
+    };
+    ads.push(newAd);
+    localStorage.setItem('100panik_ads', JSON.stringify(ads));
+    loadAds();
+    this.reset();
 });
 
-// Products (simplifié)
-async function loadProductsAdmin() {
-    const { data, error } = await supabase.from('admin_products').select('*');
+// Products
+function loadProducts() {
     const container = document.getElementById('productsList');
     container.innerHTML = '';
-    if (!error && data) {
-        data.forEach(p => {
-            container.innerHTML += `<div>${p.name} - $${p.price} <button onclick="deleteProduct('${p.id}')">Suppr</button></div>`;
-        });
+    if (products.length === 0) {
+        container.innerHTML = '<p>Aucun produit.</p>';
+        return;
     }
+    products.forEach((p, i) => {
+        container.innerHTML += `<div class="list-item">${p.name} - $${p.price} <button onclick="deleteProduct(${i})">Suppr</button></div>`;
+    });
 }
-window.deleteProduct = async (id) => { await supabase.from('admin_products').delete().eq('id', id); loadProductsAdmin(); };
-document.getElementById('productForm').addEventListener('submit', async (e) => {
+
+window.deleteProduct = function(index) {
+    products.splice(index, 1);
+    localStorage.setItem('100panik_products', JSON.stringify(products));
+    loadProducts();
+};
+
+document.getElementById('productForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const name = document.getElementById('prodName').value;
-    const price = parseFloat(document.getElementById('prodPrice').value);
-    const category = document.getElementById('prodCategory').value;
-    await supabase.from('admin_products').insert({ name, price, category, stock: 10 });
-    loadProductsAdmin();
+    const newProduct = {
+        name: document.getElementById('prodName').value,
+        price: parseFloat(document.getElementById('prodPrice').value),
+        category: document.getElementById('prodCategory').value,
+        stock: 10,
+        image: '../assets/images/products/product-1.svg'
+    };
+    products.push(newProduct);
+    localStorage.setItem('100panik_products', JSON.stringify(products));
+    loadProducts();
+    this.reset();
 });
 
-// Orders (simplifié)
-async function loadOrdersAdmin() {
-    const { data, error } = await supabase.from('admin_orders').select('*');
+// Orders
+function loadOrders() {
     const container = document.getElementById('ordersList');
     container.innerHTML = '';
-    if (!error && data) {
-        data.forEach(o => {
-            container.innerHTML += `<div>#${o.id.slice(0,8)} - ${o.customer_name} - $${o.total} - ${o.status}</div>`;
-        });
-    } else {
-        container.innerHTML = 'Aucune commande.';
+    if (orders.length === 0) {
+        container.innerHTML = '<p>Aucune commande.</p>';
+        return;
     }
+    orders.forEach((o, i) => {
+        container.innerHTML += `<div class="list-item">#${i+1} - ${o.customer_name} - $${o.total} - ${o.status}</div>`;
+    });
 }
 
-// Auto-login
-(async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session && session.user.user_metadata?.role === 'admin') {
-        document.getElementById('loginPanel').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        loadColors();
-        loadAdsAdmin();
-        loadProductsAdmin();
-        loadOrdersAdmin();
-    }
-})();
+function loadAll() {
+    loadAds();
+    loadProducts();
+    loadOrders();
+}
 </script>
 </body>
 </html>
