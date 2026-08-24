@@ -220,9 +220,18 @@ let produitsAffiches = [];
 
 // Fonction pour charger les produits (Supabase ou fallback)
 async function chargerProduits() {
-    const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
-    if (!error && data && data.length > 0) {
-        tousLesProduits = data;
+        const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+        if (!error && data && data.length > 0) {
+            tousLesProduits = data;
+        } else {
+            tousLesProduits = [
+                { id: '1', name: 'Hoodie Calm', price: 189, category: 'Hoodie', image: '../assets/images/products/product-1.svg' },
+                { id: '2', name: 'T-Shirt Silence', price: 89, category: 'T-Shirt', image: '../assets/images/products/product-2.svg' },
+                { id: '3', name: 'Pantalon Clean', price: 149, category: 'Pants', image: '../assets/images/products/product-3.svg' },
+                { id: '4', name: 'Casquette Crown', price: 59, category: 'Cap', image: '../assets/images/products/product-4.svg' }
+            ];
+        }
+        appliquerFiltres();
     } else {
         // Fallback produits statiques
         tousLesProduits = [
