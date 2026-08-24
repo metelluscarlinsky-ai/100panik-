@@ -289,5 +289,17 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProducts();
 });
 </script>
+
+async function loadColors() {
+    const { data, error } = await supabase.from('site_settings').select('*').eq('id', 1).single();
+    if (!error && data) {
+        document.documentElement.style.setProperty('--wouj-vif', data.accent_color || '#A0522D');
+        document.documentElement.style.setProperty('--ble-pwofon', data.header_bg || '#3E2723');
+        document.documentElement.style.setProperty('--gri-klè', data.bg_color || '#F5F0E6');
+        document.documentElement.style.setProperty('--lò', data.gold_color || '#D4A373');
+    }
+}
+document.addEventListener('DOMContentLoaded', loadColors);
+
 </body>
 </html>
