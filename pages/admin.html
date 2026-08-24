@@ -1,60 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin | 100PANIK</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8">
+    <title>Admin | 100PANIK</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="loginPanel" style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg, #F5F0E6);">
-  <div style="background:var(--ble-pwofon, #3E2723); padding:50px 40px; max-width:420px; width:100%; border-radius:12px; text-align:center;">
-    <h2 style="color:var(--gri-klè, #F5F0E6); margin-bottom:25px;">🔐 Admin 100PANIK</h2>
+<div id="loginPanel" style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:#F5F0E6;">
+  <div style="background:#3E2723; padding:50px 40px; max-width:420px; width:100%; border-radius:12px; text-align:center;">
+    <h2 style="color:#F5F0E6;">🔐 Admin 100PANIK</h2>
     <form id="loginForm">
-      <div style="margin-bottom:20px; text-align:left;">
-        <label style="color:var(--gri-klè, #F5F0E6); font-size:0.8rem;">Email</label>
-        <input type="email" id="email" required style="width:100%; padding:12px; margin-top:5px; border:none; border-radius:4px;">
-      </div>
-      <div style="margin-bottom:25px; text-align:left;">
-        <label style="color:var(--gri-klè, #F5F0E6); font-size:0.8rem;">Password</label>
-        <input type="password" id="password" required style="width:100%; padding:12px; margin-top:5px; border:none; border-radius:4px;">
-      </div>
-      <button type="submit" style="width:100%; padding:14px; background:var(--lò, #D4A373); border:none; border-radius:4px; font-weight:700;">Sign In</button>
+      <div style="margin-bottom:20px; text-align:left;"><label style="color:#F5F0E6;">Email</label><input type="email" id="email" required style="width:100%; padding:12px; margin-top:5px;"></div>
+      <div style="margin-bottom:25px; text-align:left;"><label style="color:#F5F0E6;">Password</label><input type="password" id="password" required style="width:100%; padding:12px; margin-top:5px;"></div>
+      <button type="submit" style="width:100%; padding:14px; background:#D4A373; border:none; font-weight:700;">Sign In</button>
     </form>
-    <p id="loginError" style="color:red; display:none; margin-top:10px;">Invalid credentials or not admin</p>
+    <p id="loginError" style="color:red; display:none;">Invalid credentials or not admin</p>
   </div>
 </div>
 <div id="adminPanel" style="display:none; max-width:1200px; margin:auto; padding:40px 20px;">
-  <h1 style="color:var(--ble-pwofon, #3E2723);">Admin Panel</h1>
-  <button id="logoutBtn" style="margin:20px 0; padding:10px 20px; background:transparent; border:1px solid #3E2723; border-radius:4px;">Sign Out</button>
-  <p>Byenveni nan panèl admin an.</p>
+  <h1>Admin Panel</h1>
+  <button id="logoutBtn">Sign Out</button>
+  <p>Bienvenue !</p>
 </div>
+
 <script src="../js/supabase-config.js"></script>
 <script>
+async function trySupabaseLogin(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) return false;
+  const user = data.user;
+  if (user.user_metadata?.role === 'admin') return true;
+  await supabase.auth.signOut();
+  return false;
+}
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) {
-    document.getElementById('loginError').style.display = 'block';
+  
+  // Essaie Supabase d'abord
+  const supabaseSuccess = await trySupabaseLogin(email, password);
+  if (supabaseSuccess) {
+    document.getElementById('loginPanel').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
     return;
   }
-  const user = data.user;
-  if (user.user_metadata?.role !== 'admin') {
-    document.getElementById('loginError').style.display = 'block';
-    await supabase.auth.signOut();
+  
+  // Fallback local (mot de passe 100panik)
+  if (password === '100panik') {
+    document.getElementById('loginPanel').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
     return;
   }
-  document.getElementById('loginPanel').style.display = 'none';
-  document.getElementById('adminPanel').style.display = 'block';
+  
+  document.getElementById('loginError').style.display = 'block';
 });
+
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   await supabase.auth.signOut();
   document.getElementById('loginPanel').style.display = 'flex';
   document.getElementById('adminPanel').style.display = 'none';
 });
+
+// Auto-login si session Supabase active
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
   if (session && session.user.user_metadata?.role === 'admin') {
