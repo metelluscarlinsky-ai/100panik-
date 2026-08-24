@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin | 100PANIK</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
@@ -25,13 +26,21 @@
     <p id="loginError" style="color:red; display:none; margin-top:10px;">Invalid credentials or not admin</p>
   </div>
 </div>
+
 <div id="adminPanel" style="display:none; max-width:1200px; margin:auto; padding:40px 20px;">
   <h1 style="color:var(--ble-pwofon, #3E2723);">Admin Panel</h1>
   <button id="logoutBtn" style="margin:20px 0; padding:10px 20px; background:transparent; border:1px solid #3E2723; border-radius:4px;">Sign Out</button>
+  <!-- Ou ka ajoute tab ak lòt bagay pita -->
   <p>Byenveni nan panèl admin an.</p>
 </div>
-<script src="../js/supabase-config.js"></script>
+
 <script>
+// Initialisation Supabase
+const supabase = window.supabase.createClient(
+  "https://fwkbbcizkqajvlgnswka.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3a2JiY2l6a3FhanZsZ25zd2thIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzMDM0MDQsImV4cCI6MjEwMTg3OTQwNH0.B0mABdA0AF-mDZKEMHNiAjPFEiRkGKibx4_5cN5bk8U"
+);
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
@@ -42,6 +51,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     return;
   }
   const user = data.user;
+  // Vérifier wòl admin
   if (user.user_metadata?.role !== 'admin') {
     document.getElementById('loginError').style.display = 'block';
     await supabase.auth.signOut();
@@ -50,11 +60,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   document.getElementById('loginPanel').style.display = 'none';
   document.getElementById('adminPanel').style.display = 'block';
 });
+
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   await supabase.auth.signOut();
   document.getElementById('loginPanel').style.display = 'flex';
   document.getElementById('adminPanel').style.display = 'none';
 });
+
+// Auto-login si session deja aktif
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
   if (session && session.user.user_metadata?.role === 'admin') {

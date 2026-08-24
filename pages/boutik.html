@@ -1,74 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="theme-color" content="#0B1D3A">
-<link rel="manifest" href="/manifest.json">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop | 100PANIK</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+    <meta charset="UTF-8">
+    <title>Shop | 100PANIK</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="toastContainer"></div>
-
-
-
-
-<!-- INSTALL APP BUTTON (visible si disponible) -->
-<button id="installBtn">📱 Install App</button>
-
-
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" >Home</a>
-      <a href="boutik.html" class="active">Shop</a>
-      <a href="koleksyon.html" >Collection</a>
-      <a href="istwa.html" >Our Story</a>
-      <a href="kontak.html" >Contact</a>
+    <nav class="nav-panik">
+      <a href="index.html">Home</a><a href="boutik.html" class="active">Shop</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Story</a><a href="kontak.html">Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
       <a href="panye.html" class="icon-btn">🛒</a>
-      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </div>
 </header>
-
-<main style="padding-top:90px;">
-
-<section class="seksyon-pwodwi">
+<main style="padding-top:120px;">
   <div class="konteni-limit">
     <h1 class="tit-seksyon">Shop</h1>
-    <p class="souti-seksyon">Explore the collection. Choose your pieces.</p>
-    <div class="grid-pwodwi">
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-1.svg" alt=""></div>
-        <span class="badge-pwodwi badge-nouvo">New</span>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Hoodie</p><h3 class="pwodwi-non">The Calm Before the Storm</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$189.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('1','The Calm Before the Storm',189)">Add to Cart</button></div>
-      </article>
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-2.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">T-Shirt</p><h3 class="pwodwi-non">Echoes of Silence</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$89.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('2','Echoes of Silence',89)">Add to Cart</button></div>
-      </article>
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-3.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Pants</p><h3 class="pwodwi-non">Clean Lines, Calm Mind</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$149.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('3','Clean Lines, Calm Mind',149)">Add to Cart</button></div>
-      </article>
-      <article class="kat-pwodwi">
-        <div class="pwodwi-img-wrap"><img src="../assets/images/products/product-4.svg" alt=""></div>
-        <div class="pwodwi-enfo"><p class="pwodwi-kategori">Cap</p><h3 class="pwodwi-non">Crown of Calm</h3><div class="pwodwi-pri-liy"><span class="pwodwi-pri">$59.00</span></div><button class="btn-ajoute-panye" onclick="addToCart('4','Crown of Calm',59)">Add to Cart</button></div>
-      </article>
+    <div class="grid-pwodwi" id="dynamicProducts">
+      <p style="color:#5C3A21;">Loading products...</p>
     </div>
   </div>
-</section>
-
-
-<script src="/js/notifications.js"></script>
+</main>
+<script src="../js/supabase-config.js"></script>
+<script>
+async function loadProducts() {
+  const container = document.getElementById('dynamicProducts');
+  if (!container) return;
+  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+  if (error) {
+    container.innerHTML = '<p style="color:#B71C1C;">Error loading products.</p>';
+    return;
+  }
+  if (data.length === 0) {
+    container.innerHTML = '<p style="color:#5C3A21;">No products yet.</p>';
+    return;
+  }
+  container.innerHTML = data.map(p => `
+    <article class="kat-pwodwi">
+      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}" onerror="this.src='../assets/images/products/product-1.svg'"></div>
+      <div class="pwodwi-enfo">
+        <p class="pwodwi-kategori">${p.category}</p>
+        <h3 class="pwodwi-non">${p.name}</h3>
+        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
+        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
+      </div>
+    </article>
+  `).join('');
+}
+function addToCart(id, name, price) {
+  let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+  const exist = cart.find(i => i.id === id);
+  if(exist) exist.quantity++;
+  else cart.push({id, name, price, quantity:1});
+  localStorage.setItem('100panik_cart', JSON.stringify(cart));
+  alert('✅ Added to cart!');
+}
+document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
 </body>
 </html>

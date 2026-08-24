@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100PANIK | When the World Panics, Style Stays Calm</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- PUB SPLASH FULLSCREEN -->
+<div id="pubSplash" style="position:fixed; inset:0; z-index:99998; background:#0B1D3A; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+  <div id="splashSlider" style="position:absolute; inset:0; width:100%; height:100%;">
+    <div id="splashTrack" style="display:flex; height:100%; transition:transform 0.7s cubic-bezier(0.25,0.8,0.25,1);"></div>
+    <button class="splash-arrow splash-prev" onclick="moveSplash(-1)" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid rgba(212,175,55,0.4); color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10; font-size:1.5rem;">&#10094;</button>
+    <button class="splash-arrow splash-next" onclick="moveSplash(1)" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid rgba(212,175,55,0.4); color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10; font-size:1.5rem;">&#10095;</button>
+    <div id="splashDots" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:12px; z-index:10;"></div>
+  </div>
+  <button id="skipSplashBtn" style="position:absolute; top:20px; right:20px; z-index:20; padding:12px 30px; background:#D4AF37; color:#0B1D3A; border:none; border-radius:4px; font-weight:700; text-transform:uppercase; letter-spacing:1px; cursor:pointer;">Skip</button>
+</div>
+
+<div id="toastContainer"></div>
+
+<!-- INTRO OVERLAY (5s) -->
+
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="seksyon-temwayaj">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">From the Streets</h2>
+    <div class="grid-temwayaj">
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"From the moment I put it on, I felt untouchable. 100PANIK is a statement."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">JK</div><div><p class="temwayaj-non">Jean-Karl</p><p class="temwayaj-vil">Port-au-Prince</p></div></div>
+      </div>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"100PANIK isn't just fashion—it's a state of mind. Calm in chaos, always."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">MK</div><div><p class="temwayaj-non">Mika</p><p class="temwayaj-vil">Miami</p></div></div>
+      </div>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"Every drop sells out. If you hesitate, you lose. That's the 100PANIK effect."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">DP</div><div><p class="temwayaj-non">Daphney</p><p class="temwayaj-vil">Pétion-Ville</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONCASH -->
+<section class="seksyon-moncash">
+  <div class="moncash-kat">
+    <h2 class="moncash-tit">💰 Payment</h2>
+    <p class="moncash-tèks">Reserve your piece. Pay via MonCash.</p>
+    <div class="moncash-nimewo">32924776</div>
+    <a href="https://wa.me/50932924776" target="_blank" class="btn-panik btn-lò">Confirm on WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-panik">
+  <div class="konteni-limit">
+    <div class="grid-footer">
+      <div class="footer-kolòn">
+        <h3 class="footer-logo">100<span>PANIK</span></h3>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
+        <div class="footer-rezosyal">
+          <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
+        </div>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Quick Links</h4>
+        <ul><li><a href="boutik.html">Shop</a></li><li><a href="koleksyon.html">Collection</a></li><li><a href="istwa.html">Our Story</a></li><li><a href="kontak.html">Contact</a></li></ul>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Services</h4>
+        <ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul>
+      </div>
+      <div class="footer-kolòn">
+        <h4>Contact</h4>
+        <ul><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-anba">
+      <p>&copy; 2026 100PANIK. All rights reserved.</p>
+      <a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.7;">⚙ Admin</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CART -->
+<a href="panye.html" class="panye-flotan" aria-label="Cart">🛒<span class="panye-konte" id="cartBadge">0</span></a>
+
+<!-- SCRIPTS -->
+<script src="../js/supabase-config.js"></script>
+
+<script src="/js/notifications.js"></script>
+</body>
+</html>

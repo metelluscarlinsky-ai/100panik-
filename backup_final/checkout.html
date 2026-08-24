@@ -9,11 +9,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+<div id="toastContainer"></div>
 
-<!-- INTRO OVERLAY (5s, uniquement accueil) -->
+<!-- INTRO OVERLAY (5s) -->
 <div id="introOverlay" style="position:fixed; inset:0; z-index:99999; background:#F5F0E6; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.5s ease;">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" style="width:180px; height:auto;">
-  <h1 style="font-family:'Space Grotesk', sans-serif; font-size:2.5rem; color:#3E2723; margin-top:20px; letter-spacing:0.4em;">100<span style="color:#A0522D;">PANIK</span></h1>
+  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" style="width:180px; height:auto; animation:introLogo 2s ease-in-out;">
+  <h1 style="font-family:var(--font-titr, 'Space Grotesk', sans-serif); font-size:2.5rem; color:#3E2723; margin-top:20px; letter-spacing:0.4em;">100<span style="color:#A0522D;">PANIK</span></h1>
   <p style="color:#8D6E63; letter-spacing:0.3em; text-transform:uppercase; margin-top:10px;">When the world panics, style stays calm</p>
 </div>
 
@@ -59,7 +60,7 @@
   </div>
 </div>
 
-<!-- FEATURED DROPS (PUBS/ADS) -->
+<!-- FEATURED DROPS (PUBS / ADS) -->
 <section class="seksyon-pwodwi" id="adsSection">
   <div class="konteni-limit">
     <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Featured Drops</h2>
@@ -152,7 +153,7 @@
     </div>
     <div class="footer-anba">
       <p>&copy; 2026 100PANIK. All rights reserved.</p>
-      <a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.7;">⚙ Admin</a>
+      <a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.5;">⚙ Admin</a>
     </div>
   </div>
 </footer>
@@ -185,18 +186,7 @@ const hamburger = document.getElementById('hamburgerBtn');
 const nav = document.getElementById('navPanik');
 if(hamburger && nav) hamburger.addEventListener('click', () => nav.classList.toggle('nav-louvri'));
 
-// Toast system
-function showToast(message, type='success') {
-  const container = document.getElementById('toastContainer');
-  if(!container) return;
-  const toast = document.createElement('div');
-  toast.textContent = message;
-  toast.style.cssText = `padding:15px 25px; border-radius:8px; margin-bottom:10px; font-weight:600; background:${type==='success'?'#A0522D':type==='error'?'#B71C1C':'#3E2723'}; color:#F5F0E6; animation:slideInRight 0.3s ease-out;`;
-  container.appendChild(toast);
-  setTimeout(()=>{toast.style.animation='slideOutRight 0.3s ease-out forwards'; setTimeout(()=>toast.remove(),300);},3000);
-}
-
-// Load Ads
+// Load Ads (pubs)
 async function loadAds() {
   const container = document.getElementById('adsGrid');
   if (!container) return;
@@ -260,5 +250,6 @@ window.addEventListener('DOMContentLoaded', () => {
   loadProducts();
 });
 </script>
+<script src="/js/notifications.js"></script>
 </body>
 </html>

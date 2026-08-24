@@ -1,255 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100PANIK | When the World Panics, Style Stays Calm</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<title>Checkout | 100PANIK</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="toastContainer"></div>
-
-<!-- INTRO OVERLAY (5s) -->
-<div id="introOverlay" style="position:fixed; inset:0; z-index:99999; background:#F5F0E6; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.5s ease;">
-  <img src="../assets/images/logo-100panik.jpg" alt="100PANIK" style="width:180px; height:auto; animation:introLogo 2s ease-in-out;">
-  <h1 style="font-family:var(--font-titr, 'Space Grotesk', sans-serif); font-size:2.5rem; color:#3E2723; margin-top:20px; letter-spacing:0.4em;">100<span style="color:#A0522D;">PANIK</span></h1>
-  <p style="color:#8D6E63; letter-spacing:0.3em; text-transform:uppercase; margin-top:10px;">When the world panics, style stays calm</p>
-</div>
-
-<!-- HEADER -->
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" class="active">Home</a>
-      <a href="boutik.html">Shop</a>
-      <a href="koleksyon.html">Collection</a>
-      <a href="istwa.html">Our Story</a>
-      <a href="kontak.html">Contact</a>
+    <nav class="nav-panik">
+      <a href="index.html">Home</a><a href="boutik.html">Shop</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Story</a><a href="kontak.html">Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
       <a href="panye.html" class="icon-btn">🛒</a>
-      <button class="hamburger-panik" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
-
-<!-- HERO -->
-<section class="hero-panik">
-  <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-kontni">
-    <p class="hero-eyebrow">The New Standard</p>
-    <h1 class="hero-tit">CALM IS <span style="color:#A0522D;">POWER</span></h1>
-    <p class="hero-slogan">Luxury streetwear for those who move in silence.</p>
-    <div class="hero-boutons">
-      <a href="boutik.html" class="btn-panik btn-primè">Shop the Drop</a>
-      <a href="koleksyon.html" class="btn-panik btn-segondè">Explore</a>
+<main style="padding-top:120px;">
+  <div class="konteni-limit" style="max-width:800px;">
+    <h1 class="tit-seksyon">Checkout</h1>
+    <div id="orderSummary" style="background:rgba(255,255,255,0.7); padding:25px; margin-bottom:30px; border-radius:12px;"></div>
+    <form id="checkoutForm" style="background:rgba(255,255,255,0.7); padding:30px; border-radius:12px;">
+      <h2 style="color:#3E2723; margin-bottom:20px;">Shipping Information</h2>
+      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Full Name</label><input type="text" id="fullname" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Phone</label><input type="tel" id="phone" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
+      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Address</label><input type="text" id="address" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
+      <div style="margin-bottom:30px;"><label style="color:#5C3A21;">City</label><input type="text" id="city" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
+      <h2 style="color:#3E2723; margin-bottom:20px;">Payment Method</h2>
+      <div style="background:rgba(212,163,115,0.15); padding:20px; border:2px solid #A0522D; margin-bottom:30px; border-radius:8px;">
+        <p style="color:#3E2723; font-weight:700; font-size:1.2rem;">💰 MonCash</p>
+        <p style="color:#5C3A21;">Number: <strong style="font-size:1.5rem;">32924776</strong></p>
+        <p style="color:#5C3A21;">Name: 100PANIK LLC</p>
+      </div>
+      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Place Order</button>
+    </form>
+    <div id="confirmation" style="display:none; margin-top:30px; background:rgba(212,163,115,0.2); padding:25px; border-radius:12px; text-align:center;">
+      <h3 style="color:#3E2723; margin-bottom:10px;">✅ Order Received!</h3>
+      <p style="color:#5C3A21;">Order ID: <span id="orderId"></span></p>
+      <p style="color:#5C3A21; margin-top:15px;">To complete your order, send your MonCash payment screenshot on WhatsApp.</p>
+      <a id="whatsappLink" href="#" target="_blank" class="btn-panik btn-lò" style="margin-top:15px;">Send Screenshot on WhatsApp</a>
     </div>
   </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-panik">
-  <div class="marquee-track">
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-  </div>
-</div>
-
-<!-- FEATURED DROPS (PUBS / ADS) -->
-<section class="seksyon-pwodwi" id="adsSection">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Featured Drops</h2>
-    <div id="adsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:25px;">
-      <p style="color:#5C3A21;">Loading ads...</p>
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="seksyon-pwodwi">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">The Edit</h2>
-    <div class="grid-pwodwi" id="dynamicProducts">
-      <p style="color:#5C3A21;">Loading products...</p>
-    </div>
-  </div>
-</section>
-
-<!-- LOOKBOOK -->
-<section class="seksyon-lookbook">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Campaign</h2>
-    <div class="grid-lookbook">
-      <div class="lookbook-item"><img src="../assets/images/products/product-1.svg" alt="Look 1"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-2.svg" alt="Look 2"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-3.svg" alt="Look 3"></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-4.svg" alt="Look 4"></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="seksyon-temwayaj">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">From the Streets</h2>
-    <div class="grid-temwayaj">
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"From the moment I put it on, I felt untouchable. 100PANIK is a statement."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">JK</div><div><p class="temwayaj-non">Jean-Karl</p><p class="temwayaj-vil">Port-au-Prince</p></div></div>
-      </div>
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"100PANIK isn't just fashion—it's a state of mind. Calm in chaos, always."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">MK</div><div><p class="temwayaj-non">Mika</p><p class="temwayaj-vil">Miami</p></div></div>
-      </div>
-      <div class="kat-temwayaj">
-        <div class="temwayaj-zetwal">★★★★★</div>
-        <p class="temwayaj-tèks">"Every drop sells out. If you hesitate, you lose. That's the 100PANIK effect."</p>
-        <div class="temwayaj-moun"><div class="temwayaj-avatar">DP</div><div><p class="temwayaj-non">Daphney</p><p class="temwayaj-vil">Pétion-Ville</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MONCASH -->
-<section class="seksyon-moncash">
-  <div class="moncash-kat">
-    <h2 class="moncash-tit">💰 Payment</h2>
-    <p class="moncash-tèks">Reserve your piece. Pay via MonCash.</p>
-    <div class="moncash-nimewo">32924776</div>
-    <a href="https://wa.me/50932924776" target="_blank" class="btn-panik btn-lò">Confirm on WhatsApp</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer-panik">
-  <div class="konteni-limit">
-    <div class="grid-footer">
-      <div class="footer-kolòn">
-        <h3 class="footer-logo">100<span>PANIK</span></h3>
-        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
-        <div class="footer-rezosyal">
-          <a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a>
-        </div>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Quick Links</h4>
-        <ul><li><a href="boutik.html">Shop</a></li><li><a href="koleksyon.html">Collection</a></li><li><a href="istwa.html">Our Story</a></li><li><a href="kontak.html">Contact</a></li></ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Services</h4>
-        <ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul>
-      </div>
-      <div class="footer-kolòn">
-        <h4>Contact</h4>
-        <ul><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul>
-      </div>
-    </div>
-    <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. All rights reserved.</p>
-      <a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.5;">⚙ Admin</a>
-    </div>
-  </div>
-</footer>
-
-<!-- FLOATING CART -->
-<a href="panye.html" class="panye-flotan" aria-label="Cart">🛒<span class="panye-konte" id="cartBadge">0</span></a>
-
-<!-- SCRIPTS -->
+</main>
 <script src="../js/supabase-config.js"></script>
 <script>
-// Cart
 let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
-function addToCart(id, name, price) {
-  const exist = cart.find(i => i.id === id);
-  if(exist) exist.quantity++;
-  else cart.push({id, name, price, quantity:1});
-  localStorage.setItem('100panik_cart', JSON.stringify(cart));
-  updateBadge();
-  showToast('✅ ' + name + ' added to cart!', 'success');
-}
-
-// Hamburger
-const hamburger = document.getElementById('hamburgerBtn');
-const nav = document.getElementById('navPanik');
-if(hamburger && nav) hamburger.addEventListener('click', () => nav.classList.toggle('nav-louvri'));
-
-// Load Ads (pubs)
-async function loadAds() {
-  const container = document.getElementById('adsGrid');
-  if (!container) return;
-  const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    container.innerHTML = '<p style="color:#5C3A21;">No featured drops right now.</p>';
+function displaySummary() {
+  const summary = document.getElementById('orderSummary');
+  if (cart.length === 0) {
+    summary.innerHTML = '<p style="color:#5C3A21;">Your cart is empty.</p>';
     return;
   }
-  container.innerHTML = data.map(ad => `
-    <div class="ad-card" style="background:rgba(255,255,255,0.7); border:1px solid rgba(160,82,45,0.2); border-radius:12px; overflow:hidden;">
-      <img src="${ad.image_url}" alt="${ad.title}" style="width:100%; height:180px; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
-      <div style="padding:15px;">
-        <h3 style="color:#3E2723; font-size:1.1rem; font-weight:700;">${ad.title}</h3>
-        <p style="color:#5C3A21; font-size:0.9rem; margin:5px 0;">${ad.subtitle || ''}</p>
-        <a href="${ad.link || 'boutik.html'}" style="color:#A0522D; font-weight:600;">Shop Now →</a>
-      </div>
-    </div>
-  `).join('');
+  let total = 0;
+  let html = '<h3 style="color:#3E2723; margin-bottom:15px;">Order Summary</h3><ul style="list-style:none;">';
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    html += `<li style="display:flex; justify-content:space-between; margin-bottom:10px;"><span style="color:#3E2723;">${item.name} x${item.quantity}</span><span style="color:#A0522D; font-weight:700;">$${(item.price*item.quantity).toFixed(2)}</span></li>`;
+  });
+  html += `</ul><p style="font-size:1.5rem; color:#A0522D; font-weight:700; margin-top:20px;">Total: $${total.toFixed(2)}</p>`;
+  summary.innerHTML = html;
 }
-
-// Load Products
-async function loadProducts() {
-  const container = document.getElementById('dynamicProducts');
-  if (!container) return;
-  container.innerHTML = '<p style="color:#5C3A21;">Loading products...</p>';
-  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+displaySummary();
+document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('fullname').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+  const city = document.getElementById('city').value;
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  if (total === 0) {
+    alert('Your cart is empty.');
+    return;
+  }
+  const { data, error } = await supabase.from('admin_orders').insert({
+    customer_name: name,
+    customer_phone: phone,
+    customer_address: address + ', ' + city,
+    total: total,
+    status: 'pending_payment'
+  }).select();
   if (error) {
-    console.error('Supabase products error:', error);
-    container.innerHTML = '<p style="color:#B71C1C;">Error loading products. Please refresh.</p>';
+    alert('Error placing order: ' + error.message);
     return;
   }
-  if (data.length === 0) {
-    container.innerHTML = '<p style="color:#5C3A21;">No products yet. Check back soon.</p>';
-    return;
-  }
-  container.innerHTML = data.map(p => `
-    <article class="kat-pwodwi">
-      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}" onerror="this.src='../assets/images/products/product-1.svg'"></div>
-      ${p.stock === 0 ? '<span class="badge-pwodwi badge-limite">Sold Out</span>' : ''}
-      <div class="pwodwi-enfo">
-        <p class="pwodwi-kategori">${p.category}</p>
-        <h3 class="pwodwi-non">${p.name}</h3>
-        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
-        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
-      </div>
-    </article>
-  `).join('');
-}
-
-// Intro overlay (5s)
-window.addEventListener('DOMContentLoaded', () => {
-  const overlay = document.getElementById('introOverlay');
-  if (overlay) {
-    const INTRO_DURATION = 5000;
-    setTimeout(() => {
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 500);
-    }, INTRO_DURATION);
-  }
-  loadAds();
-  loadProducts();
+  const orderId = data[0].id;
+  document.getElementById('checkoutForm').style.display = 'none';
+  document.getElementById('confirmation').style.display = 'block';
+  document.getElementById('orderId').textContent = orderId.slice(0,8);
+  const message = `Hello 100PANIK! I just placed an order (ID: ${orderId.slice(0,8)}). I will send my MonCash payment screenshot.`;
+  document.getElementById('whatsappLink').href = `https://wa.me/50932924776?text=${encodeURIComponent(message)}`;
+  localStorage.removeItem('100panik_cart');
 });
 </script>
-<script src="/js/notifications.js"></script>
 </body>
 </html>
