@@ -2,17 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shop | 100PANIK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique | 100PANIK</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Style spécifique boutique */
+        .boutique-layout {
+            display: flex;
+            gap: 30px;
+            margin-top: 120px;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .sidebar h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #3E2723;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        .filter-group label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #5C3A21;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #3E2723;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .products-main {
+            flex: 1;
+        }
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .products-count {
+            color: #5C3A21;
+            font-size: 0.9rem;
+        }
+        .sort-select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #3E2723;
+        }
+        .grid-produits {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .carte-produit {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(160,82,45,0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .carte-produit:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: #A0522D;
+        }
+        .carte-produit img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .carte-produit .infos {
+            padding: 15px;
+        }
+        .carte-produit .categorie {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #8D6E63;
+        }
+        .carte-produit h3 {
+            font-size: 1.1rem;
+            margin: 8px 0;
+            color: #3E2723;
+        }
+        .carte-produit .prix {
+            font-weight: 700;
+            color: #A0522D;
+            font-size: 1.2rem;
+        }
+        .btn-ajouter {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #A0522D;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-ajouter:hover {
+            background: #5C3A21;
+        }
+        .vide {
+            text-align: center;
+            color: #5C3A21;
+            padding: 40px;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .boutique-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+
 <header class="header-panik">
   <div class="header-container">
     <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
     <nav class="nav-panik">
-      <a href="index.html">Home</a><a href="boutik.html" class="active">Shop</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Story</a><a href="kontak.html">Contact</a>
+      <a href="index.html">Home</a><a href="boutik.html" class="active">Boutique</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Our Story</a><a href="kontak.html">Contact</a>
     </nav>
     <div class="aksyon-header">
       <a href="konekte.html" class="icon-btn">👤</a>
@@ -20,49 +165,149 @@
     </div>
   </div>
 </header>
-<main style="padding-top:120px;">
-  <div class="konteni-limit">
-    <h1 class="tit-seksyon">Shop</h1>
-    <div class="grid-pwodwi" id="dynamicProducts">
-      <p style="color:#5C3A21;">Loading products...</p>
+
+<main>
+    <div class="boutique-layout">
+        <!-- Barre latérale filtres -->
+        <aside class="sidebar">
+            <h3>Filtres</h3>
+            <div class="filter-group">
+                <label>Recherche</label>
+                <input type="text" id="searchInput" placeholder="Rechercher...">
+            </div>
+            <div class="filter-group">
+                <label>Catégorie</label>
+                <select id="categorieSelect">
+                    <option value="all">Toutes</option>
+                    <option value="Hoodie">Hoodie</option>
+                    <option value="T-Shirt">T-Shirt</option>
+                    <option value="Pants">Pantalon</option>
+                    <option value="Cap">Casquette</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Prix maximum</label>
+                <input type="range" id="prixRange" min="0" max="300" value="300" step="10">
+                <span id="prixValeur">$300</span>
+            </div>
+            <div class="filter-group">
+                <label>Trier par</label>
+                <select id="triSelect">
+                    <option value="recent">Nouveautés</option>
+                    <option value="prix-asc">Prix croissant</option>
+                    <option value="prix-desc">Prix décroissant</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- Produits -->
+        <section class="products-main">
+            <div class="products-header">
+                <h1 style="font-family:'Space Grotesk', sans-serif; font-size:2rem; color:#3E2723;">Boutique</h1>
+                <span class="products-count" id="productsCount">0 produits</span>
+            </div>
+            <div id="produitsGrid" class="grid-produits">
+                <p class="vide">Chargement des produits...</p>
+            </div>
+        </section>
     </div>
-  </div>
 </main>
+
 <script src="../js/supabase-config.js"></script>
 <script>
-async function loadProducts() {
-  const container = document.getElementById('dynamicProducts');
-  if (!container) return;
-  const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
-  if (error) {
-    container.innerHTML = '<p style="color:#B71C1C;">Error loading products.</p>';
-    return;
-  }
-  if (data.length === 0) {
-    container.innerHTML = '<p style="color:#5C3A21;">No products yet.</p>';
-    return;
-  }
-  container.innerHTML = data.map(p => `
-    <article class="kat-pwodwi">
-      <div class="pwodwi-img-wrap"><img src="${p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}" onerror="this.src='../assets/images/products/product-1.svg'"></div>
-      <div class="pwodwi-enfo">
-        <p class="pwodwi-kategori">${p.category}</p>
-        <h3 class="pwodwi-non">${p.name}</h3>
-        <div class="pwodwi-pri-liy"><span class="pwodwi-pri">$${p.price}</span></div>
-        <button class="btn-ajoute-panye" onclick="addToCart('${p.id}', '${p.name}', ${p.price})">Add to Cart</button>
-      </div>
-    </article>
-  `).join('');
+let tousLesProduits = [];   // Stock les produits chargés depuis Supabase ou fallback
+let produitsAffiches = [];
+
+// Fonction pour charger les produits (Supabase ou fallback)
+async function chargerProduits() {
+    const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
+    if (!error && data && data.length > 0) {
+        tousLesProduits = data;
+    } else {
+        // Fallback produits statiques
+        tousLesProduits = [
+            { id: '1', name: 'Hoodie Calm', price: 189, category: 'Hoodie', image: '../assets/images/products/product-1.svg' },
+            { id: '2', name: 'T-Shirt Silence', price: 89, category: 'T-Shirt', image: '../assets/images/products/product-2.svg' },
+            { id: '3', name: 'Pantalon Clean', price: 149, category: 'Pants', image: '../assets/images/products/product-3.svg' },
+            { id: '4', name: 'Casquette Crown', price: 59, category: 'Cap', image: '../assets/images/products/product-4.svg' },
+            { id: '5', name: 'Hoodie Midnight', price: 199, category: 'Hoodie', image: '../assets/images/products/product-5.svg' },
+            { id: '6', name: 'T-Shirt Absolute', price: 79, category: 'T-Shirt', image: '../assets/images/products/product-6.svg' }
+        ];
+    }
+    appliquerFiltres();
 }
-function addToCart(id, name, price) {
-  let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
-  const exist = cart.find(i => i.id === id);
-  if(exist) exist.quantity++;
-  else cart.push({id, name, price, quantity:1});
-  localStorage.setItem('100panik_cart', JSON.stringify(cart));
-  alert('✅ Added to cart!');
+
+function appliquerFiltres() {
+    const recherche = document.getElementById('searchInput').value.toLowerCase();
+    const categorie = document.getElementById('categorieSelect').value;
+    const prixMax = parseInt(document.getElementById('prixRange').value);
+    const tri = document.getElementById('triSelect').value;
+
+    produitsAffiches = tousLesProduits.filter(p => {
+        const matchNom = p.name.toLowerCase().includes(recherche);
+        const matchCategorie = categorie === 'all' || p.category === categorie;
+        const matchPrix = p.price <= prixMax;
+        return matchNom && matchCategorie && matchPrix;
+    });
+
+    // Tri
+    if (tri === 'prix-asc') {
+        produitsAffiches.sort((a, b) => a.price - b.price);
+    } else if (tri === 'prix-desc') {
+        produitsAffiches.sort((a, b) => b.price - a.price);
+    } else {
+        produitsAffiches.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    }
+
+    afficherProduits();
 }
-document.addEventListener('DOMContentLoaded', loadProducts);
+
+function afficherProduits() {
+    const grid = document.getElementById('produitsGrid');
+    const count = document.getElementById('productsCount');
+    count.textContent = `${produitsAffiches.length} produit(s)`;
+
+    if (produitsAffiches.length === 0) {
+        grid.innerHTML = '<p class="vide">Aucun produit trouvé.</p>';
+        return;
+    }
+
+    grid.innerHTML = produitsAffiches.map(p => `
+        <article class="carte-produit">
+            <img src="${p.image || p.image_url || '../assets/images/products/product-1.svg'}" alt="${p.name}" onerror="this.src='../assets/images/products/product-1.svg'">
+            <div class="infos">
+                <div class="categorie">${p.category}</div>
+                <h3>${p.name}</h3>
+                <div class="prix">$${p.price}</div>
+                <button class="btn-ajouter" onclick="ajouterAuPanier('${p.id}', '${p.name}', ${p.price})">Ajouter au panier</button>
+            </div>
+        </article>
+    `).join('');
+}
+
+function ajouterAuPanier(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+    const exist = cart.find(i => i.id === id);
+    if (exist) {
+        exist.quantity++;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+    localStorage.setItem('100panik_cart', JSON.stringify(cart));
+    alert('✅ Ajouté au panier !');
+}
+
+// Écouteurs d'événements pour filtres
+document.getElementById('searchInput').addEventListener('input', appliquerFiltres);
+document.getElementById('categorieSelect').addEventListener('change', appliquerFiltres);
+document.getElementById('prixRange').addEventListener('input', function() {
+    document.getElementById('prixValeur').textContent = '$' + this.value;
+    appliquerFiltres();
+});
+document.getElementById('triSelect').addEventListener('change', appliquerFiltres);
+
+// Charger les produits au démarrage
+chargerProduits();
 </script>
 </body>
 </html>
