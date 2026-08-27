@@ -257,5 +257,25 @@ document.getElementById('addToCartBtn').addEventListener('click', function() {
 // Charger le produit au démarrage
 loadProduct();
 </script>
+<script>
+function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+    const exist = cart.find(i => i.id === id);
+    if (exist) {
+        exist.quantity++;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+    localStorage.setItem('100panik_cart', JSON.stringify(cart));
+    updateBadge();
+    alert('✅ Ajouté au panier !');
+}
+function updateBadge() {
+    let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+    const total = cart.reduce((s, i) => s + i.quantity, 0);
+    const el = document.getElementById('cartBadge');
+    if (el) el.textContent = total;
+}
+</script>
 </body>
 </html>

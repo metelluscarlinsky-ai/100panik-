@@ -213,6 +213,7 @@
 <script>
 // ===== PANIER (localStorage) =====
 let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+function renderCart() {
 
 function renderCart() {
     const container = document.getElementById('cartItems');
