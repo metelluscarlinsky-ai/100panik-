@@ -10,83 +10,18 @@
 </head>
 <body>
 
-<!-- ========== SPLASH PUB (AVANT LA PAGE) ========== -->
+<!-- SPLASH PUB AVEC PHOTO ET BOUTON ENTRER -->
 <div id="pubSplash" style="position:fixed; inset:0; z-index:99998; background:#0B1D3A; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-  <div id="splashTrack" style="display:flex; height:100%; transition:transform 0.7s cubic-bezier(0.25,0.8,0.25,1);"></div>
-  <button class="splash-arrow" onclick="moveSplash(-1)" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid #D4AF37; color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10; font-size:1.5rem;">‹</button>
-  <button class="splash-arrow" onclick="moveSplash(1)" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid #D4AF37; color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10; font-size:1.5rem;">›</button>
+  <div id="splashTrack" style="display:flex; height:100%; transition:transform 0.7s;"></div>
+  <button class="splash-arrow" onclick="moveSplash(-1)" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid #D4AF37; color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10;">‹</button>
+  <button class="splash-arrow" onclick="moveSplash(1)" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid #D4AF37; color:#D4AF37; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:10;">›</button>
   <div id="splashDots" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:12px; z-index:10;"></div>
-  <button id="skipSplashBtn" style="position:absolute; top:20px; right:20px; z-index:20; padding:12px 30px; background:#D4AF37; color:#0B1D3A; border:none; border-radius:4px; font-weight:700; text-transform:uppercase; letter-spacing:1px; cursor:pointer;">Skip</button>
+  <button id="enterSiteBtn" style="position:absolute; top:20px; right:20px; z-index:20; padding:12px 30px; background:#D4AF37; color:#0B1D3A; border:none; border-radius:4px; font-weight:700; text-transform:uppercase; letter-spacing:1px; cursor:pointer;">Antre</button>
 </div>
 
-<!-- ========== HEADER ========== -->
-<header class="header-panik">
-  <div class="header-container">
-    <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik" id="navPanik">
-      <a href="index.html" class="active">Home</a>
-      <a href="boutik.html">Shop</a>
-      <a href="koleksyon.html">Collection</a>
-      <a href="istwa.html">Our Story</a>
-      <a href="kontak.html">Contact</a>
-    </nav>
-    <div class="aksyon-header">
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
-    </div>
-  </div>
-</header>
 
-<!-- ========== HERO ========== -->
-<section class="hero-panik">
-  <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-kontni">
-    <p class="hero-eyebrow">The New Standard</p>
-    <h1 class="hero-tit">CALM IS <span style="color:#A0522D;">POWER</span></h1>
-    <p class="hero-slogan">Luxury streetwear for those who move in silence.</p>
-    <div class="hero-boutons">
-      <a href="boutik.html" class="btn-panik btn-primè">Shop the Drop</a>
-      <a href="koleksyon.html" class="btn-panik btn-segondè">Explore</a>
-    </div>
-  </div>
-</section>
+<!-- ========== SPLASH PUB (AVANT LA PAGE) ========== -->
 
-<!-- ========== MARQUEE ========== -->
-<div class="marquee-panik">
-  <div class="marquee-track">
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
-  </div>
-</div>
-
-<!-- ========== FEATURED DROPS (ADS) ========== -->
-<section class="seksyon-pwodwi">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Featured Drops</h2>
-    <div id="adsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:25px;"></div>
-  </div>
-</section>
-
-<!-- ========== PRODUCTS ========== -->
-<section class="seksyon-pwodwi">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">The Edit</h2>
-    <div class="grid-pwodwi" id="dynamicProducts"></div>
-  </div>
-</section>
-
-<!-- ========== LOOKBOOK ========== -->
-<section class="seksyon-lookbook">
-  <div class="konteni-limit">
-    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Campaign</h2>
-    <div class="grid-lookbook">
-      <div class="lookbook-item"><img src="../assets/images/products/product-1.svg" alt=""></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-2.svg" alt=""></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-3.svg" alt=""></div>
-      <div class="lookbook-item"><img src="../assets/images/products/product-4.svg" alt=""></div>
-    </div>
-  </div>
 </section>
 
 <!-- ========== TESTIMONIALS ========== -->
@@ -145,182 +80,7 @@
 
 <!-- ========== SCRIPTS ========== -->
 <script src="../js/supabase-config.js"></script>
-<script>
-// === Cart system ===
-let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
-function updateBadge() {
-  const total = cart.reduce((s,i)=>s+i.quantity,0);
-  const el = document.getElementById('cartBadge');
-  if(el) el.textContent = total;
-}
-updateBadge();
-function addToCart(id, name, price) {
-  const exist = cart.find(i => i.id === id);
-  if(exist) exist.quantity++;
-  else cart.push({id, name, price, quantity:1});
-  localStorage.setItem('100panik_cart', JSON.stringify(cart));
-  updateBadge();
-  alert('✅ Added to cart!');
-}
 
-// === Splash pub logic ===
-let splashAds = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-if (splashAds.length === 0) {
-  splashAds = [
-    { id: '1', image_url: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'The Calm Before the Storm', subtitle: 'Bold streetwear for the fearless.', link: 'produi.html' },
-    { id: '2', image_url: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Echoes of Silence', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' }
-  ];
-}
-let splashSupabaseAds = [];
-async function fetchSplashAdsFromSupabase() {
-  const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
-  if (!error && data && data.length > 0) {
-    splashSupabaseAds = data;
-    renderSplash();
-  }
-}
-let splashIndex = 0;
-const splashTrack = document.getElementById('splashTrack');
-const splashDots = document.getElementById('splashDots');
-function renderSplash() {
-  const ads = splashSupabaseAds.length > 0 ? splashSupabaseAds : splashAds;
-  splashTrack.innerHTML = '';
-  splashDots.innerHTML = '';
-  ads.forEach((ad, i) => {
-    const slide = document.createElement('div');
-    slide.style.cssText = 'min-width:100%; height:100%; position:relative;';
-    slide.innerHTML = `
-      <img src="${ad.image_url}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
-      <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(11,29,58,0.9), rgba(11,29,58,0.3));"></div>
-      <div style="position:absolute; top:50%; left:10%; transform:translateY(-50%); color:white; max-width:600px;">
-        ${ad.eyebrow ? `<p style="color:#D4AF37; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.4em;">${ad.eyebrow}</p>` : ''}
-        <h2 style="font-family:'Space Grotesk', sans-serif; font-size:3rem; margin:10px 0;">${ad.title}</h2>
-        <p style="font-size:1.1rem; margin-bottom:20px;">${ad.subtitle || ''}</p>
-        <a href="${ad.link || 'boutik.html'}" style="display:inline-block; padding:12px 30px; background:#D4AF37; color:#0B1D3A; text-decoration:none; font-weight:700;">Shop Now</a>
-      </div>
-    `;
-    splashTrack.appendChild(slide);
-    const dot = document.createElement('div');
-    dot.style.cssText = 'width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.4); cursor:pointer;';
-    if (i === 0) dot.style.background = '#D4AF37';
-    dot.onclick = () => goToSplash(i);
-    splashDots.appendChild(dot);
-  });
-  updateSplash();
-}
-function updateSplash() {
-  splashTrack.style.transform = `translateX(-${splashIndex * 100}%)`;
-  const dots = splashDots.querySelectorAll('div');
-  dots.forEach((d, i) => d.style.background = (i === splashIndex) ? '#D4AF37' : 'rgba(255,255,255,0.4)');
-}
-function goToSplash(i) { splashIndex = i; updateSplash(); }
-function moveSplash(dir) {
-  const ads = splashSupabaseAds.length > 0 ? splashSupabaseAds : splashAds;
-  splashIndex = (splashIndex + dir + ads.length) % ads.length;
-  updateSplash();
-}
-document.getElementById('skipSplashBtn').addEventListener('click', () => {
-  document.getElementById('pubSplash').style.display = 'none';
-});
-setInterval(() => moveSplash(1), 5000);
-
-// === Load Featured Ads Grid ===
-async function loadAdsGrid() {
-        const container = document.getElementById('adsGrid');
-        if (!container) return;
-        const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
-        if (!error && data && data.length > 0) {
-            container.innerHTML = data.map(ad => `
-                <div class="ad-card" style="background:rgba(255,255,255,0.9); border:1px solid rgba(160,82,45,0.2); border-radius:12px; overflow:hidden; transition:transform 0.3s;">
-                    <img src="${ad.image_url}" alt="${ad.title}" style="width:100%; height:200px; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
-                    <div style="padding:15px;">
-                        <h3 style="color:#3E2723; font-size:1.1rem; font-weight:700;">${ad.title}</h3>
-                        <p style="color:#5C3A21; font-size:0.9rem; margin:5px 0;">${ad.subtitle || ''}</p>
-                        <a href="${ad.link || 'boutik.html'}" style="color:#A0522D; font-weight:600;">Shop Now →</a>
-                    </div>
-                </div>
-            `).join('');
-        } else {
-            container.innerHTML = '<p style="color:#5C3A21;">Aucune pub disponible.</p>';
-        }
-    }
-}
-document.addEventListener('DOMContentLoaded', loadColors);
-
-
-<script>
-// ===== PUB SPLASH (Supabase + fallback) =====
-let splashAds = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-let splashSupabaseAds = [];
-let splashIndex = 0;
-let splashTrack = document.getElementById('splashTrack');
-let splashDots = document.getElementById('splashDots');
-
-// Fallback par défaut si Supabase ne renvoie rien
-const fallbackAds = [
-    { id: '1', image_url: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', eyebrow: 'Limited Release', title: 'The Calm Before the Storm', subtitle: 'Bold streetwear for the fearless.', link: 'produi.html' },
-    { id: '2', image_url: '../assets/images/products/product-2.svg', eyebrow: 'New Drop', title: 'Echoes of Silence', subtitle: 'Pure comfort, pure style.', link: 'boutik.html' }
-];
-
-async function fetchSplashAdsFromSupabase() {
-    const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
-    if (!error && data && data.length > 0) {
-        splashSupabaseAds = data;
-    }
-    renderSplash();
-}
-
-function renderSplash() {
-    const adsToShow = splashSupabaseAds.length > 0 ? splashSupabaseAds : (splashAds.length > 0 ? splashAds : fallbackAds);
-    splashTrack.innerHTML = '';
-    splashDots.innerHTML = '';
-    adsToShow.forEach((ad, i) => {
-        const slide = document.createElement('div');
-        slide.style.cssText = 'min-width:100%; height:100%; position:relative;';
-        slide.innerHTML = `
-            <img src="${ad.image_url}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
-            <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(11,29,58,0.9), rgba(11,29,58,0.3));"></div>
-            <div style="position:absolute; top:50%; left:10%; transform:translateY(-50%); color:white; max-width:600px;">
-                ${ad.eyebrow ? `<p style="color:#D4AF37; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.4em;">${ad.eyebrow}</p>` : ''}
-                <h2 style="font-family:'Space Grotesk', sans-serif; font-size:3rem; margin:10px 0;">${ad.title}</h2>
-                <p style="font-size:1.1rem; margin-bottom:20px;">${ad.subtitle || ''}</p>
-                <a href="${ad.link || 'boutik.html'}" style="display:inline-block; padding:12px 30px; background:#D4AF37; color:#0B1D3A; text-decoration:none; font-weight:700;">Shop Now</a>
-            </div>
-        `;
-        splashTrack.appendChild(slide);
-        const dot = document.createElement('div');
-        dot.style.cssText = 'width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.4); cursor:pointer;';
-        if (i === 0) dot.style.background = '#D4AF37';
-        dot.onclick = () => goToSplash(i);
-        splashDots.appendChild(dot);
-    });
-    updateSplash();
-}
-
-function updateSplash() {
-    splashTrack.style.transform = `translateX(-${splashIndex * 100}%)`;
-    const dots = splashDots.querySelectorAll('div');
-    dots.forEach((d, i) => d.style.background = (i === splashIndex) ? '#D4AF37' : 'rgba(255,255,255,0.4)');
-}
-
-function goToSplash(i) { splashIndex = i; updateSplash(); }
-function moveSplash(dir) {
-    const ads = splashSupabaseAds.length > 0 ? splashSupabaseAds : (splashAds.length > 0 ? splashAds : fallbackAds);
-    splashIndex = (splashIndex + dir + ads.length) % ads.length;
-    updateSplash();
-}
-
-document.getElementById('skipSplashBtn').addEventListener('click', () => {
-    document.getElementById('pubSplash').style.display = 'none';
-});
-
-setInterval(() => moveSplash(1), 5000);
-
-// Initialisation
-window.addEventListener('DOMContentLoaded', () => {
-    fetchSplashAdsFromSupabase();
-});
-</script>
 
 
 <script>
@@ -399,6 +159,86 @@ async function loadDynamicContent() {
 document.addEventListener('DOMContentLoaded', () => {
     loadDynamicContent();
 });
+</script>
+
+
+<script>
+// ===== SPLASH PUB (PHOTO + SUPABASE + BOUTON ENTRE) =====
+let splashAds = [];
+let splashIndex = 0;
+const splashTrack = document.getElementById('splashTrack');
+const splashDots = document.getElementById('splashDots');
+
+// Foto default si Supabase pa gen anyen
+const defaultPhoto = {
+    id: 'default',
+    image_url: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
+    eyebrow: 'Limited Release',
+    title: 'The Calm Before the Storm',
+    subtitle: 'Bold streetwear for the fearless.',
+    link: 'produi.html'
+};
+
+async function fetchSplashAds() {
+    const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
+    if (!error && data && data.length > 0) {
+        splashAds = data;
+    } else {
+        splashAds = [defaultPhoto];
+    }
+    renderSplash();
+}
+
+function renderSplash() {
+    splashTrack.innerHTML = '';
+    splashDots.innerHTML = '';
+    splashAds.forEach((ad, i) => {
+        const slide = document.createElement('div');
+        slide.style.cssText = 'min-width:100%; height:100%; position:relative;';
+        slide.innerHTML = `
+            <img src="${ad.image_url}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.src='https://i.postimg.cc/QNzv9wsb/1003204538.jpg'">
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(11,29,58,0.9), rgba(11,29,58,0.3));"></div>
+            <div style="position:absolute; top:50%; left:10%; transform:translateY(-50%); color:white; max-width:600px;">
+                ${ad.eyebrow ? `<p style="color:#D4AF37; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.4em;">${ad.eyebrow}</p>` : ''}
+                <h2 style="font-family:'Space Grotesk', sans-serif; font-size:3rem; margin:10px 0;">${ad.title}</h2>
+                <p style="font-size:1.1rem; margin-bottom:20px;">${ad.subtitle || ''}</p>
+                <a href="${ad.link || 'boutik.html'}" style="display:inline-block; padding:12px 30px; background:#D4AF37; color:#0B1D3A; text-decoration:none; font-weight:700;">Shop Now</a>
+            </div>
+        `;
+        splashTrack.appendChild(slide);
+
+        const dot = document.createElement('div');
+        dot.style.cssText = 'width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.4); cursor:pointer;';
+        if (i === 0) dot.style.background = '#D4AF37';
+        dot.onclick = () => goToSplash(i);
+        splashDots.appendChild(dot);
+    });
+    updateSplash();
+}
+
+function updateSplash() {
+    splashTrack.style.transform = `translateX(-${splashIndex * 100}%)`;
+    const dots = splashDots.querySelectorAll('div');
+    dots.forEach((d, i) => d.style.background = (i === splashIndex) ? '#D4AF37' : 'rgba(255,255,255,0.4)');
+}
+
+function goToSplash(i) { splashIndex = i; updateSplash(); }
+function moveSplash(dir) {
+    if (splashAds.length === 0) return;
+    splashIndex = (splashIndex + dir + splashAds.length) % splashAds.length;
+    updateSplash();
+}
+
+// Bouton "Antre" pou fèmen splash la
+document.getElementById('enterSiteBtn').addEventListener('click', function() {
+    document.getElementById('pubSplash').style.display = 'none';
+});
+
+// Auto-avance chak 5 segond
+setInterval(() => moveSplash(1), 5000);
+
+// Inisyalizasyon
+document.addEventListener('DOMContentLoaded', fetchSplashAds);
 </script>
 
 </body>
