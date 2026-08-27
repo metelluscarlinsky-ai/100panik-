@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | 100PANIK</title>
-    <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
+    <title>Admin 100PANIK</title>
     <style>
         :root {
             --bg: #050912;
@@ -36,12 +35,11 @@
         .form-group { margin-bottom:15px; }
         .form-group label { display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px; }
         .form-group input, .form-group select { width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:6px; color:var(--text); }
+        .form-group input[type="file"] { padding:8px; }
         .btn-save { background:var(--gold); color:#000; padding:12px 30px; border:none; border-radius:6px; font-weight:700; cursor:pointer; }
         .list-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); gap:10px; flex-wrap:wrap; }
         .list-item img { width:50px; height:50px; object-fit:cover; border-radius:6px; }
-        .btn-delete, .btn-edit { border:none; padding:8px 12px; border-radius:4px; cursor:pointer; }
-        .btn-delete { background:var(--danger); color:#fff; }
-        .btn-edit { background:var(--gold); color:#000; margin-right:5px; }
+        .btn-delete { background:var(--danger); color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; }
         .empty-message { text-align:center; color:var(--muted); padding:20px; }
         .hidden { display:none; }
         @media (max-width:768px) { .admin-header h1 { font-size:1.5rem; } }
@@ -58,7 +56,7 @@
             <button type="submit">Se connecter</button>
         </form>
         <p class="login-error" id="loginError">Mot de passe incorrect</p>
-        <p style="color:#aaa; margin-top:10px;">Mot de passe par défaut : 100panik</p>
+        <!-- Pas d'indice de mot de passe ici -->
     </div>
 </div>
 
@@ -71,7 +69,7 @@
 
     <div class="admin-tabs">
         <button class="admin-tab active" data-tab="dashboard">📊 Dashboard</button>
-        <button class="admin-tab" data-tab="ads">📢 Pubs</button>
+        <button class="admin-tab" data-tab="splash">📢 Splash Pubs</button>
         <button class="admin-tab" data-tab="products">📦 Produits</button>
         <button class="admin-tab" data-tab="orders">🛒 Commandes</button>
     </div>
@@ -82,36 +80,36 @@
         <p>Bienvenue ! Utilisez les onglets pour gérer les contenus.</p>
     </div>
 
-    <!-- Ads -->
-    <div id="tab-ads" class="admin-panel">
+    <!-- Splash Pubs -->
+    <div id="tab-splash" class="admin-panel">
         <div class="form-card">
-            <h3>Ajouter une pub</h3>
-            <form id="adForm">
-                <div class="form-group"><label>Imaj (depi galeri)</label><input type="file" id="adImageFile" accept="image/*" required></div>
-                <div class="form-group"><label>Titre</label><input type="text" id="adTitle" required></div>
-                <div class="form-group"><label>Lien</label><input type="text" id="adLink" value="boutik.html"></div>
+            <h3>Ajouter une pub splash</h3>
+            <form id="splashForm">
+                <div class="form-group"><label>Image (depuis galerie)</label><input type="file" id="splashImage" accept="image/*" required></div>
+                <div class="form-group"><label>Titre</label><input type="text" id="splashTitle" required></div>
+                <div class="form-group"><label>Lien</label><input type="text" id="splashLink" value="boutik.html"></div>
                 <button type="submit" class="btn-save">Ajouter</button>
             </form>
         </div>
-        <div id="adsList"></div>
+        <div id="splashList"></div>
     </div>
 
-    <!-- Products -->
+    <!-- Produits -->
     <div id="tab-products" class="admin-panel">
         <div class="form-card">
             <h3>Ajouter un produit</h3>
             <form id="productForm">
+                <div class="form-group"><label>Image (depuis galerie)</label><input type="file" id="productImage" accept="image/*"></div>
                 <div class="form-group"><label>Nom</label><input type="text" id="productName" required></div>
                 <div class="form-group"><label>Prix</label><input type="number" id="productPrice" step="0.01" required></div>
                 <div class="form-group"><label>Catégorie</label><select id="productCategory"><option>Hoodie</option><option>T-Shirt</option><option>Pants</option><option>Cap</option></select></div>
-                <div class="form-group"><label>Image URL</label><input type="text" id="productImageUrl" value="../assets/images/products/product-1.svg"></div>
                 <button type="submit" class="btn-save">Ajouter</button>
             </form>
         </div>
         <div id="productsList"></div>
     </div>
 
-    <!-- Orders -->
+    <!-- Commandes -->
     <div id="tab-orders" class="admin-panel">
         <h3>Commandes</h3>
         <div id="ordersList"></div>
@@ -120,7 +118,7 @@
 
 <script>
 // ===== AUTHENTIFICATION LOCALE =====
-const ADMIN_PASSWORD = '100panik'; // ⚠️ Changez ceci par votre mot de passe
+const ADMIN_PASSWORD = '100panik'; // changez si besoin
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -141,7 +139,6 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
     document.getElementById('adminPanel').style.display = 'none';
 });
 
-// Auto-login
 if (sessionStorage.getItem('admin_auth') === 'true') {
     document.getElementById('loginPanel').style.display = 'none';
     document.getElementById('adminPanel').style.display = 'block';
@@ -158,61 +155,69 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
-// ===== DONNÉES LOCALSTORAGE =====
-let ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+// ===== DATA =====
+let splashAds = JSON.parse(localStorage.getItem('100panik_splash_ads') || '[]');
 let products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
 let orders = JSON.parse(localStorage.getItem('100panik_orders') || '[]');
 
-function renderAds() {
-    const container = document.getElementById('adsList');
-    container.innerHTML = ads.length ? '' : '<p class="empty-message">Aucune pub</p>';
-    ads.forEach((ad, i) => {
-        container.innerHTML += `<div class="list-item"><span>${ad.title}</span><button class="btn-delete" onclick="deleteAd(${i})">Suppr</button></div>`;
+function fileToBase64(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
     });
 }
-window.deleteAd = (i) => { ads.splice(i,1); localStorage.setItem('100panik_ads', JSON.stringify(ads)); renderAds(); };
-document.getElementById('adForm').addEventListener('submit', function(e) {
+
+// ===== SPLASH =====
+function renderSplash() {
+    const container = document.getElementById('splashList');
+    container.innerHTML = splashAds.length ? '' : '<p class="empty-message">Aucune pub splash</p>';
+    splashAds.forEach((ad, i) => {
+        container.innerHTML += `<div class="list-item"><img src="${ad.image_url}"><span>${ad.title}</span><button class="btn-delete" onclick="deleteSplash(${i})">Suppr</button></div>`;
+    });
+}
+window.deleteSplash = (i) => { splashAds.splice(i,1); localStorage.setItem('100panik_splash_ads', JSON.stringify(splashAds)); renderSplash(); };
+document.getElementById('splashForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const fileInput = document.getElementById('adImageFile');
-    if (fileInput.files.length === 0) {
-        alert('Chwazi yon imaj');
-        return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-        ads.push({
-            image_url: ev.target.result, // base64
-            title: document.getElementById('adTitle').value,
-            link: document.getElementById('adLink').value
-        });
-        localStorage.setItem('100panik_ads', JSON.stringify(ads));
-        renderAds();
-        document.getElementById('adForm').reset();
-    };
-    reader.readAsDataURL(fileInput.files[0]);
+    const file = document.getElementById('splashImage').files[0];
+    if (!file) return alert('Choisir une image');
+    const image_url = await fileToBase64(file);
+    splashAds.push({
+        image_url,
+        title: document.getElementById('splashTitle').value,
+        link: document.getElementById('splashLink').value || 'boutik.html'
+    });
+    localStorage.setItem('100panik_splash_ads', JSON.stringify(splashAds));
+    renderSplash();
+    this.reset();
 });
 
+// ===== PRODUCTS =====
 function renderProducts() {
     const container = document.getElementById('productsList');
     container.innerHTML = products.length ? '' : '<p class="empty-message">Aucun produit</p>';
     products.forEach((p, i) => {
-        container.innerHTML += `<div class="list-item"><span>${p.name} - $${p.price}</span><button class="btn-delete" onclick="deleteProduct(${i})">Suppr</button></div>`;
+        container.innerHTML += `<div class="list-item"><img src="${p.image || '../assets/images/products/product-1.svg'}"><span>${p.name} - $${p.price}</span><button class="btn-delete" onclick="deleteProduct(${i})">Suppr</button></div>`;
     });
 }
 window.deleteProduct = (i) => { products.splice(i,1); localStorage.setItem('100panik_products', JSON.stringify(products)); renderProducts(); };
-document.getElementById('productForm').addEventListener('submit', function(e) {
+document.getElementById('productForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    let image = '../assets/images/products/product-1.svg';
+    const file = document.getElementById('productImage').files[0];
+    if (file) image = await fileToBase64(file);
     products.push({
         name: document.getElementById('productName').value,
         price: parseFloat(document.getElementById('productPrice').value),
         category: document.getElementById('productCategory').value,
-        image: document.getElementById('productImageUrl').value
+        image
     });
     localStorage.setItem('100panik_products', JSON.stringify(products));
     renderProducts();
     this.reset();
 });
 
+// ===== ORDERS =====
 function renderOrders() {
     const container = document.getElementById('ordersList');
     container.innerHTML = orders.length ? '' : '<p class="empty-message">Aucune commande</p>';
@@ -222,7 +227,7 @@ function renderOrders() {
 }
 
 function loadAll() {
-    renderAds();
+    renderSplash();
     renderProducts();
     renderOrders();
 }
