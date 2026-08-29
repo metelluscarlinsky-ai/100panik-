@@ -2,47 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin 100PANIK</title>
     <style>
-        :root {
-            --bg: #050912;
-            --surface: #0D1520;
-            --gold: #D4AF37;
-            --text: #F5F0E6;
-            --muted: #8D9AAD;
-            --border: rgba(212,175,55,0.2);
-            --danger: #B71C1C;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { background:var(--bg); color:var(--text); font-family: 'Inter', sans-serif; min-height:100vh; }
-        #loginPanel { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at center, rgba(212,175,55,0.08), transparent); }
-        .login-box { background: var(--surface); border:1px solid var(--border); padding:40px; border-radius:16px; width:100%; max-width:400px; text-align:center; }
-        .login-box h2 { color:var(--gold); margin-bottom:20px; font-family:'Space Grotesk', sans-serif; }
-        .login-box input { width:100%; padding:14px; margin-bottom:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:1rem; }
-        .login-box button { width:100%; padding:14px; background:var(--gold); color:#000; border:none; border-radius:8px; font-weight:700; text-transform:uppercase; cursor:pointer; }
-        .login-error { color:var(--danger); margin-top:10px; display:none; }
-        #adminPanel { display:none; max-width:1200px; margin:auto; padding:30px 20px; }
-        .admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
-        .admin-header h1 { color:var(--text); }
-        .admin-header h1 span { color:var(--gold); }
-        .admin-tabs { display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap; }
-        .admin-tab { padding:12px 20px; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--muted); cursor:pointer; border-radius:6px; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem; }
-        .admin-tab.active { background:var(--gold); color:#000; border-color:var(--gold); }
+        body { background:#050912; color:#F5F0E6; font-family: sans-serif; margin:0; }
+        #loginPanel { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#0B1D3A; }
+        .login-box { background:#111A28; padding:40px; border-radius:12px; text-align:center; border:1px solid #D4AF37; }
+        .login-box input { padding:12px; margin:10px 0; width:100%; background:transparent; border:1px solid #333; color:#fff; border-radius:4px; }
+        .login-box button { padding:12px 30px; background:#D4AF37; border:none; border-radius:4px; font-weight:bold; cursor:pointer; }
+        #adminPanel { display:none; padding:20px; }
+        .admin-tabs { display:flex; gap:10px; margin-bottom:20px; }
+        .admin-tab { padding:10px 20px; background:#111A28; border:1px solid #333; color:#ccc; cursor:pointer; border-radius:4px; }
+        .admin-tab.active { background:#D4AF37; color:#000; }
         .admin-panel { display:none; }
         .admin-panel.active { display:block; }
-        .form-card { background:var(--surface); border:1px solid var(--border); padding:25px; border-radius:12px; margin-bottom:25px; }
         .form-group { margin-bottom:15px; }
-        .form-group label { display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px; }
-        .form-group input, .form-group select { width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:6px; color:var(--text); }
-        .form-group input[type="file"] { padding:8px; }
-        .btn-save { background:var(--gold); color:#000; padding:12px 30px; border:none; border-radius:6px; font-weight:700; cursor:pointer; }
-        .list-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); gap:10px; flex-wrap:wrap; }
-        .list-item img { width:50px; height:50px; object-fit:cover; border-radius:6px; }
-        .btn-delete { background:var(--danger); color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; }
-        .empty-message { text-align:center; color:var(--muted); padding:20px; }
-        .hidden { display:none; }
-        @media (max-width:768px) { .admin-header h1 { font-size:1.5rem; } }
+        label { display:block; margin-bottom:5px; }
+        input[type="text"], input[type="number"], select, input[type="file"] { width:100%; padding:10px; background:transparent; border:1px solid #333; color:#fff; border-radius:4px; }
+        button { cursor:pointer; }
+        .list-item { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #333; }
+        .btn-delete { background:#B71C1C; color:#fff; border:none; padding:5px 10px; border-radius:4px; }
     </style>
 </head>
 <body>
@@ -55,75 +33,78 @@
             <input type="password" id="password" placeholder="Mot de passe" required>
             <button type="submit">Se connecter</button>
         </form>
-        <p class="login-error" id="loginError">Mot de passe incorrect</p>
-        <!-- Pas d'indice de mot de passe ici -->
+        <p id="loginError" style="color:red; display:none;">Mot de passe incorrect</p>
     </div>
 </div>
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
-    <div class="admin-header">
-        <h1>100<span>PANIK</span> Admin</h1>
-        <button class="btn-save" id="logoutBtn" style="background:transparent; border:1px solid var(--gold); color:var(--gold);">Déconnexion</button>
-    </div>
+    <h1 style="color:#D4AF37;">Admin Panel</h1>
+    <button id="logoutBtn" style="background:transparent; border:1px solid #D4AF37; color:#D4AF37; padding:8px 20px; border-radius:4px; cursor:pointer;">Déconnexion</button>
 
     <div class="admin-tabs">
-        <button class="admin-tab active" data-tab="dashboard">📊 Dashboard</button>
-        <button class="admin-tab" data-tab="splash">📢 Splash Pubs</button>
-        <button class="admin-tab" data-tab="products">📦 Produits</button>
-        <button class="admin-tab" data-tab="orders">🛒 Commandes</button>
+        <button class="admin-tab active" data-tab="ads">Pubs</button>
+        <button class="admin-tab" data-tab="products">Produits</button>
     </div>
 
-    <!-- Dashboard -->
-    <div id="tab-dashboard" class="admin-panel active">
-        <h2>Vue d'ensemble</h2>
-        <p>Bienvenue ! Utilisez les onglets pour gérer les contenus.</p>
-    </div>
-
-    <!-- Splash Pubs -->
-    <div id="tab-splash" class="admin-panel">
-        <div class="form-card">
-            <h3>Ajouter une pub splash</h3>
-            <form id="splashForm">
-                <div class="form-group"><label>Image (depuis galerie)</label><input type="file" id="splashImage" accept="image/*" required></div>
-                <div class="form-group"><label>Titre</label><input type="text" id="splashTitle" required></div>
-                <div class="form-group"><label>Lien</label><input type="text" id="splashLink" value="boutik.html"></div>
-                <button type="submit" class="btn-save">Ajouter</button>
-            </form>
-        </div>
-        <div id="splashList"></div>
+    <!-- Pubs -->
+    <div id="tab-ads" class="admin-panel active">
+        <h2>Gérer les pubs (splash)</h2>
+        <form id="adForm">
+            <div class="form-group">
+                <label>Image (depuis galerie)</label>
+                <input type="file" id="adImage" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label>Titre</label>
+                <input type="text" id="adTitle" required>
+            </div>
+            <div class="form-group">
+                <label>Lien (optionnel)</label>
+                <input type="text" id="adLink" value="boutik.html">
+            </div>
+            <button type="submit" style="background:#D4AF37; color:#000; padding:10px 20px; border:none; border-radius:4px;">Ajouter</button>
+        </form>
+        <div id="adsList"></div>
     </div>
 
     <!-- Produits -->
     <div id="tab-products" class="admin-panel">
-        <div class="form-card">
-            <h3>Ajouter un produit</h3>
-            <form id="productForm">
-                <div class="form-group"><label>Image (depuis galerie)</label><input type="file" id="productImage" accept="image/*"></div>
-                <div class="form-group"><label>Nom</label><input type="text" id="productName" required></div>
-                <div class="form-group"><label>Prix</label><input type="number" id="productPrice" step="0.01" required></div>
-                <div class="form-group"><label>Catégorie</label><select id="productCategory"><option>Hoodie</option><option>T-Shirt</option><option>Pants</option><option>Cap</option></select></div>
-                <button type="submit" class="btn-save">Ajouter</button>
-            </form>
-        </div>
+        <h2>Gérer les produits</h2>
+        <form id="productForm">
+            <div class="form-group">
+                <label>Image (depuis galerie)</label>
+                <input type="file" id="productImage" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" id="productName" required>
+            </div>
+            <div class="form-group">
+                <label>Prix</label>
+                <input type="number" id="productPrice" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Catégorie</label>
+                <select id="productCategory">
+                    <option>Hoodie</option>
+                    <option>T-Shirt</option>
+                    <option>Pants</option>
+                    <option>Cap</option>
+                </select>
+            </div>
+            <button type="submit" style="background:#D4AF37; color:#000; padding:10px 20px; border:none; border-radius:4px;">Ajouter</button>
+        </form>
         <div id="productsList"></div>
-    </div>
-
-    <!-- Commandes -->
-    <div id="tab-orders" class="admin-panel">
-        <h3>Commandes</h3>
-        <div id="ordersList"></div>
     </div>
 </div>
 
 <script>
-// ===== AUTHENTIFICATION LOCALE =====
-const ADMIN_PASSWORD = '100panik'; // changez si besoin
+const ADMIN_PASSWORD = '100panik';
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const pwd = document.getElementById('password').value;
-    if (pwd === ADMIN_PASSWORD) {
+    if (document.getElementById('password').value === ADMIN_PASSWORD) {
         document.getElementById('loginPanel').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         sessionStorage.setItem('admin_auth', 'true');
@@ -145,7 +126,6 @@ if (sessionStorage.getItem('admin_auth') === 'true') {
     loadAll();
 }
 
-// ===== TABS =====
 document.querySelectorAll('.admin-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -155,10 +135,9 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
-// ===== DATA =====
-let splashAds = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+// Données
+let ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
 let products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
-let orders = JSON.parse(localStorage.getItem('100panik_orders') || '[]');
 
 function fileToBase64(file) {
     return new Promise((resolve) => {
@@ -168,36 +147,30 @@ function fileToBase64(file) {
     });
 }
 
-// ===== SPLASH =====
-function renderSplash() {
-    const container = document.getElementById('splashList');
-    container.innerHTML = splashAds.length ? '' : '<p class="empty-message">Aucune pub splash</p>';
-    splashAds.forEach((ad, i) => {
-        container.innerHTML += `<div class="list-item"><img src="${ad.image_url}"><span>${ad.title}</span><button class="btn-delete" onclick="deleteSplash(${i})">Suppr</button></div>`;
+function renderAds() {
+    const container = document.getElementById('adsList');
+    container.innerHTML = ads.length ? '' : '<p>Aucune pub.</p>';
+    ads.forEach((ad, i) => {
+        container.innerHTML += `<div class="list-item"><span>${ad.title}</span><button class="btn-delete" onclick="deleteAd(${i})">Suppr</button></div>`;
     });
 }
-window.deleteSplash = (i) => { splashAds.splice(i,1); localStorage.setItem('100panik_ads', JSON.stringify(splashAds)); renderSplash(); };
-document.getElementById('splashForm').addEventListener('submit', async function(e) {
+window.deleteAd = (i) => { ads.splice(i,1); localStorage.setItem('100panik_ads', JSON.stringify(ads)); renderAds(); };
+document.getElementById('adForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const file = document.getElementById('splashImage').files[0];
+    const file = document.getElementById('adImage').files[0];
     if (!file) return alert('Choisir une image');
     const image_url = await fileToBase64(file);
-    splashAds.push({
-        image_url,
-        title: document.getElementById('splashTitle').value,
-        link: document.getElementById('splashLink').value || 'boutik.html'
-    });
-    localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
-    renderSplash();
+    ads.push({ image_url, title: document.getElementById('adTitle').value, link: document.getElementById('adLink').value || 'boutik.html' });
+    localStorage.setItem('100panik_ads', JSON.stringify(ads));
+    renderAds();
     this.reset();
 });
 
-// ===== PRODUCTS =====
 function renderProducts() {
     const container = document.getElementById('productsList');
-    container.innerHTML = products.length ? '' : '<p class="empty-message">Aucun produit</p>';
+    container.innerHTML = products.length ? '' : '<p>Aucun produit.</p>';
     products.forEach((p, i) => {
-        container.innerHTML += `<div class="list-item"><img src="${p.image || '../assets/images/products/product-1.svg'}"><span>${p.name} - $${p.price}</span><button class="btn-delete" onclick="deleteProduct(${i})">Suppr</button></div>`;
+        container.innerHTML += `<div class="list-item"><span>${p.name} - $${p.price}</span><button class="btn-delete" onclick="deleteProduct(${i})">Suppr</button></div>`;
     });
 }
 window.deleteProduct = (i) => { products.splice(i,1); localStorage.setItem('100panik_products', JSON.stringify(products)); renderProducts(); };
@@ -206,30 +179,15 @@ document.getElementById('productForm').addEventListener('submit', async function
     let image = '../assets/images/products/product-1.svg';
     const file = document.getElementById('productImage').files[0];
     if (file) image = await fileToBase64(file);
-    products.push({
-        name: document.getElementById('productName').value,
-        price: parseFloat(document.getElementById('productPrice').value),
-        category: document.getElementById('productCategory').value,
-        image
-    });
+    products.push({ name: document.getElementById('productName').value, price: parseFloat(document.getElementById('productPrice').value), category: document.getElementById('productCategory').value, image });
     localStorage.setItem('100panik_products', JSON.stringify(products));
     renderProducts();
     this.reset();
 });
 
-// ===== ORDERS =====
-function renderOrders() {
-    const container = document.getElementById('ordersList');
-    container.innerHTML = orders.length ? '' : '<p class="empty-message">Aucune commande</p>';
-    orders.forEach((o, i) => {
-        container.innerHTML += `<div class="list-item"><span>#${i+1} - ${o.customer_name || 'Client'} - $${o.total}</span></div>`;
-    });
-}
-
 function loadAll() {
-    renderSplash();
+    renderAds();
     renderProducts();
-    renderOrders();
 }
 </script>
 </body>
