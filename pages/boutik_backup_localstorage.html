@@ -278,14 +278,6 @@ let produitsAffiches = [];
 
 // ===== CHARGEMENT DES PRODUITS =====
 async function chargerProduits() {
-    // 1. localStorage d'abord
-    const localProducts = JSON.parse(localStorage.getItem('100panik_products') || '[]');
-    if (localProducts.length > 0) {
-        tousLesProduits = localProducts;
-        appliquerFiltres();
-        return;
-    }
-    // 2. Supabase
     const { data, error } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
     if (!error && data && data.length > 0) {
         tousLesProduits = data;

@@ -156,7 +156,7 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
 });
 
 // ===== DATA =====
-let splashAds = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+let splashAds = JSON.parse(localStorage.getItem('100panik_splash_ads') || '[]');
 let products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
 let orders = JSON.parse(localStorage.getItem('100panik_orders') || '[]');
 
@@ -176,7 +176,7 @@ function renderSplash() {
         container.innerHTML += `<div class="list-item"><img src="${ad.image_url}"><span>${ad.title}</span><button class="btn-delete" onclick="deleteSplash(${i})">Suppr</button></div>`;
     });
 }
-window.deleteSplash = (i) => { splashAds.splice(i,1); localStorage.setItem('100panik_ads', JSON.stringify(splashAds)); renderSplash(); };
+window.deleteSplash = (i) => { splashAds.splice(i,1); localStorage.setItem('100panik_splash_ads', JSON.stringify(splashAds)); renderSplash(); };
 document.getElementById('splashForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const file = document.getElementById('splashImage').files[0];
@@ -187,7 +187,7 @@ document.getElementById('splashForm').addEventListener('submit', async function(
         title: document.getElementById('splashTitle').value,
         link: document.getElementById('splashLink').value || 'boutik.html'
     });
-    localStorage.setItem('100panik_ads', JSON.stringify(splashAds));
+    localStorage.setItem('100panik_splash_ads', JSON.stringify(splashAds));
     renderSplash();
     this.reset();
 });

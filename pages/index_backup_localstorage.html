@@ -199,14 +199,6 @@ const defaultPhoto = {
 };
 
 async function fetchSplashAds() {
-    // 1. Vérifier localStorage 100panik_ads
-    const localAds = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-    if (localAds.length > 0) {
-        splashAds = localAds;
-        renderSplash();
-        return;
-    }
-    // 2. Sinon, Supabase
     const { data, error } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
     splashAds = (!error && data && data.length > 0) ? data : [defaultPhoto];
     renderSplash();
@@ -282,16 +274,9 @@ async function loadDynamicContent() {
         `).join('');
     }
 
-        // Charger les produits normaux (localStorage d'abord)
-    let products = JSON.parse(localStorage.getItem('100panik_products') || 'null');
-    if (products && products.length > 0) {
-        // Utiliser localStorage
-    } else {
-        const { data: supabaseProducts, error: productsError } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
-        products = (!productsError && supabaseProducts) ? supabaseProducts : [];
-    }
+    // Charger les produits normaux
+    const { data: products, error: productsError } = await supabase.from('admin_products').select('*').order('created_at', { ascending: false });
     const productsContainer = document.getElementById('dynamicProducts');
-    if (products && products.length > 0 && productsContainer) {
     if (!productsError && products && products.length > 0 && productsContainer) {
         productsContainer.innerHTML = products.map(p => `
             <article class="kat-pwodwi">
@@ -308,14 +293,8 @@ async function loadDynamicContent() {
         productsContainer.innerHTML = '<p style="color:#5C3A21;">Aucun produit disponible.</p>';
     }
 
-        // Charger les ads (Featured Drops) - localStorage d'abord
-    let ads = JSON.parse(localStorage.getItem('100panik_ads') || 'null');
-    if (ads && ads.length > 0) {
-        // utiliser localStorage
-    } else {
-        const { data: supabaseAds, error: adsError } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
-        ads = (!adsError && supabaseAds) ? supabaseAds : [];
-    }
+    // Charger les ads (Featured Drops)
+    const { data: ads, error: adsError } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
     const adsContainer = document.getElementById('adsGrid');
     if (!adsError && ads && ads.length > 0 && adsContainer) {
         adsContainer.innerHTML = ads.map(ad => `
