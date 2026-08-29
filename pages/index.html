@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
     <style>
-        /* Splash */
         #pubSplash {
             position: fixed; inset: 0; z-index: 99998;
             background: #0B1D3A; display: flex;
             align-items: center; justify-content: center;
             overflow: hidden;
         }
-        #splashImage {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            object-fit: cover;
+        #pubSplash img.bg {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
         }
         .splash-overlay {
             position: absolute; inset: 0;
@@ -26,27 +24,23 @@
             position: relative; z-index: 2; text-align: center; padding: 20px;
         }
         .splash-content h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem; color: #D4AF37; margin-bottom: 10px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 3rem; color: #D4AF37; margin-bottom: 10px;
         }
         .splash-content p {
             color: #fff; font-size: 1.2rem; margin-bottom: 30px;
         }
         .btn-enter {
-            padding: 16px 50px;
-            background: #D4AF37; color: #0B1D3A;
-            border: none; border-radius: 50px;
-            font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; cursor: pointer;
-            font-size: 1rem;
+            padding: 16px 50px; background: #D4AF37; color: #0B1D3A;
+            border: none; border-radius: 50px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; font-size: 1rem;
         }
     </style>
 </head>
 <body>
 
-<!-- SPLASH PUB -->
+<!-- SPLASH PUB (BOUTON ANTRE INLINE) -->
 <div id="pubSplash">
-    <img id="splashImage" src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Splash">
+    <img class="bg" src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Splash" onerror="this.src='../assets/images/hero-bg.svg'">
     <div class="splash-overlay"></div>
     <div class="splash-content">
         <h1>100PANIK</h1>
@@ -88,6 +82,14 @@
   </div>
 </section>
 
+<!-- MARQUEE -->
+<div class="marquee-panik">
+  <div class="marquee-track">
+    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
+    <span>100PANIK</span><span>CALM IN CHAOS</span><span>DROP 01 LIVE NOW</span>
+  </div>
+</div>
+
 <!-- FEATURED DROPS (PUBS) -->
 <section class="seksyon-pwodwi">
   <div class="konteni-limit">
@@ -104,13 +106,67 @@
   </div>
 </section>
 
+<!-- LOOKBOOK -->
+<section class="seksyon-lookbook">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">Campaign</h2>
+    <div class="grid-lookbook">
+      <div class="lookbook-item"><img src="../assets/images/products/product-1.svg" alt=""></div>
+      <div class="lookbook-item"><img src="../assets/images/products/product-2.svg" alt=""></div>
+      <div class="lookbook-item"><img src="../assets/images/products/product-3.svg" alt=""></div>
+      <div class="lookbook-item"><img src="../assets/images/products/product-4.svg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="seksyon-temwayaj">
+  <div class="konteni-limit">
+    <h2 class="tit-seksyon" style="text-align:center; margin-bottom:20px;">From the Streets</h2>
+    <div class="grid-temwayaj">
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"From the moment I put it on, I felt untouchable."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">JK</div><div><p class="temwayaj-non">Jean-Karl</p><p class="temwayaj-vil">Port-au-Prince</p></div></div>
+      </div>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"100PANIK isn't just fashion—it's a state of mind."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">MK</div><div><p class="temwayaj-non">Mika</p><p class="temwayaj-vil">Miami</p></div></div>
+      </div>
+      <div class="kat-temwayaj">
+        <div class="temwayaj-zetwal">★★★★★</div>
+        <p class="temwayaj-tèks">"Every drop sells out. That's the 100PANIK effect."</p>
+        <div class="temwayaj-moun"><div class="temwayaj-avatar">DP</div><div><p class="temwayaj-non">Daphney</p><p class="temwayaj-vil">Pétion-Ville</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONCASH -->
+<section class="seksyon-moncash">
+  <div class="moncash-kat">
+    <h2 class="moncash-tit">💰 Payment</h2>
+    <p class="moncash-tèks">Reserve your piece. Pay via MonCash.</p>
+    <div class="moncash-nimewo">32924776</div>
+    <a href="https://wa.me/50932924776" target="_blank" class="btn-panik btn-lò">Confirm on WhatsApp</a>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer-panik">
   <div class="konteni-limit">
-    <div class="footer-anba">
-      <p>&copy; 2026 100PANIK. All rights reserved.</p>
-      <a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.7;">⚙ Admin</a>
+    <div class="grid-footer">
+      <div class="footer-kolòn">
+        <h3 class="footer-logo">100<span>PANIK</span></h3>
+        <p class="footer-deskripsyon">When the world panics, style stays calm.</p>
+        <div class="footer-rezosyal"><a href="#">📸</a><a href="#">📘</a><a href="#">🐦</a><a href="#">📱</a></div>
+      </div>
+      <div class="footer-kolòn"><h4>Quick Links</h4><ul><li><a href="boutik.html">Shop</a></li><li><a href="koleksyon.html">Collection</a></li><li><a href="istwa.html">Story</a></li><li><a href="kontak.html">Contact</a></li></ul></div>
+      <div class="footer-kolòn"><h4>Services</h4><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul></div>
+      <div class="footer-kolòn"><h4>Contact</h4><ul><li><a href="tel:+50932924776">+509 32924776</a></li><li><a href="mailto:info@100panik.com">info@100panik.com</a></li></ul></div>
     </div>
+    <div class="footer-anba"><p>&copy; 2026 100PANIK. All rights reserved.</p><a href="admin.html" style="color:#999; font-size:0.75rem; opacity:0.7;">⚙ Admin</a></div>
   </div>
 </footer>
 
@@ -118,15 +174,22 @@
 <a href="panye.html" class="panye-flotan">🛒<span class="panye-konte" id="cartBadge">0</span></a>
 
 <script>
-// ===== CHARGEMENT DES DONNÉES LOCALES =====
+// ===== FONCTIONS SIMPLES =====
+function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
+    cart.push({ name, price, quantity: 1 });
+    localStorage.setItem('100panik_cart', JSON.stringify(cart));
+    alert('✅ Ajouté au panier !');
+}
+
 function loadLocalData() {
-    // Charger les pubs
+    // Pubs
     const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
     const adsContainer = document.getElementById('adsGrid');
     if (ads.length > 0) {
         adsContainer.innerHTML = ads.map(ad => `
             <div style="background:rgba(255,255,255,0.8); border:1px solid #A0522D; border-radius:12px; overflow:hidden;">
-                <img src="${ad.image_url}" style="width:100%; height:180px; object-fit:cover;">
+                <img src="${ad.image_url}" style="width:100%; height:180px; object-fit:cover;" onerror="this.src='../assets/images/hero-bg.svg'">
                 <div style="padding:15px;">
                     <h3 style="color:#3E2723;">${ad.title}</h3>
                     <a href="${ad.link || 'boutik.html'}" style="color:#A0522D;">Shop Now →</a>
@@ -137,7 +200,7 @@ function loadLocalData() {
         adsContainer.innerHTML = '<p style="color:#5C3A21;">Aucune pub pour le moment.</p>';
     }
 
-    // Charger les produits
+    // Produits
     const products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
     const productsContainer = document.getElementById('dynamicProducts');
     if (products.length > 0) {
@@ -157,15 +220,7 @@ function loadLocalData() {
     }
 }
 
-// Panier simplifié
-function addToCart(name, price) {
-    let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
-    cart.push({ name, price, quantity: 1 });
-    localStorage.setItem('100panik_cart', JSON.stringify(cart));
-    alert('✅ Ajouté au panier !');
-}
-
-// Initialisation
+// Charger au démarrage
 window.addEventListener('DOMContentLoaded', loadLocalData);
 </script>
 </body>
