@@ -1,193 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin 100PANIK</title>
-    <style>
-        body { background:#050912; color:#F5F0E6; font-family: sans-serif; margin:0; }
-        #loginPanel { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#0B1D3A; }
-        .login-box { background:#111A28; padding:40px; border-radius:12px; text-align:center; border:1px solid #D4AF37; }
-        .login-box input { padding:12px; margin:10px 0; width:100%; background:transparent; border:1px solid #333; color:#fff; border-radius:4px; }
-        .login-box button { padding:12px 30px; background:#D4AF37; border:none; border-radius:4px; font-weight:bold; cursor:pointer; }
-        #adminPanel { display:none; padding:20px; }
-        .admin-tabs { display:flex; gap:10px; margin-bottom:20px; }
-        .admin-tab { padding:10px 20px; background:#111A28; border:1px solid #333; color:#ccc; cursor:pointer; border-radius:4px; }
-        .admin-tab.active { background:#D4AF37; color:#000; }
-        .admin-panel { display:none; }
-        .admin-panel.active { display:block; }
-        .form-group { margin-bottom:15px; }
-        label { display:block; margin-bottom:5px; }
-        input[type="text"], input[type="number"], select, input[type="file"] { width:100%; padding:10px; background:transparent; border:1px solid #333; color:#fff; border-radius:4px; }
-        button { cursor:pointer; }
-        .list-item { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #333; }
-        .btn-delete { background:#B71C1C; color:#fff; border:none; padding:5px 10px; border-radius:4px; }
-    </style>
-</head>
-<body>
-
-<!-- LOGIN -->
-<div id="loginPanel">
-    <div class="login-box">
-        <h2>100PANIK Admin</h2>
-        <form id="loginForm">
-            <input type="password" id="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
-        </form>
-        <p id="loginError" style="color:red; display:none;">Mot de passe incorrect</p>
-    </div>
+<html>
+<head><title>Admin 100PANIK</title></head>
+<body style="background:#111; color:#fff; font-family:sans-serif; padding:20px;">
+<h1>Admin</h1>
+<div id="login" style="margin-bottom:20px;">
+  <input type="password" id="pwd" placeholder="Mot de passe" style="padding:10px;">
+  <button onclick="login()" style="padding:10px 20px;">Se connecter</button>
 </div>
-
-<!-- ADMIN PANEL -->
-<div id="adminPanel">
-    <h1 style="color:#D4AF37;">Admin Panel</h1>
-    <button id="logoutBtn" style="background:transparent; border:1px solid #D4AF37; color:#D4AF37; padding:8px 20px; border-radius:4px; cursor:pointer;">Déconnexion</button>
-
-    <div class="admin-tabs">
-        <button class="admin-tab active" data-tab="ads">Pubs</button>
-        <button class="admin-tab" data-tab="products">Produits</button>
-    </div>
-
-    <!-- Pubs -->
-    <div id="tab-ads" class="admin-panel active">
-        <h2>Gérer les pubs (splash)</h2>
-        <form id="adForm">
-            <div class="form-group">
-                <label>Image (depuis galerie)</label>
-                <input type="file" id="adImage" accept="image/*" required>
-            </div>
-            <div class="form-group">
-                <label>Titre</label>
-                <input type="text" id="adTitle" required>
-            </div>
-            <div class="form-group">
-                <label>Lien (optionnel)</label>
-                <input type="text" id="adLink" value="boutik.html">
-            </div>
-            <button type="submit" style="background:#D4AF37; color:#000; padding:10px 20px; border:none; border-radius:4px;">Ajouter</button>
-        </form>
-        <div id="adsList"></div>
-    </div>
-
-    <!-- Produits -->
-    <div id="tab-products" class="admin-panel">
-        <h2>Gérer les produits</h2>
-        <form id="productForm">
-            <div class="form-group">
-                <label>Image (depuis galerie)</label>
-                <input type="file" id="productImage" accept="image/*">
-            </div>
-            <div class="form-group">
-                <label>Nom</label>
-                <input type="text" id="productName" required>
-            </div>
-            <div class="form-group">
-                <label>Prix</label>
-                <input type="number" id="productPrice" step="0.01" required>
-            </div>
-            <div class="form-group">
-                <label>Catégorie</label>
-                <select id="productCategory">
-                    <option>Hoodie</option>
-                    <option>T-Shirt</option>
-                    <option>Pants</option>
-                    <option>Cap</option>
-                </select>
-            </div>
-            <button type="submit" style="background:#D4AF37; color:#000; padding:10px 20px; border:none; border-radius:4px;">Ajouter</button>
-        </form>
-        <div id="productsList"></div>
-    </div>
+<div id="panel" style="display:none;">
+  <h2>Ajouter une pub</h2>
+  <input type="file" id="adImage" accept="image/*"><br><br>
+  <input type="text" id="adTitle" placeholder="Titre" style="padding:8px;"><br><br>
+  <button onclick="addAd()" style="padding:10px 20px;">Ajouter</button>
+  <hr>
+  <h2>Liste des pubs</h2>
+  <ul id="adList"></ul>
 </div>
-
 <script>
-const ADMIN_PASSWORD = '100panik';
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (document.getElementById('password').value === ADMIN_PASSWORD) {
-        document.getElementById('loginPanel').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        sessionStorage.setItem('admin_auth', 'true');
-        loadAll();
-    } else {
-        document.getElementById('loginError').style.display = 'block';
-    }
-});
-
-document.getElementById('logoutBtn').addEventListener('click', function() {
-    sessionStorage.removeItem('admin_auth');
-    document.getElementById('loginPanel').style.display = 'flex';
-    document.getElementById('adminPanel').style.display = 'none';
-});
-
-if (sessionStorage.getItem('admin_auth') === 'true') {
-    document.getElementById('loginPanel').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    loadAll();
+function login() {
+  if (document.getElementById('pwd').value === '100panik') {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+    loadAds();
+  } else {
+    alert('Mot de passe incorrect');
+  }
 }
-
-document.querySelectorAll('.admin-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    });
-});
-
-// Données
-let ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-let products = JSON.parse(localStorage.getItem('100panik_products') || '[]');
-
-function fileToBase64(file) {
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(file);
-    });
+function loadAds() {
+  const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+  document.getElementById('adList').innerHTML = ads.map(a => `<li>${a.title}</li>`).join('');
 }
-
-function renderAds() {
-    const container = document.getElementById('adsList');
-    container.innerHTML = ads.length ? '' : '<p>Aucune pub.</p>';
-    ads.forEach((ad, i) => {
-        container.innerHTML += `<div class="list-item"><span>${ad.title}</span><button class="btn-delete" onclick="deleteAd(${i})">Suppr</button></div>`;
-    });
-}
-window.deleteAd = (i) => { ads.splice(i,1); localStorage.setItem('100panik_ads', JSON.stringify(ads)); renderAds(); };
-document.getElementById('adForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const file = document.getElementById('adImage').files[0];
-    if (!file) return alert('Choisir une image');
-    const image_url = await fileToBase64(file);
-    ads.push({ image_url, title: document.getElementById('adTitle').value, link: document.getElementById('adLink').value || 'boutik.html' });
+function addAd() {
+  const fileInput = document.getElementById('adImage');
+  const title = document.getElementById('adTitle').value;
+  if (!fileInput.files[0] || !title) return alert('Choisir image et titre');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
+    ads.push({ image_url: e.target.result, title: title });
     localStorage.setItem('100panik_ads', JSON.stringify(ads));
-    renderAds();
-    this.reset();
-});
-
-function renderProducts() {
-    const container = document.getElementById('productsList');
-    container.innerHTML = products.length ? '' : '<p>Aucun produit.</p>';
-    products.forEach((p, i) => {
-        container.innerHTML += `<div class="list-item"><span>${p.name} - $${p.price}</span><button class="btn-delete" onclick="deleteProduct(${i})">Suppr</button></div>`;
-    });
-}
-window.deleteProduct = (i) => { products.splice(i,1); localStorage.setItem('100panik_products', JSON.stringify(products)); renderProducts(); };
-document.getElementById('productForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    let image = '../assets/images/products/product-1.svg';
-    const file = document.getElementById('productImage').files[0];
-    if (file) image = await fileToBase64(file);
-    products.push({ name: document.getElementById('productName').value, price: parseFloat(document.getElementById('productPrice').value), category: document.getElementById('productCategory').value, image });
-    localStorage.setItem('100panik_products', JSON.stringify(products));
-    renderProducts();
-    this.reset();
-});
-
-function loadAll() {
-    renderAds();
-    renderProducts();
+    loadAds();
+    alert('Pub ajoutée !');
+  };
+  reader.readAsDataURL(fileInput.files[0]);
 }
 </script>
 </body>
