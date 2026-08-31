@@ -3,8 +3,11 @@ const CART_KEY = 'panik_cart';
 const PUBS_KEY = 'panik_pubs';
 const PRODUCTS_KEY = 'panik_products';
 const ORDERS_KEY = 'panik_orders';
+const USERS_KEY = 'panik_users';
+const CURRENT_USER_KEY = 'panik_current_user';
 const ADMIN_LOGGED_KEY = 'panik_admin_logged';
 const ADMIN_PASSWORD = '100panik';
+const LAST_SPLASH_INDEX_KEY = 'panik_last_splash_index';
 
 // Fonction safe pour localStorage
 function getLocalStorage(key) {
@@ -27,18 +30,74 @@ function setLocalStorage(key, value) {
   }
 }
 
-// ========== Splash ==========
+// ========== Gestion des utilisateurs ==========
+function getUsers() {
+  return getLocalStorage(USERS_KEY) || [];
+}
+
+function saveUsers(users) {
+  setLocalStorage(USERS_KEY, users);
+}
+
+function registerUser(name, email, password, phone) {
+  const users = getUsers();
+  if (users.some(u => u.email === email)) {
+    return { success: false, message: 'Cet email est déjà utilisé.' };
+  }
+  const newUser = {
+    id: Date.now(),
+    name,
+    email,
+    password, // En production, hasher le mot de passe
+    phone,
+    createdAt: new Date().toISOString()
+  };
+  users.push(newUser);
+  saveUsers(users);
+  return { success: true, user: newUser };
+}
+
+function loginUser(email, password) {
+  const users = getUsers();
+  const user = users.find(u => u.email === email && u.password === password);
+  if (user) {
+    setLocalStorage(CURRENT_USER_KEY, user);
+    return { success: true, user };
+  }
+  return { success: false, message: 'Email ou mot de passe incorrect.' };
+}
+
+function logoutUser() {
+  setLocalStorage(CURRENT_USER_KEY, null);
+  window.location.href = 'konekte.html';
+}
+
+function getCurrentUser() {
+  return getLocalStorage(CURRENT_USER_KEY);
+}
+
+// ========== Splash avec rotation anti-répétition ==========
 function showSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
   
-  // Tente de récupérer une pub aléatoire pour le splash
   let splashImage = 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg';
   try {
-    const pubs = getLocalStorage(PUBS_KEY);
+    const pubs = getPubsFromStorage();
     if (pubs && pubs.length > 0) {
-      const randomPub = pubs[Math.floor(Math.random() * pubs.length)];
-      if (randomPub && randomPub.image) splashImage = randomPub.image;
+      let lastIndex = getLocalStorage(LAST_SPLASH_INDEX_KEY);
+      lastIndex = lastIndex !== null && lastIndex !== undefined ? lastIndex : -1;
+      // Choisir un index aléatoire différent du dernier
+      let newIndex;
+      if (pubs.length === 1) {
+        newIndex = 0;
+      } else {
+        do {
+          newIndex = Math.floor(Math.random() * pubs.length);
+        } while (newIndex === lastIndex);
+      }
+      splashImage = pubs[newIndex].image;
+      setLocalStorage(LAST_SPLASH_INDEX_KEY, newIndex);
     }
   } catch (e) {
     console.warn('Erreur chargement pub splash, image par défaut utilisée.');
@@ -48,6 +107,10 @@ function showSplash() {
   if (img) img.src = splashImage;
   
   splash.style.display = 'flex';
+  // Auto-fermeture après 6 secondes si l'utilisateur ne clique pas
+  setTimeout(() => {
+    closeSplash();
+  }, 6000);
 }
 
 function closeSplash() {
@@ -59,7 +122,6 @@ function closeSplash() {
 
 // ========== Produits & Pubs (LocalStorage + Supabase fallback) ==========
 function getProductsFromStorage() {
-  // Essaie d'abord localStorage
   let products = getLocalStorage(PRODUCTS_KEY);
   if (products && Array.isArray(products) && products.length > 0) {
     return products;
@@ -79,34 +141,10 @@ function getProductsFromStorage() {
   
   // Données par défaut
   const defaultProducts = [
-    {
-      id: 1,
-      name: 'T-shirt Logo 100PANIK',
-      price: 45,
-      category: 'T-shirt',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
-    },
-    {
-      id: 2,
-      name: 'Hoodie Oversize',
-      price: 85,
-      category: 'Hoodie',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
-    },
-    {
-      id: 3,
-      name: 'Veste Workwear',
-      price: 120,
-      category: 'Veste',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
-    },
-    {
-      id: 4,
-      name: 'Pantalon Cargo',
-      price: 75,
-      category: 'Pantalon',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
-    }
+    { id: 1, name: 'T-shirt Logo 100PANIK', price: 45, category: 'T-shirt', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+    { id: 2, name: 'Hoodie Oversize', price: 85, category: 'Hoodie', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+    { id: 3, name: 'Veste Workwear', price: 120, category: 'Veste', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+    { id: 4, name: 'Pantalon Cargo', price: 75, category: 'Pantalon', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' }
   ];
   setLocalStorage(PRODUCTS_KEY, defaultProducts);
   return defaultProducts;
@@ -114,7 +152,6 @@ function getProductsFromStorage() {
 
 function saveProductsToStorage(products) {
   setLocalStorage(PRODUCTS_KEY, products);
-  // Optionnel : synchroniser avec Supabase si configuré
   if (supabase) {
     try {
       supabase.from('products').upsert(products).then(({ error }) => {
@@ -128,14 +165,9 @@ function getPubsFromStorage() {
   let pubs = getLocalStorage(PUBS_KEY);
   if (pubs && Array.isArray(pubs)) return pubs;
   
-  // Données par défaut (une seule pub avec l'image par défaut)
   const defaultPubs = [
-    {
-      id: 1,
-      title: 'Nouvelle Collection',
-      image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg',
-      link: 'boutik.html'
-    }
+    { id: 1, title: 'Nouvelle Collection', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', link: 'boutik.html' },
+    { id: 2, title: 'Promo Exclusive', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', link: 'boutik.html' }
   ];
   setLocalStorage(PUBS_KEY, defaultPubs);
   return defaultPubs;
@@ -203,7 +235,6 @@ function loadProductsWithFilters() {
   
   let products = getProductsFromStorage();
   
-  // Filtres
   if (search) {
     products = products.filter(p => p.name.toLowerCase().includes(search) || (p.category && p.category.toLowerCase().includes(search)));
   }
@@ -219,19 +250,11 @@ function loadProductsWithFilters() {
     }
   }
   
-  // Tri
   switch(sort) {
-    case 'price-asc':
-      products.sort((a,b) => a.price - b.price);
-      break;
-    case 'price-desc':
-      products.sort((a,b) => b.price - a.price);
-      break;
-    case 'name':
-      products.sort((a,b) => a.name.localeCompare(b.name));
-      break;
-    default: // newest
-      products.sort((a,b) => b.id - a.id);
+    case 'price-asc': products.sort((a,b) => a.price - b.price); break;
+    case 'price-desc': products.sort((a,b) => b.price - a.price); break;
+    case 'name': products.sort((a,b) => a.name.localeCompare(b.name)); break;
+    default: products.sort((a,b) => b.id - a.id);
   }
   
   container.innerHTML = products.map(prod => `
@@ -273,8 +296,8 @@ function addToCart(id, name, price, image, size = 'M') {
     cart.push({ id, name, price, image, size, quantity: 1 });
   }
   saveCart(cart);
-  // Feedback visuel
-  alert('Produit ajouté au panier !');
+  // Notification moderne
+  showToast('Produit ajouté au panier !');
 }
 
 function updateCartCount() {
@@ -379,7 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      // Création de la commande
       const order = {
         id: Date.now(),
         customer: { name, phone, address },
@@ -388,12 +410,10 @@ document.addEventListener('DOMContentLoaded', function() {
         date: new Date().toISOString()
       };
       
-      // Enregistrer dans localStorage
       const orders = getLocalStorage(ORDERS_KEY) || [];
       orders.push(order);
       setLocalStorage(ORDERS_KEY, orders);
       
-      // Optionnel : Supabase
       if (supabase) {
         try {
           supabase.from('orders').insert(order).then(({ error }) => {
@@ -402,7 +422,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (e) {}
       }
       
-      // Construire le message WhatsApp
       let message = `Nouvelle commande 100PANIK%0A%0A`;
       message += `Client: ${encodeURIComponent(name)}%0A`;
       message += `Téléphone: ${encodeURIComponent(phone)}%0A`;
@@ -415,17 +434,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const waLink = `https://wa.me/32924776?text=${message}`;
       
-      // Afficher le lien
       const waContainer = document.getElementById('whatsapp-link');
       if (waContainer) {
         waContainer.style.display = 'block';
         waContainer.innerHTML = `<a href="${waLink}" target="_blank">Confirmer via WhatsApp</a>`;
       }
       
-      // Vider le panier
       setLocalStorage(CART_KEY, []);
       updateCartCount();
-      alert('Commande enregistrée ! Cliquez sur le bouton WhatsApp pour finaliser.');
+      showToast('Commande enregistrée !');
     });
   }
 });
@@ -452,7 +469,6 @@ function adminLogout() {
 }
 
 function loadAdminData() {
-  // Pubs
   const pubsContainer = document.getElementById('pubs-list');
   if (pubsContainer) {
     const pubs = getPubsFromStorage();
@@ -467,7 +483,6 @@ function loadAdminData() {
     `).join('');
   }
   
-  // Produits
   const productsContainer = document.getElementById('products-list');
   if (productsContainer) {
     const products = getProductsFromStorage();
@@ -555,11 +570,175 @@ function deleteProduct(id) {
   loadAdminData();
 }
 
-// Initialisation au chargement
+// ========== Authentification ==========
+function switchAuthTab(tab) {
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const loginTab = document.getElementById('tab-login');
+  const registerTab = document.getElementById('tab-register');
+  
+  if (tab === 'login') {
+    loginForm.style.display = 'flex';
+    registerForm.style.display = 'none';
+    loginTab.classList.add('active');
+    registerTab.classList.remove('active');
+  } else {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'flex';
+    loginTab.classList.remove('active');
+    registerTab.classList.add('active');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Gestion login
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const result = loginUser(email, password);
+      if (result.success) {
+        window.location.href = 'kont-mwen.html';
+      } else {
+        const error = document.getElementById('login-error');
+        if (error) {
+          error.textContent = result.message;
+          error.style.display = 'block';
+        }
+      }
+    });
+  }
+  
+  // Gestion register
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('register-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const password = document.getElementById('register-password').value;
+      const phone = document.getElementById('register-phone').value.trim();
+      const result = registerUser(name, email, password, phone);
+      if (result.success) {
+        // Auto-login après inscription
+        setLocalStorage(CURRENT_USER_KEY, result.user);
+        window.location.href = 'kont-mwen.html';
+      } else {
+        const error = document.getElementById('register-error');
+        if (error) {
+          error.textContent = result.message;
+          error.style.display = 'block';
+        }
+      }
+    });
+  }
+  
+  // Dashboard
+  if (document.getElementById('dashboard-content')) {
+    loadDashboard();
+  }
+  
+  // Splash sur la page d'accueil
+  if (document.getElementById('splash')) {
+    showSplash();
+  }
+  
+  updateCartCount();
+});
+
+function loadDashboard() {
+  const user = getCurrentUser();
+  const content = document.getElementById('dashboard-content');
+  const notLogged = document.getElementById('not-logged-in');
+  
+  if (!content || !notLogged) return;
+  
+  if (!user) {
+    content.style.display = 'none';
+    notLogged.style.display = 'block';
+    return;
+  }
+  
+  content.style.display = 'block';
+  notLogged.style.display = 'none';
+  
+  // Infos utilisateur
+  let userInfo = `
+    <div class="dashboard-info">
+      <div class="dashboard-card">
+        <h3>Informations</h3>
+        <p><strong>Nom :</strong> ${user.name}</p>
+        <p><strong>Email :</strong> ${user.email}</p>
+        ${user.phone ? `<p><strong>Téléphone :</strong> ${user.phone}</p>` : ''}
+      </div>
+      <div class="dashboard-card">
+        <h3>Statistiques</h3>
+        <p><strong>Commandes :</strong> ${getOrdersForUser(user.email).length}</p>
+      </div>
+    </div>
+  `;
+  
+  // Historique commandes
+  const orders = getOrdersForUser(user.email);
+  let ordersHtml = '<div class="order-history"><h3>Historique des commandes</h3>';
+  if (orders.length === 0) {
+    ordersHtml += '<p>Aucune commande pour le moment.</p>';
+  } else {
+    orders.forEach(order => {
+      ordersHtml += `
+        <div class="order-item">
+          <span>Commande #${order.id}</span>
+          <span>${new Date(order.date).toLocaleDateString()}</span>
+          <span>$${order.total.toFixed(2)}</span>
+        </div>
+      `;
+    });
+  }
+  ordersHtml += '</div>';
+  
+  content.innerHTML = userInfo + ordersHtml;
+}
+
+function getOrdersForUser(email) {
+  const orders = getLocalStorage(ORDERS_KEY) || [];
+  return orders.filter(o => o.customer && o.customer.email === email);
+}
+
+// ========== Notification toast ==========
+function showToast(message) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--brown-dark);
+      color: var(--gold);
+      padding: 15px 25px;
+      border-radius: 50px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 600;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 3000);
+}
+
+// ========== Initialisation ==========
 document.addEventListener('DOMContentLoaded', function() {
   updateCartCount();
   
-  // Si on est sur la page admin et déjà connecté
   if (document.getElementById('admin-panel') && getLocalStorage(ADMIN_LOGGED_KEY) === 'true') {
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('admin-panel').style.display = 'block';

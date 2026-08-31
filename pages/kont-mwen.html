@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Compte - 100PANIK</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">100PANIK</a>
+      <nav class="nav">
+        <a href="boutik.html">Boutique</a>
+        <a href="panye.html">Panier (<span id="cart-count">0</span>)</a>
+        <a href="kont-mwen.html">Compte</a>
+        <a href="#" id="logout-link" onclick="logoutUser()">Déconnexion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container dashboard">
+    <h1 class="page-title">Mon Dashboard</h1>
+    <div id="dashboard-content">
+      <!-- Affiché si connecté -->
+    </div>
+    <div id="not-logged-in" style="display:none;">
+      <p>Veuillez vous connecter pour accéder à votre espace.</p>
+      <a href="konekte.html" class="btn btn-gold">Se connecter</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2024 100PANIK. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      loadDashboard();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - 100PANIK</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+  <div class="auth-container">
+    <div class="auth-box">
+      <a href="index.html" class="logo auth-logo">100PANIK</a>
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
+        <button id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Inscription</button>
+      </div>
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block">Se connecter</button>
+        <p id="login-error" class="auth-error" style="display:none;"></p>
+      </form>
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" id="register-name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="register-email" required>
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" id="register-password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" id="register-phone">
+        </div>
+        <button type="submit" class="btn btn-gold btn-block">Créer un compte</button>
+        <p id="register-error" class="auth-error" style="display:none;"></p>
+      </form>
+    </div>
+  </div>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    // Vérifier si déjà connecté
+    document.addEventListener('DOMContentLoaded', function() {
+      if (getCurrentUser()) {
+        window.location.href = 'kont-mwen.html';
+      }
+    });
+  </script>
+</body>
+</html>
