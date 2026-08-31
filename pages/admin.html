@@ -51,6 +51,28 @@
           <button onclick="addProduct()" class="btn btn-gold">Ajouter Produit</button>
         </div>
       </section>
+
+      <!-- Gestion des Vidéos (The Edit) -->
+      <section class="admin-section">
+        <h2>Vidéos - The Edit</h2>
+        <div id="videos-list" class="admin-list"></div>
+        <div class="admin-form">
+          <input type="text" id="video-title" placeholder="Titre de la vidéo">
+          <input type="file" id="video-file" accept="video/*">
+          <input type="text" id="video-url" placeholder="Ou URL vidéo (YouTube, mp4...)">
+          <button onclick="addVideo()" class="btn btn-gold">Ajouter Vidéo</button>
+        </div>
+      </section>
+
+      <!-- Gestion du Lookbook -->
+      <section class="admin-section">
+        <h2>Lookbook (Images)</h2>
+        <div id="lookbook-list" class="admin-list"></div>
+        <div class="admin-form">
+          <input type="file" id="lookbook-image" accept="image/*">
+          <button onclick="addLookbookImage()" class="btn btn-gold">Ajouter Image</button>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -66,4 +88,3 @@
   </script>
 </body>
 </html>
-

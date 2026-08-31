@@ -497,6 +497,35 @@ function loadAdminData() {
     `).join('');
   }
 }
+// Videyo
+const videosContainer = document.getElementById('videos-list');
+if (videosContainer) {
+  const videos = getVideosFromStorage();
+  videosContainer.innerHTML = videos.map(video => `
+    <div class="admin-item">
+      <div class="info">
+        <strong>${video.title}</strong>
+        <small>${video.url.substring(0, 50)}...</small>
+      </div>
+      <button class="btn btn-outline" onclick="deleteVideo(${video.id})">Supprimer</button>
+    </div>
+  `).join('');
+}
+
+// Lookbook
+const lookbookContainer = document.getElementById('lookbook-list');
+if (lookbookContainer) {
+  const images = getLookbookFromStorage();
+  lookbookContainer.innerHTML = images.map(img => `
+    <div class="admin-item">
+      <img src="${img.image}" alt="${img.alt}" style="width:60px;height:60px;object-fit:cover;">
+      <div class="info">
+        <strong>Image ${img.id}</strong>
+      </div>
+      <button class="btn btn-outline" onclick="deleteLookbookImage(${img.id})">Supprimer</button>
+    </div>
+  `).join('');
+}
 
 function addPub() {
   const title = document.getElementById('pub-title').value.trim();
@@ -744,5 +773,156 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('admin-panel').style.display = 'block';
     loadAdminData();
   }
+
+// ========== Videyo (The Edit) ==========
+const VIDEOS_KEY = 'panik_videos';
+
+function getVideosFromStorage() {
+  let videos = getLocalStorage(VIDEOS_KEY);
+  if (videos && Array.isArray(videos)) return videos;
+  // Videyo default (si pa gen anyen)
+  const defaultVideos = [
+    {
+      id: 1,
+      title: '100PANIK - Nouvelle Collection',
+      url: 'https://www.w3schools.com/html/mov_bbb.mp4', // Video placeholder
+      poster: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
+    }
+  ];
+  setLocalStorage(VIDEOS_KEY, defaultVideos);
+  return defaultVideos;
+}
+
+function saveVideosToStorage(videos) {
+  setLocalStorage(VIDEOS_KEY, videos);
+}
+
+function loadEditVideos() {
+  const container = document.getElementById('edit-videos');
+  if (!container) return;
+  const videos = getVideosFromStorage();
+  container.innerHTML = videos.map(video => `
+    <div class="card">
+      <div class="video-container">
+        <video controls poster="${video.poster || ''}">
+          <source src="${video.url}" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${video.title}</h3>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addVideo() {
+  const title = document.getElementById('video-title').value.trim();
+  const fileInput = document.getElementById('video-file');
+  const urlInput = document.getElementById('video-url').value.trim();
+  
+  let videoUrl = '';
+  let poster = '';
+  
+  if (fileInput.files[0]) {
+    // Lire le fichier vidéo en base64
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const newVideo = {
+        id: Date.now(),
+        title: title || 'Vidéo sans titre',
+        url: e.target.result,  // base64
+        poster: poster || 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
+      };
+      const videos = getVideosFromStorage();
+      videos.push(newVideo);
+      saveVideosToStorage(videos);
+      loadAdminData();
+      document.getElementById('video-title').value = '';
+      fileInput.value = '';
+      document.getElementById('video-url').value = '';
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  } else if (urlInput) {
+    // Utiliser l'URL fournie
+    videoUrl = urlInput;
+    const newVideo = {
+      id: Date.now(),
+      title: title || 'Vidéo sans titre',
+      url: videoUrl,
+      poster: poster || 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
+    };
+    const videos = getVideosFromStorage();
+    videos.push(newVideo);
+    saveVideosToStorage(videos);
+    loadAdminData();
+    document.getElementById('video-title').value = '';
+    document.getElementById('video-url').value = '';
+  } else {
+    alert('Veuillez choisir un fichier vidéo ou entrer une URL.');
+  }
+}
+
+function deleteVideo(id) {
+  let videos = getVideosFromStorage();
+  videos = videos.filter(v => v.id !== id);
+  saveVideosToStorage(videos);
+  loadAdminData();
+}
+// ========== Lookbook ==========
+const LOOKBOOK_KEY = 'panik_lookbook';
+
+function getLookbookFromStorage() {
+  let images = getLocalStorage(LOOKBOOK_KEY);
+  if (images && Array.isArray(images)) return images;
+  const defaultLookbook = [
+    { id: 1, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 1' },
+    { id: 2, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 2' },
+    { id: 3, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 3' }
+  ];
+  setLocalStorage(LOOKBOOK_KEY, defaultLookbook);
+  return defaultLookbook;
+}
+
+function saveLookbookToStorage(images) {
+  setLocalStorage(LOOKBOOK_KEY, images);
+}
+
+function loadLookbook() {
+  const container = document.getElementById('lookbook-grid');
+  if (!container) return;
+  const images = getLookbookFromStorage();
+  container.innerHTML = images.map(img => `
+    <img src="${img.image}" alt="${img.alt || 'Lookbook image'}">
+  `).join('');
+}
+
+function addLookbookImage() {
+  const fileInput = document.getElementById('lookbook-image');
+  if (!fileInput.files[0]) {
+    alert('Veuillez choisir une image.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const images = getLookbookFromStorage();
+    images.push({
+      id: Date.now(),
+      image: e.target.result,
+      alt: 'Lookbook image'
+    });
+    saveLookbookToStorage(images);
+    loadAdminData();
+    fileInput.value = '';
+  };
+  reader.readAsDataURL(fileInput.files[0]);
+}
+
+function deleteLookbookImage(id) {
+  let images = getLookbookFromStorage();
+  images = images.filter(img => img.id !== id);
+  saveLookbookToStorage(images);
+  loadAdminData();
+}
 });
 

@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>100PANIK </title>
+  <title>100PANIK - Streetwear de Luxe</title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -58,23 +57,19 @@
     </div>
   </section>
 
-  <!-- The Edit -->
+  <!-- The Edit (Vidéos) -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">The Edit</h2>
-      <div id="featured-products" class="grid grid-4"></div>
+      <div id="edit-videos" class="grid grid-3"></div>
     </div>
   </section>
 
-  <!-- Lookbook -->
+  <!-- Lookbook (Images dynamiques) -->
   <section class="section section-dark">
     <div class="container">
       <h2 class="section-title">Lookbook</h2>
-      <div class="lookbook-grid">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 1">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 2">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 3">
-      </div>
+      <div id="lookbook-grid" class="lookbook-grid"></div>
     </div>
   </section>
 
@@ -128,8 +123,10 @@
           <a href="#">Facebook</a>
         </div>
       </div>
-
-<	      </div>
+      <!-- Lyen admin kache -->
+      <div style="position:relative;">
+        <a href="admin.html" style="position:absolute; bottom:0; right:0; opacity:0; font-size:1px; color:transparent; text-decoration:none;">•</a>
+      </div>
     </div>
   </footer>
 
@@ -137,14 +134,12 @@
   <script src="../js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Affichage du splash
       showSplash();
-      // Chargement des pubs et produits
       loadFeaturedPubs();
-      loadFeaturedProducts();
+      loadEditVideos();      // Charger les vidéos pour "The Edit"
+      loadLookbook();        // Charger les images du lookbook
       updateCartCount();
     });
   </script>
 </body>
 </html>
-
