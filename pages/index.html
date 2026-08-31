@@ -1,13 +1,150 @@
 <!DOCTYPE html>
-<html>
-<head><title>100PANIK</title></head>
-<body style="background:#111; color:#fff; font-family:sans-serif;">
-<div id="ads" style="padding:20px;"></div>
-<script>
-const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-document.getElementById('ads').innerHTML = ads.length > 0 ?
-  ads.map(a => `<div style="background:#222; margin:10px; padding:10px;"><img src="${a.image_url}" style="max-width:200px;"><p>${a.title}</p></div>`).join('') :
-  '<p>Aucune pub</p>';
-</script>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100PANIK </title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Splash Pub -->
+  <div id="splash" class="splash-overlay">
+    <div class="splash-content">
+      <img id="splash-image" src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Pub" class="splash-bg">
+      <button class="btn-enter" onclick="closeSplash()">Enter</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">100PANIK</a>
+      <nav class="nav">
+        <a href="boutik.html">Boutique</a>
+        <a href="panye.html">Panier (<span id="cart-count">0</span>)</a>
+        <a href="kont-mwen.html">Compte</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>NOUVELLE ÈRE DU STREETWEAR</h1>
+      <p>Découvrez la collection exclusive 100PANIK</p>
+      <a href="boutik.html" class="btn btn-gold">Explorer</a>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>NOUVELLE COLLECTION — LIVRAISON GRATUITE — PAIEMENT MONCASH — 100PANIK —</span>
+      <span>NOUVELLE COLLECTION — LIVRAISON GRATUITE — PAIEMENT MONCASH — 100PANIK —</span>
+    </div>
+  </div>
+
+  <!-- Featured Drops -->
+  <section class="section" id="featured-drops">
+    <div class="container">
+      <h2 class="section-title">Featured Drops</h2>
+      <div id="featured-pubs" class="grid grid-3"></div>
+    </div>
+  </section>
+
+  <!-- The Edit -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">The Edit</h2>
+      <div id="featured-products" class="grid grid-4"></div>
+    </div>
+  </section>
+
+  <!-- Lookbook -->
+  <section class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">Lookbook</h2>
+      <div class="lookbook-grid">
+        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 1">
+        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 2">
+        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 3">
+      </div>
+    </div>
+  </section>
+
+  <!-- Témoignages -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Ils nous font confiance</h2>
+      <div class="testimonials">
+        <div class="testimonial">
+          <p>"Qualité exceptionnelle, livraison rapide!"</p>
+          <span>- Jean R.</span>
+        </div>
+        <div class="testimonial">
+          <p>"Le style 100PANIK est incomparable."</p>
+          <span>- Marie L.</span>
+        </div>
+        <div class="testimonial">
+          <p>"Je recommande vivement."</p>
+          <span>- Pierre D.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MonCash -->
+  <section class="section moncash">
+    <div class="container">
+      <h2 class="section-title">Paiement Mobile</h2>
+      <p>Payez facilement avec MonCash</p>
+      <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="MonCash" class="moncash-logo">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>100PANIK</h3>
+          <p>Streetwear de luxe depuis 2024</p>
+        </div>
+        <div>
+          <h4>Liens</h4>
+          <a href="boutik.html">Boutique</a><br>
+          <a href="istwa.html">Notre histoire</a><br>
+          <a href="kontak.html">Contact</a>
+        </div>
+        <div>
+          <h4>Suivez-nous</h4>
+          <a href="#">Instagram</a><br>
+          <a href="#">Facebook</a>
+        </div>
+      </div>
+      <div class="admin-link">
+        <a href="admin.html" style="opacity:0.3;">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Affichage du splash
+      showSplash();
+      // Chargement des pubs et produits
+      loadFeaturedPubs();
+      loadFeaturedProducts();
+      updateCartCount();
+    });
+  </script>
 </body>
 </html>
+

@@ -1,100 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Checkout | 100PANIK</title>
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="icon" href="../assets/images/logo-100panik.jpg" type="image/jpeg">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - 100PANIK</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<header class="header-panik">
-  <div class="header-container">
-    <a href="index.html" class="logo-panik"><img src="../assets/images/logo-100panik.jpg" alt="100PANIK">100<span>PANIK</span></a>
-    <nav class="nav-panik">
-      <a href="index.html">Home</a><a href="boutik.html">Shop</a><a href="koleksyon.html">Collection</a><a href="istwa.html">Story</a><a href="kontak.html">Contact</a>
-    </nav>
-    <div class="aksyon-header">
-      <a href="konekte.html" class="icon-btn">👤</a>
-      <a href="panye.html" class="icon-btn">🛒</a>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">100PANIK</a>
+      <nav class="nav">
+        <a href="boutik.html">Boutique</a>
+        <a href="panye.html">Panier (<span id="cart-count">0</span>)</a>
+        <a href="kont-mwen.html">Compte</a>
+      </nav>
     </div>
-  </div>
-</header>
-<main style="padding-top:120px;">
-  <div class="konteni-limit" style="max-width:800px;">
-    <h1 class="tit-seksyon">Checkout</h1>
-    <div id="orderSummary" style="background:rgba(255,255,255,0.7); padding:25px; margin-bottom:30px; border-radius:12px;"></div>
-    <form id="checkoutForm" style="background:rgba(255,255,255,0.7); padding:30px; border-radius:12px;">
-      <h2 style="color:#3E2723; margin-bottom:20px;">Shipping Information</h2>
-      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Full Name</label><input type="text" id="fullname" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
-      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Phone</label><input type="tel" id="phone" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
-      <div style="margin-bottom:20px;"><label style="color:#5C3A21;">Address</label><input type="text" id="address" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
-      <div style="margin-bottom:30px;"><label style="color:#5C3A21;">City</label><input type="text" id="city" required style="width:100%; background:transparent; border:none; border-bottom:2px solid #A0522D; padding:12px 0; color:#3E2723; outline:none;"></div>
-      <h2 style="color:#3E2723; margin-bottom:20px;">Payment Method</h2>
-      <div style="background:rgba(212,163,115,0.15); padding:20px; border:2px solid #A0522D; margin-bottom:30px; border-radius:8px;">
-        <p style="color:#3E2723; font-weight:700; font-size:1.2rem;">💰 MonCash</p>
-        <p style="color:#5C3A21;">Number: <strong style="font-size:1.5rem;">32924776</strong></p>
-        <p style="color:#5C3A21;">Name: 100PANIK LLC</p>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Finaliser la commande</h1>
+    <div id="order-summary"></div>
+    <form id="checkout-form">
+      <div class="form-group">
+        <label for="name">Nom complet</label>
+        <input type="text" id="name" required>
       </div>
-      <button type="submit" class="btn-panik btn-primè" style="width:100%;">Place Order</button>
+      <div class="form-group">
+        <label for="phone">Téléphone (WhatsApp)</label>
+        <input type="tel" id="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Adresse de livraison</label>
+        <textarea id="address" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-gold">Confirmer la commande</button>
     </form>
-    <div id="confirmation" style="display:none; margin-top:30px; background:rgba(212,163,115,0.2); padding:25px; border-radius:12px; text-align:center;">
-      <h3 style="color:#3E2723; margin-bottom:10px;">✅ Order Received!</h3>
-      <p style="color:#5C3A21;">Order ID: <span id="orderId"></span></p>
-      <p style="color:#5C3A21; margin-top:15px;">To complete your order, send your MonCash payment screenshot on WhatsApp.</p>
-      <a id="whatsappLink" href="#" target="_blank" class="btn-panik btn-lò" style="margin-top:15px;">Send Screenshot on WhatsApp</a>
+    <div id="whatsapp-link" style="display:none;"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2024 100PANIK. Tous droits réservés.</p>
     </div>
-  </div>
-</main>
-<script src="../js/supabase-config.js"></script>
-<script>
-let cart = JSON.parse(localStorage.getItem('100panik_cart') || '[]');
-function displaySummary() {
-  const summary = document.getElementById('orderSummary');
-  if (cart.length === 0) {
-    summary.innerHTML = '<p style="color:#5C3A21;">Your cart is empty.</p>';
-    return;
-  }
-  let total = 0;
-  let html = '<h3 style="color:#3E2723; margin-bottom:15px;">Order Summary</h3><ul style="list-style:none;">';
-  cart.forEach(item => {
-    total += item.price * item.quantity;
-    html += `<li style="display:flex; justify-content:space-between; margin-bottom:10px;"><span style="color:#3E2723;">${item.name} x${item.quantity}</span><span style="color:#A0522D; font-weight:700;">$${(item.price*item.quantity).toFixed(2)}</span></li>`;
-  });
-  html += `</ul><p style="font-size:1.5rem; color:#A0522D; font-weight:700; margin-top:20px;">Total: $${total.toFixed(2)}</p>`;
-  summary.innerHTML = html;
-}
-displaySummary();
-document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const name = document.getElementById('fullname').value;
-  const phone = document.getElementById('phone').value;
-  const address = document.getElementById('address').value;
-  const city = document.getElementById('city').value;
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  if (total === 0) {
-    alert('Your cart is empty.');
-    return;
-  }
-  const { data, error } = await supabase.from('admin_orders').insert({
-    customer_name: name,
-    customer_phone: phone,
-    customer_address: address + ', ' + city,
-    total: total,
-    status: 'pending_payment'
-  }).select();
-  if (error) {
-    alert('Error placing order: ' + error.message);
-    return;
-  }
-  const orderId = data[0].id;
-  document.getElementById('checkoutForm').style.display = 'none';
-  document.getElementById('confirmation').style.display = 'block';
-  document.getElementById('orderId').textContent = orderId.slice(0,8);
-  const message = `Hello 100PANIK! I just placed an order (ID: ${orderId.slice(0,8)}). I will send my MonCash payment screenshot.`;
-  document.getElementById('whatsappLink').href = `https://wa.me/50932924776?text=${encodeURIComponent(message)}`;
-  localStorage.removeItem('100panik_cart');
-});
-</script>
+  </footer>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      displayOrderSummary();
+    });
+  </script>
 </body>
 </html>
+

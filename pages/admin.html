@@ -1,49 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head><title>Admin 100PANIK</title></head>
-<body style="background:#111; color:#fff; font-family:sans-serif; padding:20px;">
-<h1>Admin</h1>
-<div id="login" style="margin-bottom:20px;">
-  <input type="password" id="pwd" placeholder="Mot de passe" style="padding:10px;">
-  <button onclick="login()" style="padding:10px 20px;">Se connecter</button>
-</div>
-<div id="panel" style="display:none;">
-  <h2>Ajouter une pub</h2>
-  <input type="file" id="adImage" accept="image/*"><br><br>
-  <input type="text" id="adTitle" placeholder="Titre" style="padding:8px;"><br><br>
-  <button onclick="addAd()" style="padding:10px 20px;">Ajouter</button>
-  <hr>
-  <h2>Liste des pubs</h2>
-  <ul id="adList"></ul>
-</div>
-<script>
-function login() {
-  if (document.getElementById('pwd').value === '100panik') {
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('panel').style.display = 'block';
-    loadAds();
-  } else {
-    alert('Mot de passe incorrect');
-  }
-}
-function loadAds() {
-  const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-  document.getElementById('adList').innerHTML = ads.map(a => `<li>${a.title}</li>`).join('');
-}
-function addAd() {
-  const fileInput = document.getElementById('adImage');
-  const title = document.getElementById('adTitle').value;
-  if (!fileInput.files[0] || !title) return alert('Choisir image et titre');
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const ads = JSON.parse(localStorage.getItem('100panik_ads') || '[]');
-    ads.push({ image_url: e.target.result, title: title });
-    localStorage.setItem('100panik_ads', JSON.stringify(ads));
-    loadAds();
-    alert('Pub ajoutée !');
-  };
-  reader.readAsDataURL(fileInput.files[0]);
-}
-</script>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - 100PANIK</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="login-section" class="admin-login">
+    <h1>Connexion Admin</h1>
+    <input type="password" id="admin-password" placeholder="Mot de passe">
+    <button onclick="adminLogin()" class="btn btn-gold">Se connecter</button>
+    <p id="login-error" style="color:red;display:none;">Mot de passe incorrect</p>
+  </div>
+
+  <div id="admin-panel" style="display:none;">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">100PANIK</a>
+        <button onclick="adminLogout()" class="btn btn-outline">Déconnexion</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1 class="page-title">Panneau d'administration</h1>
+
+      <!-- Gestion des Pubs -->
+      <section class="admin-section">
+        <h2>Publicités (Pubs)</h2>
+        <div id="pubs-list" class="admin-list"></div>
+        <div class="admin-form">
+          <input type="text" id="pub-title" placeholder="Titre de la pub">
+          <input type="file" id="pub-image" accept="image/*">
+          <button onclick="addPub()" class="btn btn-gold">Ajouter Pub</button>
+        </div>
+      </section>
+
+      <!-- Gestion des Produits -->
+      <section class="admin-section">
+        <h2>Produits</h2>
+        <div id="products-list" class="admin-list"></div>
+        <div class="admin-form">
+          <input type="text" id="product-name" placeholder="Nom">
+          <input type="number" id="product-price" placeholder="Prix (USD)" step="0.01">
+          <input type="text" id="product-category" placeholder="Catégorie">
+          <input type="file" id="product-image" accept="image/*">
+          <button onclick="addProduct()" class="btn btn-gold">Ajouter Produit</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    // Vérifie si déjà connecté
+    if (localStorage.getItem('panik_admin_logged') === 'true') {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      loadAdminData();
+    }
+  </script>
 </body>
 </html>
+
