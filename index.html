@@ -35,7 +35,7 @@
     <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>NOUVELLE ÈRE DU STREETWEAR</h1>
+      <h1>100PANIK COLLECTION</h1>
       <p>Découvrez la collection exclusive 100PANIK</p>
       <a href="boutik.html" class="btn btn-gold">Explorer</a>
     </div>
@@ -57,23 +57,19 @@
     </div>
   </section>
 
-  <!-- The Edit -->
+  <!-- The Edit (Vidéos) -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">The Edit</h2>
-      <div id="featured-products" class="grid grid-4"></div>
+      <div id="edit-videos" class="grid grid-3"></div>
     </div>
   </section>
 
-  <!-- Lookbook -->
+  <!-- Lookbook (Images dynamiques) -->
   <section class="section section-dark">
     <div class="container">
       <h2 class="section-title">Lookbook</h2>
-      <div class="lookbook-grid">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 1">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 2">
-        <img src="https://i.postimg.cc/QNzv9wsb/1003204538.jpg" alt="Look 3">
-      </div>
+      <div id="lookbook-grid" class="lookbook-grid"></div>
     </div>
   </section>
 
@@ -138,12 +134,13 @@
   <script src="../js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Chargement des éléments dynamiques
-      showSplash();              // Affiche le splash pub
-      loadFeaturedPubs();        // Charge les pubs dans "Featured Drops"
-      loadFeaturedProducts();    // Charge les produits dans "The Edit"
-      updateCartCount();         // Met à jour le compteur du panier
+      showSplash();
+      loadFeaturedPubs();
+      loadEditVideos();      // Charger les vidéos pour "The Edit"
+      loadLookbook();        // Charger les images du lookbook
+      updateCartCount();
     });
   </script>
 </body>
 </html>
+
