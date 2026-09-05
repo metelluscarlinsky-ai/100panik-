@@ -4,10 +4,197 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>100PANIK - Streetwear de Luxe</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0E6;
+      --brown-dark: #3E2723;
+      --gold: #D4AF37;
+      --gold-hover: #B8962E;
+      --text-muted: #6B5B52;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 15px 35px rgba(0,0,0,0.15);
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --font-title: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--cream);
+      color: var(--brown-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 { font-family: var(--font-title); font-weight: 700; letter-spacing: 0.5px; }
+    a { color: var(--brown-dark); text-decoration: none; transition: var(--transition); }
+    a:hover { color: var(--gold); }
+    img { max-width: 100%; display: block; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+    .btn {
+      display: inline-block; padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer;
+      font-weight: 600; font-family: var(--font-body); transition: var(--transition); text-align: center;
+      position: relative; overflow: hidden; letter-spacing: 0.5px;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #C9A227);
+      color: var(--brown-dark); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, var(--gold-hover), #A88B1E);
+      transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+    }
+    .btn-outline {
+      background: transparent; border: 2px solid var(--brown-dark); color: var(--brown-dark);
+    }
+    .btn-outline:hover {
+      background: var(--brown-dark); color: var(--cream); transform: translateY(-3px);
+    }
+
+    .header {
+      background: rgba(245, 240, 230, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      font-family: var(--font-title); font-size: 28px; font-weight: 700; letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--brown-dark), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav { display: flex; gap: 20px; }
+    .nav a { font-weight: 500; position: relative; padding: 5px 0; }
+    .nav a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: var(--transition);
+    }
+    .nav a:hover::after { width: 100%; }
+
+    .hero {
+      position: relative; height: 90vh; min-height: 600px; overflow: hidden; display: flex; align-items: center;
+    }
+    .hero-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover; background-position: center; animation: slowZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(62,39,35,0.8), rgba(0,0,0,0.4));
+    }
+    .hero-content { position: relative; z-index: 3; color: var(--cream); text-align: center; width: 100%; }
+    .hero-content h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem); margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.6); letter-spacing: 3px;
+    }
+    .hero-content p { font-size: 1.3rem; margin-bottom: 30px; opacity: 0.9; }
+    .hero-content .btn { animation: fadeInUp 1s ease-out 0.6s both; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .marquee {
+      background: linear-gradient(90deg, var(--brown-dark), #5D4037); color: var(--gold);
+      padding: 15px 0; overflow: hidden; white-space: nowrap; border-top: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+    }
+    .marquee-track { display: inline-block; animation: marquee 20s linear infinite; }
+    .marquee span { margin-right: 50px; font-weight: 600; letter-spacing: 2px; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    .section { padding: 80px 0; }
+    .section-title {
+      text-align: center; font-size: 2.8rem; margin-bottom: 40px; position: relative;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 100px; height: 4px;
+      background: linear-gradient(90deg, var(--gold), transparent); margin: 15px auto 0; border-radius: 2px;
+    }
+    .section-dark { background: linear-gradient(135deg, var(--brown-dark), #2C1A16); color: var(--cream); }
+
+    .grid { display: grid; gap: 30px; }
+    .grid-3 { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .card {
+      background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: var(--transition); position: relative; animation: fadeInUp 0.6s ease-out;
+    }
+    .card:hover { transform: translateY(-10px) rotateX(2deg); box-shadow: var(--shadow-hover); }
+    .card-image { height: 280px; overflow: hidden; position: relative; }
+    .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .card:hover .card-image img { transform: scale(1.1) rotate(1deg); }
+    .card-body { padding: 20px; }
+    .card-title { font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px; }
+    .card-price { color: var(--gold); font-weight: 700; font-size: 1.2rem; text-shadow: 0 0 10px rgba(212,175,55,0.3); }
+    .card-category {
+      font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;
+    }
+
+    .lookbook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .lookbook-grid img {
+      width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .testimonial { background: #fff; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .testimonial p { font-style: italic; margin-bottom: 10px; }
+    .testimonial span { font-weight: 600; color: var(--gold); }
+
+    .moncash { text-align: center; }
+    .moncash-logo { width: 150px; margin: 20px auto; }
+
+    .footer {
+      background: var(--brown-dark); color: var(--cream); padding: 40px 0 20px; margin-top: 60px;
+      position: relative; overflow: hidden;
+    }
+    .footer::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .footer h3, .footer h4 { color: var(--gold); }
+    .footer a { color: var(--cream); opacity: 0.8; transition: var(--transition); }
+    .footer a:hover { opacity: 1; color: var(--gold); padding-left: 5px; }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px;
+    }
+    .admin-link { text-align: center; margin-top: 20px; position: relative; }
+
+    .splash-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999;
+      display: flex; align-items: center; justify-content: center; animation: fadeOut 0.5s ease 6s forwards;
+    }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+    .splash-content { position: relative; width: 100%; height: 100%; }
+    .splash-bg {
+      width: 100%; height: 100%; object-fit: cover; animation: slowZoom 10s ease-in-out infinite alternate;
+    }
+    .btn-enter {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      padding: 15px 40px; background: linear-gradient(135deg, var(--gold), #C9A227);
+      color: var(--brown-dark); border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold;
+      cursor: pointer; z-index: 10; box-shadow: 0 5px 20px rgba(212,175,55,0.5); animation: pulse 2s infinite; transition: var(--transition);
+    }
+    .btn-enter:hover {
+      background: linear-gradient(135deg, var(--gold-hover), #A88B1E);
+      animation: none; transform: translateX(-50%) scale(1.1);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    .video-container { position: relative; padding-top: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    @media (max-width: 768px) {
+      .header-inner { flex-direction: column; gap: 10px; }
+      .nav { gap: 15px; flex-wrap: wrap; justify-content: center; }
+      .hero { height: 70vh; }
+      .section { padding: 50px 0; }
+      .section-title { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
   <!-- Splash Pub -->
@@ -35,7 +222,7 @@
     <div class="hero-bg" style="background-image: url('https://i.postimg.cc/QNzv9wsb/1003204538.jpg');"></div>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>100PANIK COLLECTION</h1>
+      <h1>NOUVELLE ÈRE DU STREETWEAR</h1>
       <p>Découvrez la collection exclusive 100PANIK</p>
       <a href="boutik.html" class="btn btn-gold">Explorer</a>
     </div>
@@ -130,17 +317,247 @@
     </div>
   </footer>
 
-  <script src="../js/supabase-config.js"></script>
-  <script src="../js/main.js"></script>
   <script>
+    // ========== Constantes & Helpers ==========
+    const CART_KEY = 'panik_cart';
+    const PUBS_KEY = 'panik_pubs';
+    const PRODUCTS_KEY = 'panik_products';
+    const VIDEOS_KEY = 'panik_videos';
+    const LOOKBOOK_KEY = 'panik_lookbook';
+    const LAST_SPLASH_INDEX_KEY = 'panik_last_splash_index';
+
+    function getLocalStorage(key) {
+      try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+      } catch (e) {
+        console.error(`Erreur lecture localStorage (${key})`, e);
+        return null;
+      }
+    }
+
+    function setLocalStorage(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        console.error(`Erreur écriture localStorage (${key})`, e);
+        return false;
+      }
+    }
+
+    // ========== Splash ==========
+    function showSplash() {
+      const splash = document.getElementById('splash');
+      if (!splash) return;
+      let splashImage = 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg';
+      try {
+        const pubs = getPubsFromStorage();
+        if (pubs && pubs.length > 0) {
+          let lastIndex = getLocalStorage(LAST_SPLASH_INDEX_KEY);
+          lastIndex = lastIndex !== null && lastIndex !== undefined ? lastIndex : -1;
+          let newIndex;
+          if (pubs.length === 1) {
+            newIndex = 0;
+          } else {
+            do {
+              newIndex = Math.floor(Math.random() * pubs.length);
+            } while (newIndex === lastIndex);
+          }
+          splashImage = pubs[newIndex].image;
+          setLocalStorage(LAST_SPLASH_INDEX_KEY, newIndex);
+        }
+      } catch (e) {
+        console.warn('Erreur chargement pub splash, image par défaut utilisée.');
+      }
+      const img = document.getElementById('splash-image');
+      if (img) img.src = splashImage;
+      splash.style.display = 'flex';
+      setTimeout(() => { closeSplash(); }, 6000);
+    }
+
+    function closeSplash() {
+      const splash = document.getElementById('splash');
+      if (splash) splash.style.display = 'none';
+    }
+
+    // ========== Données (localStorage) ==========
+    function getPubsFromStorage() {
+      let pubs = getLocalStorage(PUBS_KEY);
+      if (pubs && Array.isArray(pubs)) return pubs;
+      const defaultPubs = [
+        { id: 1, title: 'Nouvelle Collection', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', link: 'boutik.html' },
+        { id: 2, title: 'Promo Exclusive', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', link: 'boutik.html' }
+      ];
+      setLocalStorage(PUBS_KEY, defaultPubs);
+      return defaultPubs;
+    }
+
+    function getProductsFromStorage() {
+      let products = getLocalStorage(PRODUCTS_KEY);
+      if (products && Array.isArray(products) && products.length > 0) return products;
+      const defaultProducts = [
+        { id: 1, name: 'T-shirt Logo 100PANIK', price: 45, category: 'T-shirt', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+        { id: 2, name: 'Hoodie Oversize', price: 85, category: 'Hoodie', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+        { id: 3, name: 'Veste Workwear', price: 120, category: 'Veste', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' },
+        { id: 4, name: 'Pantalon Cargo', price: 75, category: 'Pantalon', image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg' }
+      ];
+      setLocalStorage(PRODUCTS_KEY, defaultProducts);
+      return defaultProducts;
+    }
+
+    function getVideosFromStorage() {
+      let videos = getLocalStorage(VIDEOS_KEY);
+      if (videos && Array.isArray(videos)) return videos;
+      const defaultVideos = [
+        {
+          id: 1,
+          title: '100PANIK - Nouvelle Collection',
+          url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+          poster: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg'
+        }
+      ];
+      setLocalStorage(VIDEOS_KEY, defaultVideos);
+      return defaultVideos;
+    }
+
+    function getLookbookFromStorage() {
+      let images = getLocalStorage(LOOKBOOK_KEY);
+      if (images && Array.isArray(images)) return images;
+      const defaultLookbook = [
+        { id: 1, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 1' },
+        { id: 2, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 2' },
+        { id: 3, image: 'https://i.postimg.cc/QNzv9wsb/1003204538.jpg', alt: 'Look 3' }
+      ];
+      setLocalStorage(LOOKBOOK_KEY, defaultLookbook);
+      return defaultLookbook;
+    }
+
+    // ========== Affichage ==========
+    function loadFeaturedPubs() {
+      const container = document.getElementById('featured-pubs');
+      if (!container) return;
+      const pubs = getPubsFromStorage();
+      container.innerHTML = pubs.map(pub => `
+        <div class="card">
+          <div class="card-image"><img src="${pub.image}" alt="${pub.title}"></div>
+          <div class="card-body">
+            <h3 class="card-title">${pub.title}</h3>
+            ${pub.link ? `<a href="${pub.link}" class="btn btn-gold">Voir</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadFeaturedProducts() {
+      const container = document.getElementById('featured-products');
+      if (!container) return;
+      const products = getProductsFromStorage().slice(0, 4);
+      container.innerHTML = products.map(prod => `
+        <div class="card">
+          <div class="card-image"><img src="${prod.image}" alt="${prod.name}"></div>
+          <div class="card-body">
+            <span class="card-category">${prod.category}</span>
+            <h3 class="card-title">${prod.name}</h3>
+            <p class="card-price">$${prod.price}</p>
+            <button class="btn btn-gold" onclick="addToCart(${prod.id}, '${prod.name}', ${prod.price}, '${prod.image}')">Ajouter au panier</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadEditVideos() {
+      const container = document.getElementById('edit-videos');
+      if (!container) return;
+      const videos = getVideosFromStorage();
+      container.innerHTML = videos.map(video => `
+        <div class="card">
+          <div class="video-container">
+            <video controls poster="${video.poster || ''}">
+              <source src="${video.url}" type="video/mp4">
+              Votre navigateur ne supporte pas la vidéo.
+            </video>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${video.title}</h3>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadLookbook() {
+      const container = document.getElementById('lookbook-grid');
+      if (!container) return;
+      const images = getLookbookFromStorage();
+      container.innerHTML = images.map(img => `
+        <img src="${img.image}" alt="${img.alt || 'Lookbook image'}">
+      `).join('');
+    }
+
+    // ========== Panier (compteur) ==========
+    function getCart() {
+      return getLocalStorage(CART_KEY) || [];
+    }
+
+    function updateCartCount() {
+      const countElements = document.querySelectorAll('#cart-count');
+      const cart = getCart();
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      countElements.forEach(el => { if (el) el.textContent = totalItems; });
+    }
+
+    function addToCart(id, name, price, image, size = 'M') {
+      let cart = getCart();
+      const existing = cart.find(item => item.id === id && item.size === size);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id, name, price, image, size, quantity: 1 });
+      }
+      setLocalStorage(CART_KEY, cart);
+      updateCartCount();
+      showToast('Produit ajouté au panier !');
+    }
+
+    // ========== Toast ==========
+    function showToast(message) {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.style.cssText = `
+          position: fixed; bottom: 30px; right: 30px; background: var(--brown-dark);
+          color: var(--gold); padding: 15px 25px; border-radius: 50px;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 10000;
+          opacity: 0; transition: opacity 0.3s ease; font-weight: 600;
+        `;
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
+
+    // ========== Initialisation ==========
     document.addEventListener('DOMContentLoaded', function() {
       showSplash();
       loadFeaturedPubs();
-      loadEditVideos();      // Charger les vidéos pour "The Edit"
-      loadLookbook();        // Charger les images du lookbook
+      loadFeaturedProducts();
+      loadEditVideos();
+      loadLookbook();
       updateCartCount();
+    });
+
+    // Rechargement quand la page redevient visible (après admin)
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) {
+        loadFeaturedPubs();
+        loadFeaturedProducts();
+        loadEditVideos();
+        loadLookbook();
+        updateCartCount();
+      }
     });
   </script>
 </body>
 </html>
-
